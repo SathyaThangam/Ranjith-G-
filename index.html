@@ -7,7 +7,6 @@
         <link rel="stylesheet" href="css/index.css">
     </head>
     <body>
-        <div id="#section">
         <nav>
             <ol>
                 <li>Courses</li>
@@ -15,27 +14,32 @@
                 <li>News</li>
                 <li>Join Discord</li>
                 <li>App hosting</li>
-                <div>
-                    <span>...</span>
-                    <div>
-                        <!-- <span>About</span>
-                        <span>Web hosting</span> -->
-                    </div>
-                </div>
             </ol>
-            <input type="search">
-            <button>LOGIN</button>
-            <button>SIGN UP</button>
+            <div class="dropdown">
+                <span>...</span>
+                <div class="dropdown-content">
+                    <p>About</p>
+                    <p>Web hosting</p>
+                </div>
+            </div>
+            <div id="pull-right">
+            <input id="nav-search" type="search" placeholder="Search scotchy scotch..."/>
+            <button id="nav-login">LOGIN</button>
+            <button id="nav-signup"><strong>SIGN UP</strong></button>
+            </div>
         </nav>
         <div id="announcement">
-            <div>Free Webinar: <strong>Should I use React or Vue?</strong></div>
+            <div><p>Free Webinar:<strong>Should I use React or Vue?</strong></p></div>
         </div>
 
+        <div id="container">
+
+        <section>
         <div id="banner">
             <img src="assets/banner.png"  alt="banner">
         </div>
         <div id="heading" class="center">
-            <h1>React + Docker with Security in 10 Minutes</h1>
+            <h2>React + Docker with Security in 10 Minutes</h2>
         </div>
         <div class="center">
             <ol>
@@ -47,9 +51,9 @@
             </ol>
         </div>
         <div class="center">
-            <button>CODE</button>
+            <button id="code-button">CODE</button>
         </div>
-        <section class="">
+        <div class="article-content">
             <div>You've built a React app, but now you need to deploy it. What do you do? First, it's probably best 
                 to choose a cloud provider as they're typically low-cost and easy to deploy to.
             </div>
@@ -100,10 +104,10 @@
             <div>
                 <h2><a href="#toc-create-a-react-app">Create a React App</a></h2>
                 <p>Rather than showing you how to build a React app, I'm going to cheat and use one that a colleague of mine already built. To begin, clone the repo.</p>
-                <pre>
-                    <code>git clone https://github.com/oktadeveloper/okta-react-styled-components-example.git react-docker
-                        cd react-docker
-                        npm install</code>
+                <pre><code>
+                    <span>git clone https://github.com/oktadeveloper/okta-react-styled-components-example.git react-docker</span>
+                    <span>react-docker</span>
+                    <span>npm install</span></code>
                 </pre>
             </div>
             <div>
@@ -114,11 +118,13 @@
                 Log into your Okta developer account (you <a href="#">created one</a>, right?) 
                 to register this app and enable OIDC authentication.
             </div>
-        </section>
         </div>
+        </section>
+
         <aside>
             <div id="side-banner-img"><img src="assets/sidebar-img.png" alt="Image"></div>
         </aside>
 
+        </div>
     </body>
 </html>
