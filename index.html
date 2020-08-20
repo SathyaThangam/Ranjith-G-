@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>React + Docker with Security in 10 Minutes</title>
+        <link href="https://fonts.googleapis.com/css?family=Nunito:400,700|Source+Code+Pro&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="css/index.css">
+    </head>
+    <body>
+        <div id="#section">
+        <nav>
+            <ol>
+                <li>Courses</li>
+                <li>Tutorials</li>
+                <li>News</li>
+                <li>Join Discord</li>
+                <li>App hosting</li>
+                <div>
+                    <span>...</span>
+                    <div>
+                        <!-- <span>About</span>
+                        <span>Web hosting</span> -->
+                    </div>
+                </div>
+            </ol>
+            <input type="search">
+            <button>LOGIN</button>
+            <button>SIGN UP</button>
+        </nav>
+        <div id="announcement">
+            <div>Free Webinar: <strong>Should I use React or Vue?</strong></div>
+        </div>
+
+        <div id="banner">
+            <img src="assets/banner.png"  alt="banner">
+        </div>
+        <div id="heading" class="center">
+            <h1>React + Docker with Security in 10 Minutes</h1>
+        </div>
+        <div class="center">
+            <ol>
+                <li>Matt Raible</li>
+                <li>Matt Raible</li>
+                <li>May 18</li>
+                <li>0 comments</li>
+                <li>Bookmark</li>
+            </ol>
+        </div>
+        <div class="center">
+            <button>CODE</button>
+        </div>
+        <section class="">
+            <div>You've built a React app, but now you need to deploy it. What do you do? First, it's probably best 
+                to choose a cloud provider as they're typically low-cost and easy to deploy to.
+            </div>
+            <div>
+                <h3>Table of Contents</h3>
+                <ul><li class="two"><a href="#toc-create-a-react-app">
+                    Create a React App
+                    </a></li><li class="two"><a href="#toc-why-docker-">
+                    Why Docker?
+                    </a></li><li class="two"><a href="#toc-create-a-dockerfile-and-nginx-configuration">
+                    Create a Dockerfile and Nginx Configuration
+                    </a></li><li class="two"><a href="#toc-build-a-docker-image-with-your-react-app">
+                    Build a Docker Image with Your React App
+                    </a></li><li class="two"><a href="#toc-run-your-docker-react-app">
+                    Run Your Docker + React App
+                    </a></li><li class="two"><a href="#toc-deploy-your-react-app-to-heroku">
+                    Deploy Your React App to Heroku
+                    </a></li><li class="two"><a href="#toc-deploy-your-docker-react-app-to-heroku">
+                    Deploy Your Docker + React App to Heroku
+                    </a></li><li class="three"><a href="#toc-improve-security-headers-for-nginx-in-docker">Improve Security Headers for Nginx in Docker</a></li><li class="two"><a href="#toc-use-cloud-native-buildpacks-to-create-your-react-docker-image">
+                    Use Cloud Native Buildpacks to Create Your React + Docker Image
+                    </a></li><li class="two"><a href="#toc-deploy-your-react-docker-image-to-docker-hub">
+                    Deploy Your React + Docker Image to Docker Hub
+                    </a></li><li class="two"><a href="#toc-deploy-your-react-docker-image-to-heroku">
+                    Deploy Your React + Docker Image to Heroku
+                    </a></li><li class="two"><a href="#toc-learn-more-about-react-and-docker">
+                    Learn More About React and Docker
+                    </a></li></ul>
+            </div>
+            <div>
+                Most cloud providers offer a way to deploy a static site. A built React app is just JavaScript, 
+                HTML, and CSS. They're static files that can live on pretty much any web server. In fact, 
+                with JSX (HTML in JS) and Styled Components, you could even say it's just JavaScript!
+            </div>
+            <div>Docker is the de facto standard to build and share containerized applications. 
+                You can use it to package your apps and include many open source web servers to serve up your app.
+                 As an added bonus, you can configure the webserver to send security headers that make your app
+                  more secure.
+            </div>
+            <div>
+                <h3>Prerequisites:</h3>
+                <ul>
+                   <li>Node 12+</li>
+                   <li>Docker</li>
+                    <li>An Okta Developer Account</li>
+                </ul>
+            </div>
+            <div>
+                <h2><a href="#toc-create-a-react-app">Create a React App</a></h2>
+                <p>Rather than showing you how to build a React app, I'm going to cheat and use one that a colleague of mine already built. To begin, clone the repo.</p>
+                <pre>
+                    <code>git clone https://github.com/oktadeveloper/okta-react-styled-components-example.git react-docker
+                        cd react-docker
+                        npm install</code>
+                </pre>
+            </div>
+            <div>
+                This is a React app that uses Styled Components for its CSS and is secured by OpenID Connect 
+                (aka OIDC). You can read about how it was created in <a href="#">Build a React App with Styled Components.</a>
+            </div>
+            <div>
+                Log into your Okta developer account (you <a href="#">created one</a>, right?) 
+                to register this app and enable OIDC authentication.
+            </div>
+        </section>
+        </div>
+        <aside>
+            <div id="side-banner-img"><img src="assets/sidebar-img.png" alt="Image"></div>
+        </aside>
+
+    </body>
+</html>
