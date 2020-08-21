@@ -47,6 +47,25 @@ ol{
     margin: 5px 5px;
 }
 
+ul {
+    list-style: none;
+}
+
+ul a::before{
+    content: "#";
+    color: #dab437;
+    padding-right: 5px;
+}
+
+ul a {
+    text-decoration:none;
+    color:#000000;
+}
+
+ul a:hover{
+    color: #dab437;
+}
+
 
 aside{
     width: 30%;
@@ -102,6 +121,13 @@ section{
     padding-right: 20px;
 }
 
+#toc{
+    background-color: #ffffff;
+    padding: 50px 50px;
+    margin: 50px -50px;
+    border-radius: 5px;
+    box-shadow: 0 2px 3px hsla(0,0%,4%,.1), 0 0 0 1px hsla(0,0%,4%,.1);
+}
 
 #announcement{
     display: flex;
@@ -127,6 +153,7 @@ section{
 #banner {
     border-radius: 10px;
     box-shadow: 0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -2px rgba(0,0,0,.05);
+    margin-top: 10%;
 }
 
 #heading{
@@ -206,4 +233,69 @@ section{
 
 .article-content{
     font-size: 1.25rem;
+}
+
+svg:not(:root) {
+    overflow: hidden;
+}
+
+svg {
+    opacity: 0.2;
+    position: absolute;
+    top: -60%;
+    left:-150px;
+    z-index: -1;
+}
+
+#side-toc{
+    position: fixed;
+    left: 0;
+    display: flex;
+    justify-items: auto;
+    z-index: 1;
+    top: 50%;
+}
+
+
+#side-toc li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+#side-toc:hover li a:hover{
+    color: #000000;
+    visibility: visible;
+}
+
+#side-toc li a{
+    margin-left: 30px;
+    visibility: hidden;
+}
+
+
+
+#side-toc li a::before{
+    content: "";
+}
+
+#side-toc:hover li a{
+    margin-left: 40px;
+    visibility: visible;
+    color: #b64444;
+}
+
+#side-toc:hover li span{
+    width: 40px;
+    visibility: visible;
+}
+
+
+.line{
+    display: flex;
+    position: absolute;
+    background:#555;
+    height: 3px;
+    width: 15px;
+    /* fill: #000000; */
 }
