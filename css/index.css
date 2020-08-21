@@ -235,11 +235,18 @@ section{
     font-size: 1.25rem;
 }
 
-svg:not(:root) {
-    overflow: hidden;
+
+.scotch-logo__liquid {
+    position: absolute;
+    width: 52px;
+    top: 0;
+    z-index: 1;
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-svg {
+.blob{
     opacity: 0.2;
     position: absolute;
     top: -60%;
@@ -248,12 +255,14 @@ svg {
 }
 
 #side-toc{
+    color: #555;
+    font-size: 12px;
     position: fixed;
     left: 0;
     display: flex;
     justify-items: auto;
     z-index: 1;
-    top: 50%;
+    top: 40%;
 }
 
 
@@ -266,6 +275,13 @@ svg {
 #side-toc:hover li a:hover{
     color: #000000;
     visibility: visible;
+    font-weight: 700;
+}
+
+.is-selected{
+    color: #000000;
+    visibility: visible;
+    font-weight: 700;
 }
 
 #side-toc li a{
@@ -280,9 +296,10 @@ svg {
 }
 
 #side-toc:hover li a{
+    
     margin-left: 40px;
     visibility: visible;
-    color: #b64444;
+    color: #555555;
 }
 
 #side-toc:hover li span{
