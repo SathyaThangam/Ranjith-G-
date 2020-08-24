@@ -8,18 +8,36 @@
     </head>
     <body>
         <nav>
-            <ol>
-                <li>Courses</li>
-                <li>Tutorials</li>
-                <li>News</li>
-                <li>Join Discord</li>
-                <li>App hosting</li>
+            <ol class="navbar-menu">
+                <li class="navbar-item">Courses</li>
+                <li class="navbar-item">Tutorials</li>
+                <li class="navbar-item">News</li>
+                <li class="navbar-item">Join Discord</li>
+                <li class="navbar-item">App hosting</li>
             </ol>
             <div class="dropdown">
                 <span>...</span>
                 <div class="dropdown-content">
                     <p>About</p>
                     <p>Web hosting</p>
+                    <p>JS Glossary</p>
+                    <p>Code Challenges</p>
+                    <p>Sponsor scotch</p>
+                    <div class = "nav-item-group">
+                        <a href="www.twitter.com" title="Follow us on twitter">
+                            <svg class="svg-inline--fa fa-twitter fa-w-16 fa-fw has-text-info" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="twitter" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"></path>
+                            </svg>
+                        </a>
+                        <a href="www.facebook.com" title="Follow us on facebook">
+                            <svg class="svg-inline--fa fa-facebook fa-w-16 fa-fw has-text-link" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="facebook" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"></path></svg>
+                        </a>
+                        <a href="www.github.com" title="Follow us on github">
+                            <svg class="svg-inline--fa fa-github-alt fa-w-15 fa-fw has-text-white" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="github-alt" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512" data-fa-i2svg=""><path fill="currentColor" d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"></path></svg>
+                        </a>
+                        <a href="www.youtube.com" title="Follow us on youtube">
+                            <svg class="svg-inline--fa fa-youtube fa-w-18 fa-fw has-text-danger" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="youtube" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" data-fa-i2svg=""><path fill="currentColor" d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"></path></svg>
+                        </a>
+                    </div>
                 </div>
             </div>
             <div id="pull-right">
@@ -177,22 +195,54 @@
         </div>
         </section>
 
-        <aside>
+        <!-- <aside>
             <div id="side-banner-img"><img src="assets/sidebar-img.png" alt="Image""></div>
-        </aside>
+        </aside> -->
         </div>
         <footer>
-            <div class="footer-container">
-                <div>
-                    <div>
-                    <img src="assets/scotch-logo.png" alt="logo"  width="30px" height="30px/>
-                    <h4>scotch</h4>
-                    <span>by</span>
-                    <a href="www.twitter.com">twitter</a>
-                    <span>at</span>
-                    <img src="" alt="Digital Ocean">
+            <div class="footer-container" id="footer">
+                <div class="footer-content">
+                    <div class="footer-left">
+                        <div>
+                            <img src="assets/scotch-logo.png" alt="logo"  width="30px" height="30px"/>
+                        </div>
+                        <h4>scotch
+                        <span>by</span>
+                        <a href="https://twitter.com/chrisoncode" class="has-text-light" style="
+                                background: #1e99e6;
+                                border-radius: 3px;
+                                color: #fff;
+                                font-size: 14px;
+                                display: inline-block;
+                                padding: 3px 6px;
+                                letter-spacing: 0.5px;
+                                margin-left: 9px;
+                                ">@chrisoncode</a>
+                        <span>at</span>
+                        <a href="https://twitter.com/digitalocean" class="has-text-light" style="
+                                margin-left: 9px; margin-bottom: 2px;
+                                "><img data-src="assets/digital-ocean.webp" alt="Digital Ocean" style="padding-top: 4px; width: 125px;" src="assets/digital-ocean.webp" data-was-processed="true"></a>
+                        </h4>
+                        <p>
+                            Top shelf learning. Dev tutorials explaining the code <strong style="color: #DDD;">and the choices behind it all.</strong>
+                        </p>
+                        <p>Made with 💖 by <a href="https://twitter.com" style="color: #7a7a7a;">@chrisoncode</a> and <a href="https://twitter.com" style="color:#7a7a7a;">Nick</a>.</p>
+                        <ul></ul>
+                    </div>
+                    <div class="footer-right">
+                        <a href="#">
+                            <p>Proudly hosted by</p>
+                            <img data-src="assets/digital-ocean.webp" alt="Digital Ocean" style="padding-top: 4px; width: 250px;" src="assets/digital-ocean.webp" data-was-processed="true" />
+                        </a>
+                        <ol>
+                            <li><a href="#"> Sponsor</a></li>
+                            <li><a href="#"> Privacy</a></li>
+                            <li><a href="#"> Terms</a></li>
+                            <li><a href="#"> Rules</a></li>
+                            <li>© 2020 DigitalOcean, LLC</li>
+                        </ol>
+                    </div>
                 </div>
-                
             </div>
         </footer>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
