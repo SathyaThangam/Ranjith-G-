@@ -55,9 +55,9 @@
                 
                 <div class="modal-content-center">
                     <h4>Sign in ✌
-                        <span onclick="document.getElementById('login-modal').style.display='none'"
+                        <!-- <span onclick="document.getElementById('login-modal').style.display='none'"
                             class="close close-btn" title="Close Modal">&times;
-                        </span>
+                        </span> -->
                     </h4>
                     <p>Use social</p>
                     <div id="social-icons">
@@ -66,45 +66,45 @@
                         <p class="control"><a class="button is-info is-large is-facebook center-flex"><span class="icon"><svg height="50px" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="facebook" class="svg-inline--fa fa-facebook fa-w-16 fa-fw " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="transform-origin: 0.5em 0.5625em;"><g transform="translate(256 256)"><g transform="translate(0, 32)  scale(1.1875, 1.1875)  rotate(0 0 0)"><path fill="currentColor" d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z" transform="translate(-256 -256)"></path></g></g></svg></span></a></p>
                     </div>
                     <p>Use Email/Password</p>
-                    <input type="text" name="loginmail" id="loginmail" placeholder="me@scotch.io">
-                    <input type="password" name="loginpassword" id="loginpassword" placeholder="supersecretpassword">
-                    <button>Login</button>
                     <div>
-                        <button>Need an Account? Create One</button>
+                        <input type="text" name="loginmail" id="loginmail" placeholder="me@scotch.io">
+                    </div>
+                    <div><input type="password" name="loginpassword" id="loginpassword" placeholder="supersecretpassword"></div>
+                    <div><button class="form-btn">Login</button></div>
+                    <div class="modal-pull-right">
+                        <button onclick="document.getElementById('login-modal').style.display='none';document.getElementById('signup-modal').style.display='block'">Need an Account? Create One</button>
                     </div>
                 </div>
             </div>
         </div>
           <div id="signup-modal" class="modal">
-            <div class="modal-content">
-                <div class="modal-content-center">
-                    <div>
-                        <h4>Create An Account</h4>
-                        <span onclick="document.getElementById('signup-modal').style.display='none'"
-                            class="close close-btn" title="Close Modal">&times;
-                        </span>
-                    </div>
-                    <p>Use social</p>
-                    <div id="social-icons">
-                        <p class="control"><a class="button is-dark is-large is-github center-flex"><span class="icon"><svg  height="50px" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="github-alt" class="svg-inline--fa fa-github-alt fa-w-15 fa-fw " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512" style="transform-origin: 0.46875em 0.5625em;"><g transform="translate(240 256)"><g transform="translate(0, 32)  scale(1.1875, 1.1875)  rotate(0 0 0)"><path fill="currentColor" d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z" transform="translate(-240 -256)"></path></g></g></svg></span></a></p>
-                        <p class="control"><a class="button is-danger is-large is-google center-flex"><span class="icon"><svg height="50px" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google" class="svg-inline--fa fa-google fa-w-16 fa-fw " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512" style="transform-origin: 0.476563em 0.5625em;"><g transform="translate(244 256)"><g transform="translate(0, 32)  scale(1.1875, 1.1875)  rotate(0 0 0)"><path fill="currentColor" d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z" transform="translate(-244 -256)"></path></g></g></svg></span></a></p>
-                        <p class="control"><a class="button is-info is-large is-facebook center-flex"><span class="icon"><svg height="50px" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="facebook" class="svg-inline--fa fa-facebook fa-w-16 fa-fw " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="transform-origin: 0.5em 0.5625em;"><g transform="translate(256 256)"><g transform="translate(0, 32)  scale(1.1875, 1.1875)  rotate(0 0 0)"><path fill="currentColor" d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z" transform="translate(-256 -256)"></path></g></g></svg></span></a></p>
-                    </div>
-                    <p>Use Email/Password</p>
-                    <input type="text" name="signupusername" id="signupusername" placeholder="scotchychris">
-                    <input type="text" name="signupusermail" id="signupusermail" placeholder="me@scotch.io">
-                    <input type="password" name="signuppassword" id="signuppassword" placeholder="supersecretpassword">
-                    <input type="checkbox" name="termsandprivacy" id="termsandprivacy">
-                    <label for="termsandprivacy">I agree to Scotch's 
-                        <a href="#">terms</a>
-                        and 
-                        <a href="#">privacy</a></label>
-                    <button>SIGN UP</button>
-                    <div>
-                        <button>Got an Account? Login</button>
-                    </div>
+           <div class="modal-content">
+               <div class="modal-content-center">
+                <div id="">
+                    <h4>Create An Account</h4>
                 </div>
-            </div>
+                <p>Use social</p>
+                <div id="social-icons">
+                    <p class="control"><a class="button is-dark is-large is-github center-flex"><span class="icon"><svg  height="50px" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="github-alt" class="svg-inline--fa fa-github-alt fa-w-15 fa-fw " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512" style="transform-origin: 0.46875em 0.5625em;"><g transform="translate(240 256)"><g transform="translate(0, 32)  scale(1.1875, 1.1875)  rotate(0 0 0)"><path fill="currentColor" d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z" transform="translate(-240 -256)"></path></g></g></svg></span></a></p>
+                    <p class="control"><a class="button is-danger is-large is-google center-flex"><span class="icon"><svg height="50px" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google" class="svg-inline--fa fa-google fa-w-16 fa-fw " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512" style="transform-origin: 0.476563em 0.5625em;"><g transform="translate(244 256)"><g transform="translate(0, 32)  scale(1.1875, 1.1875)  rotate(0 0 0)"><path fill="currentColor" d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z" transform="translate(-244 -256)"></path></g></g></svg></span></a></p>
+                    <p class="control"><a class="button is-info is-large is-facebook center-flex"><span class="icon"><svg height="50px" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="facebook" class="svg-inline--fa fa-facebook fa-w-16 fa-fw " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="transform-origin: 0.5em 0.5625em;"><g transform="translate(256 256)"><g transform="translate(0, 32)  scale(1.1875, 1.1875)  rotate(0 0 0)"><path fill="currentColor" d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z" transform="translate(-256 -256)"></path></g></g></svg></span></a></p>
+                </div>
+                <p>Use Email/Password</p>
+                <div><input type="text" name="signupusername" id="signupusername" placeholder="scotchychris"></div>
+                <div><input type="text" name="signupusermail" id="signupusermail" placeholder="me@scotch.io"></div>
+                <div><input type="password" name="signuppassword" id="signuppassword" placeholder="supersecretpassword"></div>
+                <div><input type="checkbox" name="termsandprivacy" id="termsandprivacy" style="width: auto; height: fit-content;">
+                <label for="termsandprivacy">I agree to Scotch's 
+                    <a href="#">terms</a>
+                    and 
+                    <a href="#">privacy</a></label>
+                </div>
+                <button class="form-btn">SIGN UP</button>
+                <div class="modal-pull-right">
+                    <button onclick="document.getElementById('signup-modal').style.display='none';document.getElementById('login-modal').style.display='block'">Got an Account? Login</button>
+                </div>
+               </div>
+           </div>
         </div>
         <div class="announcement">
             <div><p>Free Webinar:<strong>Should I use React or Vue?</strong></p></div>
