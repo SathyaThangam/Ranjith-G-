@@ -1,5 +1,4 @@
 import React , {Component} from 'react';
-import ButtonComponent from '../components/ButtonComponent.js';
 import '../css/HeaderComponent.css';
 
 class HeaderComponent extends Component{

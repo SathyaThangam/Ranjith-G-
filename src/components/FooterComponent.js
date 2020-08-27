@@ -5,8 +5,8 @@ class FooterComponent extends Component{
         render(){
             return(
                 <div className="footer">
-                    <div class="footer-content">
-                    <span>Made with 💖 by Ranjith G</span>
+                    <div className="footer-content">
+                    <span>Made with <span role="img" aria-label="heart">💖</span> by Ranjith G</span>
                     </div>
                 </div>
             )

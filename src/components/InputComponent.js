@@ -3,14 +3,14 @@ import '../css/InputComponent.css';
 
 
 class InputComponent extends Component {
-    constructor() {
-        super();
-    }
+    // constructor() {
+    //     super();
+    // }
 
     render(){
         return(
             <div >
-                <input  className="form-input" type={this.props.type} name={this.props.name} placeholder ={this.props.placeholder}/>
+                <input  className={`form-input ${this.props.className}`} type={this.props.type} name={this.props.name} placeholder ={this.props.placeholder} onChange= {event => this.props.onChange(event)}/>
             </div>
         )
     }

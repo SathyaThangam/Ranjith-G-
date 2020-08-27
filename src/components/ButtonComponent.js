@@ -2,9 +2,9 @@ import React,{Component} from 'react';
 
 
 class ButtonComponent extends Component {
-    constructor() {
-        super();
-    }
+    // constructor() {
+    //     super();
+    // }
 
     render(){
         return(
