@@ -1,11 +1,15 @@
 import React,{Component} from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from "prop-types";
+import { withRouter } from 'react-router';
 import axios from 'axios';
 import '../css/LoginComponent.css';
 import InputComponent from '../components/InputComponent.js';
 import ButtonComponent from '../components/ButtonComponent.js';
 
 class LoginComponent extends Component{
+
+
 
     constructor(props){
         super(props);
@@ -17,6 +21,11 @@ class LoginComponent extends Component{
        };
     }
 
+    static propTypes = {
+    match: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired
+    };
     validateEmail = (value) => {
         // console.log(value);
         const re = /^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/;
@@ -36,20 +45,27 @@ class LoginComponent extends Component{
         this.setState({password:password});
     }
 
+
+
     validateLogin = () => {
         if (this.state.email !== "" && this.state.password !== ""){
-            const userData = {
-                name:this.state.email,
-                password:this.state.password
-            }
-            axios
-                .post('http://localhost:8000/login',userData)
-                .then((response) => {
-                    console.log(response.data);
-                })
-                .catch(function (error) {
+            if(this.state.isEmailValid && this.state.isPasswordValid){
+
+                const userData = {
+                    name:this.state.email,
+                    password:this.state.password
+                }
+                const { match, location, history } = this.props;
+                axios
+                    .post('http://localhost:8000/login',userData)
+                    .then((response) => {
+                        console.log(response.data);
+                        history.push('/home');
+                    })
+                    .catch(function (error) {
                     console.log(error);
                 });
+            }
         }
     }
 

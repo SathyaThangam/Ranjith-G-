@@ -3,8 +3,10 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const cors = require('cors');
-
 const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt');
+
+const connection = require('./DBconnect');
 
 app.use(express.json())
 
@@ -21,6 +23,31 @@ app.get('/home',authenticateToken,(req,res) => {
     res.json(users.filter(users => users.name === req.user.name));
 })
 
+app.post('/signup',(req,res) =>{
+    const username = req.body.email;
+    const pwd = req.body.password;
+    
+    const idgenerated = connection.uid({prefix:"IND"});
+    const db = connection.dbconnection;
+    const saltRounds = 10;
+
+    bcrypt.hash(pwd,saltRounds,function (err,hash) {
+        if(err) throw err;
+        console.log(hash);
+        console.log(pwd);
+        console.log(idgenerated);
+
+        db.query('INSERT INTO users (idusers,username,password) VALUES (?, ?, ?)', [idgenerated,username,hash],function (err,results,fields) {
+            if(err) throw err;
+
+            res.json({success:true});
+        })
+        // res.json({success:true});
+    });
+
+
+})
+
 app.post('/login',(req,res) => {
     //Authenticate user
 
@@ -28,13 +55,36 @@ app.post('/login',(req,res) => {
     const pwd = req.body.password;
     const user  = {"name": username,"password":pwd,"success":true};
 
-    const accessToken = generateAccessToken(user);
+    const db = connection.dbconnection;
+
+    db.query("SELECT password from users where username = ?",[username],function(err,results,fields){
+        
+        if(err) throw err;
+
+        if(results.length === 0) {
+            
+        }
+        
+        dbpassword = results[0].password.toString();
+        bcrypt.compare(pwd, dbpassword).then(function(result) {
+            if(result){
+                res.json({success:true});
+            }
+            else{
+                console.log(pwd);
+            }
+        });
+    })
+
+        
+    
+
+    // const accessToken = generateAccessToken(user);
     // const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
-    console.log("accessToken "+accessToken);
-    console.log("data from front end "+JSON.stringify(user));
-    const response = {accesstoken:accessToken};
-    console.log(response);
-    res.json(response);
+    // console.log("accessToken "+accessToken);
+    // const response = {accesstoken:accessToken}; 
+    // console.log(response);
+    // res.json(response);
 })
 
 function generateAccessToken(user){
@@ -61,3 +111,4 @@ function authenticateToken(req,res,next){
 app.listen(8000,function () {
     console.log("Server is running");
 })
+
