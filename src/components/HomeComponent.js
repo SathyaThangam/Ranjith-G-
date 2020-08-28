@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
+import CardComponent from './CardComponent.js';
 
 class HomeComponent extends Component {
 
     render(){
         return(
             <div>
-                <h1>Home</h1>
+            <CardComponent />
             </div>
         )
     }

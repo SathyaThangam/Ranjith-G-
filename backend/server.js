@@ -62,18 +62,20 @@ app.post('/login',(req,res) => {
         if(err) throw err;
 
         if(results.length === 0) {
-            
+            //throw error
         }
         
+        else{
         dbpassword = results[0].password.toString();
-        bcrypt.compare(pwd, dbpassword).then(function(result) {
-            if(result){
-                res.json({success:true});
-            }
-            else{
-                console.log(pwd);
-            }
-        });
+            bcrypt.compare(pwd, dbpassword).then(function(result) {
+                if(result){
+                    res.json({success:true});
+                }
+                else{
+                    console.log(pwd);
+                }
+            });
+        }
     })
 
         

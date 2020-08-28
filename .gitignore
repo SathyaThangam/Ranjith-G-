@@ -9,6 +9,7 @@
 /backend/node_modules
 test_api.rest
 # testing
+temp.txt
 /coverage
 
 # production
