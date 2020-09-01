@@ -1,0 +1,15 @@
+
+
+.gallery{
+    min-height: 100vh;
+    width: 1000px;
+    padding:20px;
+    /* background-color: #000; */
+}
+
+
+
+.slick-prev:before,
+.slick-next:before {
+  color: gray!important;
+}

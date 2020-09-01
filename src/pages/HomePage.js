@@ -6,7 +6,10 @@ import '../components/NavBarComponent';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+
 import NavBarComponent from '../components/NavBarComponent';
+import SliderComponent from '../components/SliderComponent';
+import SidebarBlockComponent from '../components/SidebarBlockComponent';
 
 
 class HomePage extends Component {
@@ -15,7 +18,7 @@ class HomePage extends Component {
      
     render(){
 
-        const data = [{
+        const data_row_1 = [{
             "id": 15299,
             "url": "http://www.tvmaze.com/shows/15299/the-boys",
             "name": "The Boys",
@@ -391,19 +394,19 @@ class HomePage extends Component {
             }
           }]
 
-        const settings = {
-            dots:true,
-            infinite:true,
+        const settings_row = {
+            dots:false,
+            infinite:false,
             speed:500,
             arrows:true,
             slidesToShow: 3,
-            slidesToScroll: 1,
+            slidesToScroll: 3,
             responsive: [
                 {
                   breakpoint: 1024,
                   settings: {
                     slidesToShow: 3,
-                    slidesToScroll: 3,
+                    slidesToScroll: 1,
                     infinite: true,
                     dots: true
                   }
@@ -426,18 +429,50 @@ class HomePage extends Component {
               ]
         };
 
+        const settings_banner = {
+          infinite:true,
+          speed:500,
+          autoplay:true,
+          autoplayspeed:1500,
+          slidesToShow:1.7,
+          slidesToScroll:1,
+          centerMode:true,
+          variableWidth: false,
+        }
+
+        const data_banner = ["ff6464","ff8264","ffaa64","fff5a5"]
 
         return(
-            <>
+            <div className="home-content">
             <NavBarComponent />
-            <div className="gallery">
-            <Slider className="slider-back" {...settings}>
-                {data.map((item) => {
-                 return   <CardComponent showName={item.name} showLang = {item.language} showDate = {item.premiered} showImg={item.image.medium}/>
-                })}
+            <Slider className='banner-container' {...settings_banner}>
+              {
+                data_banner.map((item) => {
+                  return(
+                    <div className="banner-img-container">
+                      <img src={`https://via.placeholder.com/768x300/${item}`} alt="upcoming shows"/>
+                    </div>
+                  )
+                })
+              }
             </Slider>
+              <div className="main-content">
+                <div className="main-content-left">
+                  <h3 className="heading">Trending Searches</h3>
+                  <SidebarBlockComponent className="side-block" heading="Tenet" subHeading="Movies" />
+                  <SidebarBlockComponent className="side-block" heading="Tenet" subHeading="Movies" />
+                  <SidebarBlockComponent className="side-block" heading="Tenet" subHeading="Movies" />
+                  <SidebarBlockComponent className="side-block" heading="Tenet" subHeading="Movies" />
+                  <SidebarBlockComponent className="side-block" heading="Tenet" subHeading="Movies" />
+                  <SidebarBlockComponent className="side-block" heading="Tenet" subHeading="Movies" />
+                </div>
+                <div className="main-content-right">
+                  <h1>Discover</h1>
+                  <SliderComponent data={data_row_1} settings={settings_row}/>
+                  <SliderComponent data={data_row_1} settings={settings_row}/>
+                </div>
+              </div> 
             </div>
-            </>
         )
     }
 
