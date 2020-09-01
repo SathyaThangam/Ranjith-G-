@@ -1,30 +1,31 @@
 import React,{Component} from 'react';
 import '../css/CardComponent.css';
-import card_image from '../img/card_image.jpg';
 
 class CardComponent extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     render(){
 
+        const{showName,showLang,showDate,showImg} = this.props;
+        const date = new Date(showDate);
+        var months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
         return(
+            <>
             <div className="card-container">
-                <img src={card_image} alt="image" />
+                <img src={showImg} alt="show" />
                 <div className="card-content">
                     <div className="date-container">
-                        <span>25</span>
-                        <p>SEP</p>
+                        <span>{date.getDate()}</span>
+                        <p>{months[date.getMonth()]}</p>
                     </div>
                     <div className="detail-container">
-                        <h4>The BOYS</h4>
+                        <h4>{showName}</h4>
                         <div>Amazon prime</div>
-                        <div>Series | English</div>
+                        <div>Series | {showLang}</div>
                         <div>Rs. 199 onwards</div>
                     </div>
                 </div>
             </div>
+            </>
         )
     }
 

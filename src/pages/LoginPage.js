@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import PropTypes from "prop-types";
 import { withRouter } from 'react-router';
 import axios from 'axios';
-import '../css/LoginComponent.css';
+import '../css/LoginPage.css';
 import InputComponent from '../components/InputComponent.js';
 import ButtonComponent from '../components/ButtonComponent.js';
 
-class LoginComponent extends Component{
+class LoginPage extends Component{
 
 
 
@@ -98,4 +98,4 @@ class LoginComponent extends Component{
 
 
 
-export default LoginComponent;
+export default LoginPage;

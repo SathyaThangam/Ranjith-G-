@@ -1,9 +1,9 @@
 import React from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import './App.css';
-import LoginComponent from './pages/LoginComponent.js';
-import SignUpComponent from './pages/SignUpComponent.js';
-import HomeComponent from './components/HomeComponent.js';
+import LoginPage from './pages/LoginPage.js';
+import SignUpPage from './pages/SignUpPage.js';
+import HomePage from './pages/HomePage';
 import HeaderComponent from './components/HeaderComponent.js';
 import FooterComponent from './components/FooterComponent.js';
 
@@ -14,10 +14,10 @@ function App() {
             <HeaderComponent />
             <div>
             <Switch>
-                <Route path='/' exact component={LoginComponent}/>
-                <Route path='/signup' component={SignUpComponent}/>
-                <Route path='/login' component={LoginComponent}/>
-                <Route path='/home' component={HomeComponent} />
+                <Route path='/' exact component={HomePage}/>
+                <Route path='/signup' component={SignUpPage}/>
+                <Route path='/login' component={LoginPage}/>
+                <Route path='/home' component={HomePage} />
             </Switch>
             </div>
             <FooterComponent />

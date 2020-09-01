@@ -2,12 +2,12 @@ import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from "prop-types";
 import { withRouter } from 'react-router';
-import '../css/LoginComponent.css';
+import '../css/LoginPage.css';
 import InputComponent from '../components/InputComponent.js';
 import ButtonComponent from '../components/ButtonComponent.js';
 import axios from 'axios';
 
-class SignUpComponent extends Component{
+class SignUpPage extends Component{
 
     constructor(props){
         super(props);
@@ -101,4 +101,4 @@ class SignUpComponent extends Component{
     }
 }
 
-export default SignUpComponent;
+export default SignUpPage;
