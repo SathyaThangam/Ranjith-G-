@@ -8,14 +8,15 @@ import CardComponent from '../components/CardComponent';
 
 export default function SliderComponent(props) {
     
-    const {data,settings} = props;
+    const {data,settings,heading} = props;
     
 
     return (
         <div className="gallery">
+            <h2 className="heading">{heading}</h2>
             <Slider {...settings}>
                 {data.map((item) => {
-                 return   <CardComponent showName={item.name} showLang = {item.language} showDate = {item.premiered} showImg={item.image.medium}/>
+                 return <CardComponent key={item.id} showName={item.name} showLang = {item.language} showDate = {item.premiered} showImg={item.image.medium}/>
                 })}
             </Slider>
         </div>

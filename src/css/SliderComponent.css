@@ -1,10 +1,14 @@
 
 
 .gallery{
-    min-height: 100vh;
     width: 1000px;
-    padding:20px;
+    margin-bottom: 30px;
     /* background-color: #000; */
+}
+
+.gallery .heading{
+  margin-left: 3px;
+  font-size: 18px;
 }
 
 

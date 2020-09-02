@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
-import CardComponent from '../components/CardComponent';
 import '../css/HomePage.css';
-import '../components/NavBarComponent';
 
+// slick imports
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -449,7 +448,7 @@ class HomePage extends Component {
               {
                 data_banner.map((item) => {
                   return(
-                    <div className="banner-img-container">
+                    <div key={item} className="banner-img-container">
                       <img src={`https://via.placeholder.com/768x300/${item}`} alt="upcoming shows"/>
                     </div>
                   )
@@ -459,17 +458,18 @@ class HomePage extends Component {
               <div className="main-content">
                 <div className="main-content-left">
                   <h3 className="heading">Trending Searches</h3>
-                  <SidebarBlockComponent className="side-block" heading="Tenet" subHeading="Movies" />
-                  <SidebarBlockComponent className="side-block" heading="Tenet" subHeading="Movies" />
-                  <SidebarBlockComponent className="side-block" heading="Tenet" subHeading="Movies" />
-                  <SidebarBlockComponent className="side-block" heading="Tenet" subHeading="Movies" />
-                  <SidebarBlockComponent className="side-block" heading="Tenet" subHeading="Movies" />
-                  <SidebarBlockComponent className="side-block" heading="Tenet" subHeading="Movies" />
+                  <SidebarBlockComponent  heading="Tenet" subHeading="Movies" />
+                  <SidebarBlockComponent  heading="Tenet" subHeading="Movies" />
+                  <SidebarBlockComponent  heading="Tenet" subHeading="Movies" />
+                  <SidebarBlockComponent  heading="Tenet" subHeading="Movies" />
+                  <SidebarBlockComponent  heading="Tenet" subHeading="Movies" />
+                  <SidebarBlockComponent  heading="Tenet" subHeading="Movies" />
+                  <SidebarBlockComponent  heading="Tenet" subHeading="Movies" />
+                  <SidebarBlockComponent  heading="Tenet" subHeading="Movies" />
                 </div>
                 <div className="main-content-right">
-                  <h1>Discover</h1>
-                  <SliderComponent data={data_row_1} settings={settings_row}/>
-                  <SliderComponent data={data_row_1} settings={settings_row}/>
+                  <SliderComponent heading="Events" data={data_row_1} settings={settings_row}/>
+                  <SliderComponent heading="Plays" data={data_row_1} settings={settings_row}/>
                 </div>
               </div> 
             </div>

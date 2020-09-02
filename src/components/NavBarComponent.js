@@ -7,23 +7,23 @@ export class NavBarComponent extends Component {
             <div className="navbar">
                 <div className="navbar-content">
                     <div className="navbar-left">
-                        <a href="#">Movies</a>
-                        <a href="#">Events</a>
-                        <a href="#">Plays</a>
-                        <a href="#">Sports</a>
-                        <a href="#">Activities</a>
-                        <a href="#">Monuments</a>
-                        <a href="#">Fanhood</a>
-                        <a href="#">Buzz</a>
+                        <a href="/home">Movies</a>
+                        <a href="/home">Events</a>
+                        <a href="/home">Plays</a>
+                        <a href="/home">Sports</a>
+                        <a href="/home">Activities</a>
+                        <a href="/home">Monuments</a>
+                        <a href="/home">Fanhood</a>
+                        <a href="/home">Buzz</a>
                     </div>
                     <div className="navbar-right">
-                    <a href="#">
+                    <a href="/home">
                         ListYourShow
                         <span className="new-nav-item">NEW</span>
                     </a>
-                    <a href="#">Corporates</a>
-                    <a href="#">Offers</a>
-                    <a href="#">Gift Cards</a>
+                    <a href="/home">Corporates</a>
+                    <a href="/home">Offers</a>
+                    <a href="/home">Gift Cards</a>
                 </div>
                 </div>
             </div>

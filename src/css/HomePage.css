@@ -22,6 +22,7 @@
 
 .banner-img-container{
   margin: 0;
+  max-width: 770px; 
 }
 
 .main-content{
@@ -46,9 +47,7 @@
   right: 10px;
 }
 
-.side-block h4:hover{
-  color:#187EFF;
-}
+
 
 
 

@@ -7,6 +7,7 @@ import '../css/LoginPage.css';
 import InputComponent from '../components/InputComponent.js';
 import ButtonComponent from '../components/ButtonComponent.js';
 
+
 class LoginPage extends Component{
 
 
@@ -98,4 +99,4 @@ class LoginPage extends Component{
 
 
 
-export default LoginPage;
+export default withRouter(LoginPage);
