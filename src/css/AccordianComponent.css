@@ -1,0 +1,44 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.accordian-container{
+    max-width: 800px;
+    margin: 0 auto;
+    border-bottom: 1px solid #DDDDDD;
+    padding: 16px 0px;
+}
+
+.accordian-title{
+    text-align: left;
+    padding: 0px 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.accordian-title h2{
+    font-size: 16px;
+    font-weight: 400;
+    color: #222222;
+}
+
+.accordian-title svg{
+    right: 0;
+}
+
+
+.accordian-content{
+    display: block;
+    text-align: left;
+    padding: 16px 0px;
+    margin: 14px 0px;
+}
+
+
+.accordian-content p{
+    padding: 0px 20px;
+}

@@ -5,18 +5,25 @@
 }
 
 .content-container{
-    background-color: white;
     max-width: 1152px;
     margin: 0 auto;
 }
 
 .banner-container{
+    background-color: white;
     color:black;
 }
 
 .image{
     background-image: url(https://via.placeholder.com/1152x450/0066CC);
     width: 1152px;
+    height: 450px;
+    /* filter: blur(8px);
+    -webkit-filter: blur(8px); */
+}
+
+.image img{
+    /* width: 1152px; */
     height: 450px;
 }
 
@@ -39,4 +46,31 @@
 
 .image-details .sub-heading{
     font-size: 16px;
+}
+
+.page-details{
+    padding: 24px 0px;
+    display: flex;
+}
+
+
+.page-details-right{
+    text-align: left;
+    background-color: white;
+    padding: 20px;
+}
+
+.page-info{
+    background-color:#FFF9E3;
+    padding: 16px;
+    margin: 0px 0px 16px;
+
+}
+
+.show-description p{
+    padding: 5px 0px;
+}
+
+.display-accord{
+    margin-top: 100px;
 }

@@ -1,15 +1,16 @@
 import React,{Component} from 'react';
+import { Link } from 'react-router-dom';
 import '../css/CardComponent.css';
 
 class CardComponent extends Component {
 
     render(){
 
-        const{showName,showLang,showDate,showImg} = this.props;
+        const{showName,showLang,showDate,showImg,id} = this.props;
         const date = new Date(showDate);
         var months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
         return(
-            <>
+            <Link style={{textDecoration:"none",color:"inherit"}} to={`/details/${id}`}>
             <div className="card-container">
                 <img src={showImg} alt="show" />
                 <div className="card-content">
@@ -25,7 +26,7 @@ class CardComponent extends Component {
                     </div>
                 </div>
             </div>
-            </>
+            </Link>
         )
     }
 

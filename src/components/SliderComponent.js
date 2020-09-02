@@ -16,7 +16,7 @@ export default function SliderComponent(props) {
             <h2 className="heading">{heading}</h2>
             <Slider {...settings}>
                 {data.map((item) => {
-                 return <CardComponent key={item.id} showName={item.name} showLang = {item.language} showDate = {item.premiered} showImg={item.image.medium}/>
+                 return <CardComponent key={item.id} id={item.id} showName={item.name} showLang = {item.language} showDate = {item.premiered} showImg={item.image.medium}/>
                 })}
             </Slider>
         </div>
