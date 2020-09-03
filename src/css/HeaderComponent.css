@@ -5,6 +5,21 @@
     height: 60px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding: 5px;
+    justify-content: space-between;
+    padding: 5px 20px;
+}
+
+.header button{
+    padding: 5px 20px;
+    background-color: #000000;
+    color: #FFCC00;
+    font-size: 1em;
+    font-weight: 500;
+    border-radius: 5px;
+
+}
+
+.header button:hover{
+    background-color: white;
+    color: #000000;
 }

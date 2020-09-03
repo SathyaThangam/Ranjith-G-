@@ -23,8 +23,6 @@ class LoginPage extends Component{
     }
 
     static propTypes = {
-    match: PropTypes.object.isRequired,
-    location: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired
     };
     validateEmail = (value) => {
@@ -56,7 +54,8 @@ class LoginPage extends Component{
                     name:this.state.email,
                     password:this.state.password
                 }
-                const { match, location, history } = this.props;
+                // const { match, location, history } = this.props;
+                const { history } = this.props;
                 axios
                     .post('http://localhost:8000/login',userData)
                     .then((response) => {
@@ -70,29 +69,79 @@ class LoginPage extends Component{
         }
     }
 
+    // validateFBLogin = () => {
+    //     window.FB.getLoginStatus((res) => {
+    //         console.log(res);
+    //     })
+    // }
+  
+    
     render(){
-
-        return(
-            <div className="bg-container">
+        // console.log(window);
+        if (this.props.googleSignIn === null) {
+          return <h1>Loading</h1>;
+        }
+        else{
+            window.gapi.load("signin2", () => {
+              window.gapi.signin2.render("login-google-button");
+            });
+            return (
+              <div className="bg-container">
                 <div className="center-container">
-                    <div className="form-container">
-                        <div className="title">
-                            <h1>PLEASE SIGN IN</h1>
-                        </div>
-                        <div>
-                            <InputComponent name="loginEmail" type="email" placeholder="Email Address"
-                            className={ this.state.isEmailValid ? 'valid-input' : 'invalid-input' }
-                            onChange={event => this.validateEmail(event.target.value)}/>
-                            <InputComponent name="loginPassword" type="password" placeholder = "Password" className={this.state.isPasswordValid ? 'valid-input' : 'invalid-input' } onChange={event => this.validatePassword(event.target.value)} />
-                        </div>
-                        <ButtonComponent className="form-button" innerHTML="NEXT" onClick = {this.validateLogin} />
-                        <Link to='/signup'>
-                            <ButtonComponent className="secondary-button" innerHTML="Need an Account?"/>
-                        </Link>
+                  <div className="form-container">
+                    <div className="title">
+                      <h1>PLEASE SIGN IN</h1>
                     </div>
+                    <div>
+                      <InputComponent
+                        name="loginEmail"
+                        type="email"
+                        placeholder="Email Address"
+                        className={
+                          this.state.isEmailValid
+                            ? "valid-input"
+                            : "invalid-input"
+                        }
+                        onChange={(event) =>
+                          this.validateEmail(event.target.value)
+                        }
+                      />
+                      <InputComponent
+                        name="loginPassword"
+                        type="password"
+                        placeholder="Password"
+                        className={
+                          this.state.isPasswordValid
+                            ? "valid-input"
+                            : "invalid-input"
+                        }
+                        onChange={(event) =>
+                          this.validatePassword(event.target.value)
+                        }
+                      />
+                    </div>
+                    <ButtonComponent
+                      className="form-button"
+                      innerHTML="NEXT"
+                      onClick={this.validateLogin}
+                    />
+                    <div id="login-google-button"></div>
+                    <ButtonComponent
+                      className="form-button"
+                      innerHTML="Connect with Facebook"
+                      onClick={this.validateFBLogin}
+                    />
+                    <Link to="/signup">
+                      <ButtonComponent
+                        className="secondary-button"
+                        innerHTML="Need an Account?"
+                      />
+                    </Link>
+                  </div>
                 </div>
-            </div>
-        )
+              </div>
+            );
+        }
     }
 
 }

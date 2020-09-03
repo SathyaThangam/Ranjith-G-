@@ -20,8 +20,6 @@ class SignUpPage extends Component{
        };
     }
     static propTypes = {
-    match: PropTypes.object.isRequired,
-    location: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired
     };
 
@@ -62,7 +60,7 @@ class SignUpPage extends Component{
                     password:this.state.password
                 }
 
-                const { match, location, history } = this.props;
+                const { history } = this.props;
                 axios
                     .post('http://localhost:8000/signup',userData)
                     .then((response) => {
@@ -77,28 +75,83 @@ class SignUpPage extends Component{
     }
 
 
+
     render(){
-        return(
+        // console.log(window);
+        if(this.props.googleSignin === null){
+            return <h1>Loading</h1>;
+        }
+        
+        else{
+            window.gapi.load("signin2", () => {
+              window.gapi.signin2.render("login-google-button");
+            });
+          return (
             <div className="bg-container">
-                <div className="center-container">
-                    <div className="form-container">
-                        <div className="title">
-                            <h1>Welcome!</h1>
-                        </div>
-                        <div>
-                            <InputComponent name="signupEmail" type="email" placeholder="Email Address" className={ this.state.isEmailValid ? 'valid-input' : 'invalid-input' } onChange={event => this.validateEmail(event.target.value)} />
-                            <InputComponent name="signupPassword" type="password" placeholder = "Password" className={this.state.isPasswordValid ? 'valid-input' : 'invalid-input' } onChange={event => this.validatePassword(event.target.value)} />
-                            <InputComponent name="signupConfirmPassword" type="password" placeholder = "Confirm password" className={this.state.isCPasswordValid ? 'valid-input' : 'invalid-input' } onChange={event => this.validateConfirmPassword(event.target.value)}  />
-                        </div>
-                        <ButtonComponent className="form-button" innerHTML="NEXT" onClick = {this.validateSignup} />
-                        <Link to='/login'>
-                            <ButtonComponent className="secondary-button" innerHTML="Already have an Account?"/>
-                        </Link>
-                    </div>
+              <div className="center-container">
+                <div className="form-container">
+                  <div className="title">
+                    <h1>Welcome!</h1>
+                  </div>
+                  <div>
+                    <InputComponent
+                      name="signupEmail"
+                      type="email"
+                      placeholder="Email Address"
+                      className={
+                        this.state.isEmailValid
+                          ? "valid-input"
+                          : "invalid-input"
+                      }
+                      onChange={(event) =>
+                        this.validateEmail(event.target.value)
+                      }
+                    />
+                    <InputComponent
+                      name="signupPassword"
+                      type="password"
+                      placeholder="Password"
+                      className={
+                        this.state.isPasswordValid
+                          ? "valid-input"
+                          : "invalid-input"
+                      }
+                      onChange={(event) =>
+                        this.validatePassword(event.target.value)
+                      }
+                    />
+                    <InputComponent
+                      name="signupConfirmPassword"
+                      type="password"
+                      placeholder="Confirm password"
+                      className={
+                        this.state.isCPasswordValid
+                          ? "valid-input"
+                          : "invalid-input"
+                      }
+                      onChange={(event) =>
+                        this.validateConfirmPassword(event.target.value)
+                      }
+                    />
+                  </div>
+                  <ButtonComponent
+                    className="form-button"
+                    innerHTML="NEXT"
+                    onClick={this.validateSignup}
+                  />
+                  <Link to="/login">
+                    <ButtonComponent
+                      className="secondary-button"
+                      innerHTML="Already have an Account?"
+                    />
+                  </Link>
+                    <div id="login-google-button"></div>
                 </div>
+              </div>
             </div>
-        )
+          );
+        }
     }
 }
 
-export default SignUpPage;
+export default withRouter(SignUpPage);

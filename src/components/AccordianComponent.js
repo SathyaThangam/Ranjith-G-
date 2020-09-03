@@ -10,6 +10,8 @@ class AccordianComponent extends Component {
         }
     }
 
+
+    // toggle the state of accordian
     clickHandler = () => {
         const toggle = this.state.toggle;
         if(toggle)

@@ -9,6 +9,7 @@ export default function ShowDetailsPage(props) {
 
     // filtering to get the particular show by id
     const item = showData.filter((item)=>{
+        // eslint-disable-next-line
         return item.id == props.match.params.id;
     })[0];
     console.log(item);

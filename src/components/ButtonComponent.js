@@ -1,16 +1,12 @@
-import React,{Component} from 'react';
+import React from 'react';
 
 
-class ButtonComponent extends Component {
-    // constructor() {
-    //     super();
-    // }
 
-    render(){
+// Button Component with customizable properties
+function ButtonComponent(props){
         return(
-            <button className={this.props.className} type={this.props.type} onClick={this.props.onClick}>{this.props.innerHTML}</button>
+            <button className={props.className} type={props.type} onClick={props.onClick}>{props.innerHTML}</button>
         )
-    }
 }
 
 export default ButtonComponent;
