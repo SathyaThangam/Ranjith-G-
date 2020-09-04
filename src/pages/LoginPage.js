@@ -52,16 +52,18 @@ class LoginPage extends Component {
         };
         // const { match, location, history } = this.props;
         const { history } = this.props;
-        axios
-          .post("http://localhost:8000/login", userData)
-          .then((response) => {
-            console.log(response.data);
-            this.props.handleLocalsignin(true);
-            history.push("/home");
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+        // axios
+        //   .post("http://localhost:8000/login", userData)
+        //   .then((response) => {
+        //     console.log(response.data);
+        //     this.props.handleLocalsignin(true);
+        //     history.push("/home");
+        //   })
+        //   .catch(function (error) {
+        //     console.log(error);
+        //   });
+        this.props.handleLocalsignin(true);
+        history.push("/home");
       }
     }
   };
