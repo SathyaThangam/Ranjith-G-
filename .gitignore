@@ -12,6 +12,7 @@ test_api.rest
 temp.txt
 /coverage
 
+.env
 # production
 /build
 

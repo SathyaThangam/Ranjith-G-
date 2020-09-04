@@ -12,10 +12,11 @@ class App extends Component {
     super(props);
     this.state = {
       isHomepage: false,
-	  isGoogleSignIn: null,
-	  isFBSignin:null
+      isGoogleSignIn: null,
+      isFBSignin: null,
     };
   }
+
 
   initializeGoogleSignIn() {
     window.gapi.load("auth2", () => {
@@ -34,6 +35,9 @@ class App extends Component {
           });
         });
     });
+    // window.gapi.load("signin2", () => {
+    //   window.gapi.signin2.render("login-google-button");
+    // });
   }
 
   loadFbLoginApi() {
@@ -47,8 +51,9 @@ class App extends Component {
       });
     };
 
-	console.log("Loading fb api");
+    console.log("Loading fb api");
     // Load the SDK asynchronously
+
     (function (d, s, id) {
       var js,
         fjs = d.getElementsByTagName(s)[0];
@@ -57,7 +62,11 @@ class App extends Component {
       js.id = id;
       js.src = "//connect.facebook.net/en_US/sdk.js";
       fjs.parentNode.insertBefore(js, fjs);
-    })(document, "script", "facebook-jssdk")
+    })(document, "script", "facebook-jssdk");
+  }
+
+  handleFBsignin = (status) =>{
+    this.setState({isFBSignin:status});
   }
 
   componentDidMount() {
@@ -66,30 +75,38 @@ class App extends Component {
     // script.async = true;
     // script.defer = true;
     script.onload = () => this.initializeGoogleSignIn();
-	document.body.appendChild(script);
-	
-	//loading FB Api
-	this.loadFbLoginApi();
-	
+    document.body.appendChild(script);
+    //loading FB Api
+    console.log(window);
+    this.loadFbLoginApi();
   }
 
   ifSignedIn(Component) {
-    return this.state.isGoogleSignIn ? (
-      <HomePage />
+    // var signedIn = true;
+    return this.state.isGoogleSignIn || this.state.isFBSignin ? (
+      <HomePage
+        googleSignIn={this.state.isGoogleSignIn}
+        fbSignin={this.state.isFBSignin}
+        handleFBsignin={this.handleFBsignin}
+      />
     ) : (
-      <Component googleSignIn={this.state.isGoogleSignIn} />
+      <Component
+        googleSignIn={this.state.isGoogleSignIn}
+        fbSignin={this.state.isFBSignin}
+        handleFBsignin={this.handleFBsignin}
+      />
     );
+    
   }
 
   render() {
-	
     return (
       <Router>
         <div className="App">
-          <HeaderComponent />
+          <HeaderComponent/>
           <div>
             <Switch>
-              <Route path="/" exact component={LoginPage} />
+              <Route path="/" exact render={() => this.ifSignedIn(LoginPage)} />
               <Route
                 path="/signup"
                 render={() => this.ifSignedIn(SignUpPage)}

@@ -24,6 +24,7 @@ class AccordianComponent extends Component {
     render() {
 
         var message;
+        //adding the div whenever the it is toggled
         if(this.state.toggle){
             message= <div className="accordian-content">
                     <p>

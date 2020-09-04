@@ -3,10 +3,6 @@ import '../css/InputComponent.css';
 
 
 class InputComponent extends Component {
-    // constructor() {
-    //     super();
-    // }
-
     render(){
         return(
             <div >
