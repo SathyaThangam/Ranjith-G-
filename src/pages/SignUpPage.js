@@ -16,6 +16,7 @@ class SignUpPage extends Component {
       email: "",
       password: "",
       isCPasswordValid: "",
+      googleButton: true,
     };
   }
 
@@ -98,14 +99,18 @@ class SignUpPage extends Component {
     console.log(login);
   };
 
-  componentDidMount(){
-     window.gapi.load("signin2", () => {
-       window.gapi.signin2.render("login-google-button");
-     });
-  }
+  updateGoogleButton = () => {
+    console.log("button update");
+    this.setState({ googleButton: false });
+  };
 
   render() {
     // console.log(window);
+    if (
+      this.props.location.hasOwnProperty("googleButton") &&
+      this.state.googleButton
+    )
+      this.updateGoogleButton();
     console.log("signup render");
     if (this.props.googleSignIn === null) {
       return <h1>Loading</h1>;
@@ -171,7 +176,12 @@ class SignUpPage extends Component {
                 }
               />
               <div id="login-google-button"></div>
-              <Link to="/login">
+              <Link
+                to={{
+                  pathname: "/login",
+                  googleButton: "login",
+                }}
+              >
                 <ButtonComponent
                   className="secondary-button"
                   innerHTML="Already have an Account?"

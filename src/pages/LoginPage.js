@@ -17,6 +17,7 @@ class LoginPage extends Component {
       email: "",
       password: "",
       facebookSignedIn: null,
+      googleButton:true
     };
   }
 
@@ -55,6 +56,7 @@ class LoginPage extends Component {
           .post("http://localhost:8000/login", userData)
           .then((response) => {
             console.log(response.data);
+            this.props.handleLocalsignin(true);
             history.push("/home");
           })
           .catch(function (error) {
@@ -64,17 +66,17 @@ class LoginPage extends Component {
     }
   };
 
-  validateFBLogin = () => {
-    window.FB.getLoginStatus((res) => {
-      console.log(res);
-    });
-  };
+  updateGoogleButton = () =>{
+    console.log("button update");
+    this.setState({ googleButton: false });
+  }
 
+  // facebook login
   FBLogin = (response) => {
-    let login = null;
+    
     if (response.status === "connected") {
       console.log(response);
-      // this.history.push('/home');
+      //sets FB signin in App.js
       this.props.handleFBsignin(true);
       window.FB.api(
         "/me",
@@ -83,23 +85,18 @@ class LoginPage extends Component {
         },
         { locale: "en_US", fields: "name, email" }
       );
-      // console.log(window.FB.api);
-      login = true;
-      // this.logData(response);
       const { history } = this.props;
       history.push("/home");
     }
-    // window.FB.login(this.FBLogin, {scope: 'email',return_scopes: true})
-    console.log(login);
   };
 
   render() {
     // console.log(window);
+    if (this.props.location.hasOwnProperty("googleButton") && this.state.googleButton) this.updateGoogleButton();
     console.log("login render");
     if (this.props.googleSignIn === null) {
       return <h1>Loading</h1>;
     } else {
-      // console.log(this.props);
       window.gapi.load("signin2", () => {
         window.gapi.signin2.render("login-google-button");
       });
@@ -149,7 +146,13 @@ class LoginPage extends Component {
                   })
                 }
               />
-              <Link to="/signup">
+              <Link to={
+                {
+                  pathname: '/signup',
+                  googleButton: "signup"
+                }
+              }
+              >
                 <ButtonComponent
                   className="secondary-button"
                   innerHTML="Need an Account?"

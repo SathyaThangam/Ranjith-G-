@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
-import './App.css';
-import LoginPage from './pages/LoginPage.js';
-import SignUpPage from './pages/SignUpPage.js';
-import HomePage from './pages/HomePage';
-import HeaderComponent from './components/HeaderComponent.js';
-import ShowDetailsPage from './pages/ShowDetailsPage';
+import React, { Component } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import "./App.css";
+import LoginPage from "./pages/LoginPage.js";
+import SignUpPage from "./pages/SignUpPage.js";
+import HomePage from "./pages/HomePage";
+import HeaderComponent from "./components/HeaderComponent.js";
+import ShowDetailsPage from "./pages/ShowDetailsPage";
 
 class App extends Component {
   constructor(props) {
@@ -14,11 +14,13 @@ class App extends Component {
       isHomepage: false,
       isGoogleSignIn: null,
       isFBSignin: null,
+      isLocalsignin:null
     };
   }
 
-
+  //initialize google client
   initializeGoogleSignIn() {
+    //load google client
     window.gapi.load("auth2", () => {
       window.gapi.auth2
         .init({
@@ -28,18 +30,18 @@ class App extends Component {
         .then(() => {
           const authInstance = window.gapi.auth2.getAuthInstance();
           const isSignedIn = authInstance.isSignedIn.get();
+          //set whether user is signed in
           this.setState({ isGoogleSignIn: isSignedIn });
 
+          // listen to login status
           authInstance.isSignedIn.listen((isSignedIn) => {
             this.setState({ isGoogleSignIn: isSignedIn });
           });
         });
     });
-    // window.gapi.load("signin2", () => {
-    //   window.gapi.signin2.render("login-google-button");
-    // });
   }
 
+  //loading fb sdk
   loadFbLoginApi() {
     window.fbAsyncInit = function () {
       window.FB.init({
@@ -65,45 +67,51 @@ class App extends Component {
     })(document, "script", "facebook-jssdk");
   }
 
-  handleFBsignin = (status) =>{
-    this.setState({isFBSignin:status});
+  //handler for fb signin status
+  handleFBsignin = (status) => {
+    this.setState({ isFBSignin: status });
+  };
+
+  handleLocalsignin = (status) =>{
+    this.setState({isLocalsignin:status});
   }
 
   componentDidMount() {
     const script = document.createElement("script");
     script.src = "https://apis.google.com/js/platform.js";
-    // script.async = true;
-    // script.defer = true;
     script.onload = () => this.initializeGoogleSignIn();
     document.body.appendChild(script);
     //loading FB Api
-    console.log(window);
     this.loadFbLoginApi();
   }
 
+  //Protecting routes
   ifSignedIn(Component) {
     // var signedIn = true;
-    return this.state.isGoogleSignIn || this.state.isFBSignin ? (
+    return this.state.isGoogleSignIn || this.state.isFBSignin || this.state.isLocalsignin ? (
       <HomePage
-        googleSignIn={this.state.isGoogleSignIn}
-        fbSignin={this.state.isFBSignin}
-        handleFBsignin={this.handleFBsignin}
+        googleSignIn = {this.state.isGoogleSignIn}
+        fbSignin = {this.state.isFBSignin}
+        handleFBsignin = {this.handleFBsignin}
+        handleLocalsignin = {this.handleLocalsignin}
       />
     ) : (
       <Component
-        googleSignIn={this.state.isGoogleSignIn}
-        fbSignin={this.state.isFBSignin}
-        handleFBsignin={this.handleFBsignin}
+        googleSignIn = {this.state.isGoogleSignIn}
+        fbSignin = {this.state.isFBSignin}
+        localSignin = {this.state.isLocalsignin}
+        handleFBsignin = {this.handleFBsignin}
+        handleLocalsignin = {this.handleLocalsignin}
       />
     );
-    
   }
 
   render() {
+    console.log("App render");
     return (
       <Router>
         <div className="App">
-          <HeaderComponent/>
+          <HeaderComponent />
           <div>
             <Switch>
               <Route path="/" exact render={() => this.ifSignedIn(LoginPage)} />

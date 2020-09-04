@@ -7,10 +7,8 @@ class NavBarComponent extends Component {
     if (this.props.googleSignIn === true) {
       const authInstance = window.gapi.auth2.getAuthInstance();
       authInstance.signOut();
-      console.log("if navbar");
     } 
     else if(this.props.fbSignin === true) {
-      console.log("else ");
       window.FB.logout(function (response) {
         console.log("logged out");
         console.log(response);
@@ -18,6 +16,9 @@ class NavBarComponent extends Component {
       this.props.handleFBsignin(false);
     }
     // console.log(this.props.history);
+    else if(this.props.localSignin === true){
+      this.props.handleLocalsignin(false);
+    }
   };
 
   render() {

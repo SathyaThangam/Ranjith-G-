@@ -78,7 +78,9 @@ class HomePage extends Component {
           history={this.history}
           googleSignIn={this.props.googleSignIn}
           fbSignin={this.props.fbSignin}
+          localSignin={this.props.localSignin}
           handleFBsignin={this.props.handleFBsignin}
+          handleLocalsignin={this.props.handleLocalsignin}
         />
         <Slider className="banner-container" {...settings_banner}>
           {data_banner.map((item) => {
