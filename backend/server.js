@@ -6,23 +6,19 @@ const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const Razorpay = require("razorpay");
+const request = require("request");
 
 const connection = require("./DBconnect");
 
 //RAZORPAY
 const instance = new Razorpay({
   key_id: process.env.RAZORPAY_API_KEY,
-  key_secret: process.env.RAZORPAY_API_SECRET
+  key_secret: process.env.RAZORPAY_API_SECRET,
 });
 
 app.use(express.json());
 
-app.use(
-  cors({
-    origin: "http://localhost:3000",
-    credentials: true,
-  })
-);
+app.use(cors());
 
 app.get("/home", authenticateToken, (req, res) => {
   // console.log(req);
@@ -94,11 +90,11 @@ app.post("/login", (req, res) => {
   // res.json(response);
 });
 
-//razorpay 
+//razorpay
 app.get("/order", (req, res) => {
   try {
     const options = {
-      amount: 10 * 100, // amount == Rs 10
+      amount: 10 * 100, // amount  == Rs 10
       currency: "INR",
       receipt: "receipt#1",
       payment_capture: 0,
@@ -115,6 +111,39 @@ app.get("/order", (req, res) => {
   } catch (err) {
     return res.status(500).json({
       message: "Something Went Wrong",
+    });
+  }
+});
+
+app.post("/capture/:paymentId", (req, res) => {
+  const url = `https://${process.env.RAZORPAY_API_KEY}:${process.env.RAZORPAY_API_SECRET}@api.razorpay.com/v1/payments/${req.params.paymentId}/capture`;
+  console.log(url);
+  try {
+    return request(
+      {
+        method: "POST",
+        url: url,
+        form: {
+          amount: 10 * 100, // amount == Rs 10 // Same As Order amount
+          currency: "INR",
+        },
+      },
+      function (err, response, body) {
+        if (err) {
+          return res.status(500).json({
+            message: "Something Went Wrong in capture",
+          });
+        }
+        // console.log("Status:", response.statusCode);
+        // console.log("Headers:", JSON.stringify(response.headers));
+        // console.log("Response:", body);
+        return res.status(200).json(body);
+      }
+    );
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
+      message: "Something Went Wrong out capture",
     });
   }
 });
@@ -139,4 +168,3 @@ function authenticateToken(req, res, next) {
 app.listen(8000, function () {
   console.log("Server is running");
 });
-
