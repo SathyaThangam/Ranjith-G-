@@ -7,20 +7,16 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const Razorpay = require("razorpay");
 const request = require("request");
+const nodeMailer = require('nodemailer');
 
 const connection = require("./DBconnect");
 
-//RAZORPAY
-const instance = new Razorpay({
-  key_id: process.env.RAZORPAY_API_KEY,
-  key_secret: process.env.RAZORPAY_API_SECRET,
-});
 
 app.use(express.json());
 
 app.use(cors());
 
-app.get("/home", authenticateToken, (req, res) => {
+app.get("/home", (req, res) => {
   // console.log(req);
   res.json(users.filter((users) => users.name === req.user.name));
 });
@@ -90,7 +86,13 @@ app.post("/login", (req, res) => {
   // res.json(response);
 });
 
-//razorpay
+//RAZORPAY
+
+const instance = new Razorpay({
+  key_id: process.env.RAZORPAY_API_KEY,
+  key_secret: process.env.RAZORPAY_API_SECRET,
+});
+
 app.get("/order", (req, res) => {
   try {
     const options = {
@@ -148,22 +150,45 @@ app.post("/capture/:paymentId", (req, res) => {
   }
 });
 
-function generateAccessToken(user) {
-  // return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET,{expiresIn : "15m"});
-  return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
-}
-
-function authenticateToken(req, res, next) {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
-  if (token == null) return res.sendStatus(401);
-
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-    if (err) return res.sendStatus(403);
-    req.user = user;
-    next();
+app.post("/send-email", function (req, res) {
+  let transporter = nodeMailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+      user: process.env.SENDER_EMAIL,
+      pass: process.env.SENDER_PASSWORD,
+    },
   });
-}
+  console.log(transporter);
+  let mailOptions = {
+    to: "ranjithgovind00@gmail.com",
+    subject: req.body.subject,
+    body: req.body.message,
+  };
+  console.log(mailOptions);
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      return console.log(error);
+    }
+    console.log("Message %s sent: %s", info.messageId, info.response);
+  });
+  res.end();
+});
+
+app.post('/send-sms',function (req,res) {
+  const accountSid = "ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
+  const authToken = "your_auth_token";
+  const client = require("twilio")(accountSid, authToken);
+
+  client.messages
+    .create({
+      body: req.body.message,
+      from: "+15017122661", //approved phone number
+      to: req.body.clientNumber,
+    })
+    .then((message) => console.log(message.sid));
+})  
 
 app.listen(8000, function () {
   console.log("Server is running");
