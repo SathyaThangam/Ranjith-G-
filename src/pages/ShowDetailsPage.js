@@ -51,7 +51,7 @@ class ShowDetailsPage extends Component {
 									toastMessage: "Payment success",
 								});
 
-								// setTimeout(this.setState({toastShow:'',toastMessage:''}), 3000);
+                setTimeout(() => {this.setState({ toastShow: "", toastMessage: "" });}, 2900);
 							}
 						})
 						.catch((err) => console.log(err));

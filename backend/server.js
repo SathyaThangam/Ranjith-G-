@@ -138,7 +138,8 @@ app.post("/capture/:paymentId", (req, res) => {
 				// console.log("Status:", response.statusCode);
 				// console.log("Headers:", JSON.stringify(response.headers));
 				const captureData = JSON.parse(body);
-				sendEmail(captureData,req.body);
+				sendEmail(captureData, req.body);
+				sendSMS(captureData, req.body);
 				return res.status(200).json(body);
 			}
 		);
@@ -183,12 +184,12 @@ app.post("/capture/:paymentId", (req, res) => {
 // 	}
 // });
 
-function sendEmail(captureData,showData) {
+function sendEmail(captureData, showData) {
 	const text = `<h1>Payment Successful</h1> <strong>Show:</strong>${
 		showData.showName
-	} <br/><br/> <strong>Price:</strong>${
-		captureData.amount / 100
-	} ${captureData.currency}<br/><br/> <strong>Order id:</strong>${captureData.order_id}`;
+	} <br/><br/> <strong>Price:</strong>${captureData.amount / 100} ${
+		captureData.currency
+	}<br/><br/> <strong>Order id:</strong>${captureData.order_id}`;
 	// console.log(captureData);
 	// console.log(showData);
 	// console.log(text);
@@ -214,19 +215,48 @@ function sendEmail(captureData,showData) {
 	});
 }
 
-app.post("/send-sms", function (req, res) {
-	const accountSid = "ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
-	const authToken = "your_auth_token";
-	const client = require("twilio")(accountSid, authToken);
+function sendSMS(captureData, showData) {
+	const text = `Payment Successful Show:${showData.showName} Price:${captureData.amount / 100} ${captureData.currency} Order id:${captureData.order_id}`;
 
-	client.messages
-		.create({
-			body: req.body.message,
-			from: "+15017122661", //approved phone number
-			to: req.body.clientNumber,
-		})
-		.then((message) => console.log(message.sid));
-});
+	console.log(text);
+	console.log(text.length);
+	try {
+		request({
+			method: "POST",
+			headers:{
+				'Content-Type': 'application/x-www-form-urlencoded'
+			},
+			url: "https://api.textlocal.in/send/",
+			form: {
+				apikey: process.env.TEXTLOCAL_API_KEY,
+				numbers: captureData.contact,
+				message: text,
+				sender: "TXTLCL",
+			},
+		},function (err,response,body){
+			if(err){
+				console.log(err);
+			}
+			console.log(body);
+		});
+	} catch (error) {
+		console.log("Error in sendSMS" + error);
+	}
+}
+
+// app.post("/send-sms", function (req, res) {
+// 	const accountSid = "ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
+// 	const authToken = "your_auth_token";
+// 	const client = require("twilio")(accountSid, authToken);
+
+// 	client.messages
+// 		.create({
+// 			body: req.body.message,
+// 			from: "+15017122661", //approved phone number
+// 			to: req.body.clientNumber,
+// 		})
+// 		.then((message) => console.log(message.sid));
+// });
 
 app.post("/token", function (req, res) {
 	const { headers } = req;
@@ -240,6 +270,6 @@ app.listen(8000, function () {
 	console.log("Server is running");
 });
 
-app.get('/test',(req,res) => {
+app.get("/test", (req, res) => {
 	sendEmail({ name: "hl" }, { showName: "The Boys", showPrice: 99 });
-})
+});
