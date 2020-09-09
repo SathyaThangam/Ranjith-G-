@@ -3,7 +3,6 @@ import '../css/NavBarComponent.css';
 
 class NavBarComponent extends Component {
   signoutHandler = () => {
-    console.log(this);
     if (this.props.googleSignIn === true) {
       const authInstance = window.gapi.auth2.getAuthInstance();
       authInstance.signOut();

@@ -97,7 +97,6 @@ class LoginPage extends Component {
 			this.state.googleButton
 		)
 			this.updateGoogleButton();
-		console.log("login render");
 		if (this.props.googleSignIn === null) {
 			return <h1>Loading</h1>;
 		} else {

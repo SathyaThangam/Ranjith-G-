@@ -6,6 +6,11 @@
     /* background-color: #000; */
 }
 
+.modal-gallery{
+  width: 800px;
+  margin-bottom: 30px;
+}
+
 .gallery .heading{
   margin-left: 3px;
   font-size: 18px;
@@ -17,3 +22,4 @@
 .slick-next:before {
   color: gray!important;
 }
+

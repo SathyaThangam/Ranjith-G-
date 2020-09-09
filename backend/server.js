@@ -216,55 +216,54 @@ function sendEmail(captureData, showData) {
 }
 
 function sendSMS(captureData, showData) {
-	const text = `Payment Successful Show:${showData.showName} Price:${captureData.amount / 100} ${captureData.currency} Order id:${captureData.order_id}`;
+	const text = `Payment Successful Show:${showData.showName} Price:${
+		captureData.amount / 100
+	} ${captureData.currency} Order id:${captureData.order_id}`;
 
 	console.log(text);
 	console.log(text.length);
 	try {
-		request({
-			method: "POST",
-			headers:{
-				'Content-Type': 'application/x-www-form-urlencoded'
+		request(
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/x-www-form-urlencoded",
+				},
+				url: "https://api.textlocal.in/send/",
+				form: {
+					apikey: process.env.TEXTLOCAL_API_KEY,
+					numbers: captureData.contact,
+					message: text,
+					sender: "TXTLCL",
+				},
 			},
-			url: "https://api.textlocal.in/send/",
-			form: {
-				apikey: process.env.TEXTLOCAL_API_KEY,
-				numbers: captureData.contact,
-				message: text,
-				sender: "TXTLCL",
-			},
-		},function (err,response,body){
-			if(err){
-				console.log(err);
+			function (err, response, body) {
+				if (err) {
+					console.log(err);
+				}
+				console.log(body);
 			}
-			console.log(body);
-		});
+		);
 	} catch (error) {
 		console.log("Error in sendSMS" + error);
 	}
 }
 
-// app.post("/send-sms", function (req, res) {
-// 	const accountSid = "ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
-// 	const authToken = "your_auth_token";
-// 	const client = require("twilio")(accountSid, authToken);
-
-// 	client.messages
-// 		.create({
-// 			body: req.body.message,
-// 			from: "+15017122661", //approved phone number
-// 			to: req.body.clientNumber,
-// 		})
-// 		.then((message) => console.log(message.sid));
-// });
-
-app.post("/token", function (req, res) {
-	const { headers } = req;
-	const authToken = headers["auth-token"];
-	console.log(authToken);
-	console.log(authToken === process.env.MAIL_ACCESS_TOKEN);
-	res.send({ message: "success" }).end();
-});
+app.post('/data',(req,res) => {
+	const showData = require('./data/showData.json');
+	const category = req.body.category;
+	const shows = {};
+	showData.forEach((item, i) => {
+		if (item[category] !== null) {
+			if (shows.hasOwnProperty(item[category])) {
+				shows[item[category]].push(item);
+			} else {
+				shows[item[category]] = [item];
+			}
+		}
+	});
+	res.status(200).json(shows);
+})
 
 app.listen(8000, function () {
 	console.log("Server is running");

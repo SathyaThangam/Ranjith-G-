@@ -123,6 +123,7 @@ class App extends Component {
                 render={() => this.ifSignedIn(LoginPage)}
               />
               <Route path="/details/:id" component={ShowDetailsPage} />
+              <Route path="/test" component={HomePage} />
             </Switch>
           </div>
         </div>

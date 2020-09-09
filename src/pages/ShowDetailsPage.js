@@ -3,6 +3,7 @@ import axios from "axios";
 
 import "../css/ShowDetailsPage.css";
 import showData from "../data/showData.json"; //data from json
+import crimeShowData from "../data/crimeShowData.json";
 import AccordianComponent from "../components/AccordianComponent";
 import ToastComponent from "../components/ToastComponent";
 

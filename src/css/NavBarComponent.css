@@ -64,4 +64,5 @@
 .signout-btn:hover{
   background-color: white;
   color: #000000;
+  cursor: pointer;
 }

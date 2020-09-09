@@ -1,0 +1,486 @@
+[
+	{
+		"id": 43815,
+		"url": "http://www.tvmaze.com/shows/43815/crime-and-punishment",
+		"name": "Crime and Punishment",
+		"type": "Documentary",
+		"language": "English",
+		"genres": ["Crime"],
+		"status": "Running",
+		"runtime": 60,
+		"premiered": "2019-09-16",
+		"officialSite": "https://www.channel4.com/programmes/crime-and-punishment",
+		"schedule": {
+			"time": "21:00",
+			"days": ["Thursday"]
+		},
+		"rating": {
+			"average": null
+		},
+		"weight": 90,
+		"network": {
+			"id": 45,
+			"name": "Channel 4",
+			"country": {
+				"name": "United Kingdom",
+				"code": "GB",
+				"timezone": "Europe/London"
+			}
+		},
+		"webChannel": null,
+		"externals": {
+			"tvrage": null,
+			"thetvdb": null,
+			"imdb": null
+		},
+		"image": {
+			"medium": "http://static.tvmaze.com/uploads/images/medium_portrait/217/543199.jpg",
+			"original": "http://static.tvmaze.com/uploads/images/original_untouched/217/543199.jpg"
+		},
+		"summary": "<p>Series that captures the work of police, probation, prison, prosecution and parole all coping with difficult cases - managing risk to the public and themselves, with limited resources.</p>",
+		"updated": 1597961309,
+		"_links": {
+			"self": {
+				"href": "http://api.tvmaze.com/shows/43815"
+			},
+			"previousepisode": {
+				"href": "http://api.tvmaze.com/episodes/1916981"
+			}
+		}
+	},
+	{
+		"id": 339,
+		"url": "http://www.tvmaze.com/shows/339/american-crime",
+		"name": "American Crime",
+		"type": "Scripted",
+		"language": "English",
+		"genres": ["Drama", "Crime"],
+		"status": "Ended",
+		"runtime": 60,
+		"premiered": "2015-03-05",
+		"officialSite": "http://abc.go.com/shows/american-crime/",
+		"schedule": {
+			"time": "22:00",
+			"days": ["Sunday"]
+		},
+		"rating": {
+			"average": 7.9
+		},
+		"weight": 91,
+		"network": {
+			"id": 3,
+			"name": "ABC",
+			"country": {
+				"name": "United States",
+				"code": "US",
+				"timezone": "America/New_York"
+			}
+		},
+		"webChannel": null,
+		"externals": {
+			"tvrage": 38584,
+			"thetvdb": 281613,
+			"imdb": "tt3488298"
+		},
+		"image": {
+			"medium": "http://static.tvmaze.com/uploads/images/medium_portrait/100/252315.jpg",
+			"original": "http://static.tvmaze.com/uploads/images/original_untouched/100/252315.jpg"
+		},
+		"summary": "<p><b>American Crime </b>is an American anthology crime drama. The series centers on race, class and gender politics. Season 1 follows a racially charged murder and the subsequent trial, while season 2 tells you the story of a sexual assualt with a high school trying to cover it up.</p>",
+		"updated": 1577464440,
+		"_links": {
+			"self": {
+				"href": "http://api.tvmaze.com/shows/339"
+			},
+			"previousepisode": {
+				"href": "http://api.tvmaze.com/episodes/1128676"
+			}
+		}
+	},
+	{
+		"id": 41322,
+		"url": "http://www.tvmaze.com/shows/41322/delhi-crime",
+		"name": "Delhi Crime",
+		"type": "Scripted",
+		"language": "English",
+		"genres": ["Drama", "Crime"],
+		"status": "Running",
+		"runtime": 50,
+		"premiered": "2019-03-22",
+		"officialSite": "https://www.netflix.com/title/81076756",
+		"schedule": {
+			"time": "",
+			"days": ["Friday"]
+		},
+		"rating": {
+			"average": null
+		},
+		"weight": 65,
+		"network": null,
+		"webChannel": {
+			"id": 1,
+			"name": "Netflix",
+			"country": null
+		},
+		"externals": {
+			"tvrage": null,
+			"thetvdb": 360860,
+			"imdb": "tt9398466"
+		},
+		"image": {
+			"medium": "http://static.tvmaze.com/uploads/images/medium_portrait/188/470620.jpg",
+			"original": "http://static.tvmaze.com/uploads/images/original_untouched/188/470620.jpg"
+		},
+		"summary": "<p>As Delhi reels in the aftermath of a gang rape, DCP Vartika Chaturvedi leads a painstaking search for the culprits. Based on the 2012 Nirbhaya case.</p>",
+		"updated": 1585328334,
+		"_links": {
+			"self": {
+				"href": "http://api.tvmaze.com/shows/41322"
+			},
+			"previousepisode": {
+				"href": "http://api.tvmaze.com/episodes/1621226"
+			}
+		}
+	},
+	{
+		"id": 49329,
+		"url": "http://www.tvmaze.com/shows/49329/crime",
+		"name": "Crime",
+		"type": "Scripted",
+		"language": "English",
+		"genres": [],
+		"status": "In Development",
+		"runtime": null,
+		"premiered": null,
+		"officialSite": null,
+		"schedule": {
+			"time": "",
+			"days": []
+		},
+		"rating": {
+			"average": null
+		},
+		"weight": 0,
+		"network": null,
+		"webChannel": {
+			"id": 269,
+			"name": "BritBox",
+			"country": null
+		},
+		"externals": {
+			"tvrage": null,
+			"thetvdb": null,
+			"imdb": null
+		},
+		"image": null,
+		"summary": null,
+		"updated": 1595514466,
+		"_links": {
+			"self": {
+				"href": "http://api.tvmaze.com/shows/49329"
+			}
+		}
+	},
+	{
+		"id": 38888,
+		"url": "http://www.tvmaze.com/shows/38888/inside-crime",
+		"name": "Inside Crime",
+		"type": "Documentary",
+		"language": "English",
+		"genres": ["Crime"],
+		"status": "Running",
+		"runtime": 60,
+		"premiered": "2018-09-12",
+		"officialSite": "https://www.9now.com.au/inside-crime",
+		"schedule": {
+			"time": "",
+			"days": ["Sunday"]
+		},
+		"rating": {
+			"average": null
+		},
+		"weight": 73,
+		"network": {
+			"id": 120,
+			"name": "Nine Network",
+			"country": {
+				"name": "Australia",
+				"code": "AU",
+				"timezone": "Australia/Sydney"
+			}
+		},
+		"webChannel": null,
+		"externals": {
+			"tvrage": null,
+			"thetvdb": 353365,
+			"imdb": null
+		},
+		"image": {
+			"medium": "http://static.tvmaze.com/uploads/images/medium_portrait/169/423295.jpg",
+			"original": "http://static.tvmaze.com/uploads/images/original_untouched/169/423295.jpg"
+		},
+		"summary": "<p>Chilling criminal cases that captured the nation's imagination will be re-examined and dissected like never before in <b>Inside Crime</b>.<br /><br />Hosted by Nine's Leila McKinnon and with expert insight from criminologist Garner Clancey, this gripping four-part series has been meticulously researched to expose the real story behind the headlines. Together with actual police videos, dramatic re-enactments, candid interviews and commentary from Australia's leading journalists, some of the country's most brutal crimes from the last ten years will be brought back to life and analysed in a raw and confronting way.</p>",
+		"updated": 1593417823,
+		"_links": {
+			"self": {
+				"href": "http://api.tvmaze.com/shows/38888"
+			},
+			"previousepisode": {
+				"href": "http://api.tvmaze.com/episodes/1895160"
+			}
+		}
+	},
+	{
+		"id": 27033,
+		"url": "http://www.tvmaze.com/shows/27033/crime-stories",
+		"name": "Crime Stories",
+		"type": "Documentary",
+		"language": "English",
+		"genres": ["Crime"],
+		"status": "Ended",
+		"runtime": 60,
+		"premiered": "1998-01-08",
+		"officialSite": null,
+		"schedule": {
+			"time": "20:00",
+			"days": [
+				"Monday",
+				"Tuesday",
+				"Wednesday",
+				"Thursday",
+				"Friday",
+				"Saturday",
+				"Sunday"
+			]
+		},
+		"rating": {
+			"average": null
+		},
+		"weight": 17,
+		"network": {
+			"id": 84,
+			"name": "truTV",
+			"country": {
+				"name": "United States",
+				"code": "US",
+				"timezone": "America/New_York"
+			}
+		},
+		"webChannel": null,
+		"externals": {
+			"tvrage": null,
+			"thetvdb": 72955,
+			"imdb": "tt0221740"
+		},
+		"image": {
+			"medium": "http://static.tvmaze.com/uploads/images/medium_portrait/106/267053.jpg",
+			"original": "http://static.tvmaze.com/uploads/images/original_untouched/106/267053.jpg"
+		},
+		"summary": "<p><b>Crime Stories</b> chronicles some of the most intriguing crimes in history. This investigative series takes the viewers behind the scenes, revealing what occurred, introducing the people involved, unveiling techniques used in solving the crime, exposing the emotion experience by those affected, and the final resolution of the case. Police officers, family and friends of the victim, defense lawyer, and prosecutors. They all share their differing points of view regarding the crime and its consequences. Their firsthand accounts, coupled with dramatic re-enactments, news footage, clippings and photographs paint a comprehensive picture of the grim truth. While the media brings us the headlines, Crime Stories fills in the details with never before seen footage, personal accounts and shocking revelations previously unknown to the general public. Crime Stories deliver a stunning look from the other side of the police line and from behind he closed doors of those involved.</p>",
+		"updated": 1598834361,
+		"_links": {
+			"self": {
+				"href": "http://api.tvmaze.com/shows/27033"
+			},
+			"previousepisode": {
+				"href": "http://api.tvmaze.com/episodes/1133751"
+			}
+		}
+	},
+	{
+		"id": 2029,
+		"url": "http://www.tvmaze.com/shows/2029/american-crime-story",
+		"name": "American Crime Story",
+		"type": "Scripted",
+		"language": "English",
+		"genres": ["Drama", "Crime"],
+		"status": "Running",
+		"runtime": 60,
+		"premiered": "2016-02-02",
+		"officialSite": "http://www.fxnetworks.com/shows/american-crime-story",
+		"schedule": {
+			"time": "22:00",
+			"days": ["Sunday"]
+		},
+		"rating": {
+			"average": 7.3
+		},
+		"weight": 96,
+		"network": {
+			"id": 13,
+			"name": "FX",
+			"country": {
+				"name": "United States",
+				"code": "US",
+				"timezone": "America/New_York"
+			}
+		},
+		"webChannel": null,
+		"externals": {
+			"tvrage": 47016,
+			"thetvdb": 289108,
+			"imdb": "tt2788432"
+		},
+		"image": {
+			"medium": "http://static.tvmaze.com/uploads/images/medium_portrait/142/356652.jpg",
+			"original": "http://static.tvmaze.com/uploads/images/original_untouched/142/356652.jpg"
+		},
+		"summary": "<p>This anthology series dramatizes historic criminal cases in the U.S.</p>",
+		"updated": 1590926350,
+		"_links": {
+			"self": {
+				"href": "http://api.tvmaze.com/shows/2029"
+			},
+			"previousepisode": {
+				"href": "http://api.tvmaze.com/episodes/1349072"
+			}
+		}
+	},
+	{
+		"id": 5603,
+		"url": "http://www.tvmaze.com/shows/5603/crime-punishment",
+		"name": "Crime & Punishment",
+		"type": "Reality",
+		"language": "English",
+		"genres": ["Drama", "Crime"],
+		"status": "Ended",
+		"runtime": 60,
+		"premiered": "2002-06-16",
+		"officialSite": null,
+		"schedule": {
+			"time": "",
+			"days": ["Saturday"]
+		},
+		"rating": {
+			"average": null
+		},
+		"weight": 40,
+		"network": {
+			"id": 1,
+			"name": "NBC",
+			"country": {
+				"name": "United States",
+				"code": "US",
+				"timezone": "America/New_York"
+			}
+		},
+		"webChannel": null,
+		"externals": {
+			"tvrage": 3166,
+			"thetvdb": 73281,
+			"imdb": "tt0278250"
+		},
+		"image": {
+			"medium": "http://static.tvmaze.com/uploads/images/medium_portrait/22/56911.jpg",
+			"original": "http://static.tvmaze.com/uploads/images/original_untouched/22/56911.jpg"
+		},
+		"summary": "<p>An unscripted look at actual cases brought to trial by the San Diego District Attorney's office. Although it is edited to have the look and feel of a prime-time drama series, it gives viewers a real behind-the-scenes view into the criminal justice system.</p>",
+		"updated": 1561237607,
+		"_links": {
+			"self": {
+				"href": "http://api.tvmaze.com/shows/5603"
+			},
+			"previousepisode": {
+				"href": "http://api.tvmaze.com/episodes/338401"
+			}
+		}
+	},
+	{
+		"id": 109,
+		"url": "http://www.tvmaze.com/shows/109/csi-crime-scene-investigation",
+		"name": "CSI: Crime Scene Investigation",
+		"type": "Scripted",
+		"language": "English",
+		"genres": ["Drama", "Action", "Crime"],
+		"status": "Ended",
+		"runtime": 60,
+		"premiered": "2000-10-06",
+		"officialSite": "http://www.cbs.com/shows/csi/",
+		"schedule": {
+			"time": "22:00",
+			"days": ["Sunday"]
+		},
+		"rating": {
+			"average": 8.5
+		},
+		"weight": 94,
+		"network": {
+			"id": 2,
+			"name": "CBS",
+			"country": {
+				"name": "United States",
+				"code": "US",
+				"timezone": "America/New_York"
+			}
+		},
+		"webChannel": null,
+		"externals": {
+			"tvrage": 3183,
+			"thetvdb": 72546,
+			"imdb": "tt0247082"
+		},
+		"image": {
+			"medium": "http://static.tvmaze.com/uploads/images/medium_portrait/0/887.jpg",
+			"original": "http://static.tvmaze.com/uploads/images/original_untouched/0/887.jpg"
+		},
+		"summary": "<p><b>CSI: Crime Scene Investigation</b> is a drama about a team of forensic investigators trained to solve criminal cases by scouring the crime scene, collecting irrefutable evidence and finding the missing pieces that solve the mystery.</p>",
+		"updated": 1596655737,
+		"_links": {
+			"self": {
+				"href": "http://api.tvmaze.com/shows/109"
+			},
+			"previousepisode": {
+				"href": "http://api.tvmaze.com/episodes/270033"
+			}
+		}
+	},
+	{
+		"id": 46887,
+		"url": "http://www.tvmaze.com/shows/46887/crime-beat",
+		"name": "Crime Beat",
+		"type": "Documentary",
+		"language": "English",
+		"genres": ["Crime"],
+		"status": "Running",
+		"runtime": 60,
+		"premiered": "2020-03-07",
+		"officialSite": "https://www.globaltv.com/shows/crime-beat/",
+		"schedule": {
+			"time": "19:00",
+			"days": ["Saturday"]
+		},
+		"rating": {
+			"average": null
+		},
+		"weight": 94,
+		"network": {
+			"id": 67,
+			"name": "Global",
+			"country": {
+				"name": "Canada",
+				"code": "CA",
+				"timezone": "America/Halifax"
+			}
+		},
+		"webChannel": null,
+		"externals": {
+			"tvrage": null,
+			"thetvdb": 378563,
+			"imdb": "tt11857512"
+		},
+		"image": {
+			"medium": "http://static.tvmaze.com/uploads/images/medium_portrait/248/620209.jpg",
+			"original": "http://static.tvmaze.com/uploads/images/original_untouched/248/620209.jpg"
+		},
+		"summary": "<p><b>Crime Beat</b> is a true crime series that takes viewers deep into some of Canada's most infamous criminal cases. Based on the highly successful podcast hosted by Nancy Hixt, Crime Beat showcases the best investigative crime reporting from the Global News reporters who covered the stories in real time. Using extensive archives and intimate family interviews, each week Crime Beat reveals new details that go beyond the news headlines: giving a voice to victims and their families, unraveling how each case was solved, and exploring lasting impacts on the community and justice system.</p>",
+		"updated": 1591566281,
+		"_links": {
+			"self": {
+				"href": "http://api.tvmaze.com/shows/46887"
+			},
+			"previousepisode": {
+				"href": "http://api.tvmaze.com/episodes/1871508"
+			}
+		}
+	}
+]

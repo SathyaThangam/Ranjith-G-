@@ -349,7 +349,7 @@
 		"url": "http://www.tvmaze.com/shows/43815/crime-and-punishment",
 		"name": "Crime and Punishment",
 		"type": "Documentary",
-		"price":99,
+		"price": 99,
 		"language": "English",
 		"genres": ["Crime"],
 		"status": "Running",
