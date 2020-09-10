@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import '../css/NavBarComponent.css';
+import NavSearchComponent from './NavSearchComponent';
 
 class NavBarComponent extends Component {
+  
   signoutHandler = () => {
     if (this.props.googleSignIn === true) {
       const authInstance = window.gapi.auth2.getAuthInstance();
@@ -42,6 +44,7 @@ class NavBarComponent extends Component {
             <a href="/home">Corporates</a>
             <a href="/home">Offers</a>
             <a href="/home">Gift Cards</a>
+            <NavSearchComponent />
             <button className="signout-btn" onClick={this.signoutHandler}>
               SIGN OUT
             </button>

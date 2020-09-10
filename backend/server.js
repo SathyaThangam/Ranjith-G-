@@ -151,38 +151,6 @@ app.post("/capture/:paymentId", (req, res) => {
 	}
 });
 
-// app.post("/send-email", function (req, res) {
-// 	const { headers } = req;
-// 	const authToken = headers["auth-token"];
-// 	const token = process.env.MAIL_ACCESS_TOKEN;
-// 	const text = `<h1>Verification Sucessful</h1> payment id:${req.body.paymentId}`;
-// 	console.log(authToken === token);
-// 	if (true) {
-// 		let transporter = nodeMailer.createTransport({
-// 			host: "smtp.gmail.com",
-// 			port: 465,
-// 			secure: true,
-// 			auth: {
-// 				user: process.env.SENDER_EMAIL,
-// 				pass: process.env.SENDER_PASSWORD,
-// 			},
-// 		});
-// 		let mailOptions = {
-// 			to: req.body.email,
-// 			subject: req.body.subject,
-// 			html: text,
-// 		};
-// 		transporter.sendMail(mailOptions, (error, info) => {
-// 			if (error) {
-// 				return console.log(error);
-// 			}
-// 			console.log("Message %s sent: %s", info.messageId, info.response);
-// 		});
-// 		res.end();
-// 	} else {
-// 		res.status(404).end();
-// 	}
-// });
 
 function sendEmail(captureData, showData) {
 	const text = `<h1>Payment Successful</h1> <strong>Show:</strong>${
@@ -251,18 +219,40 @@ function sendSMS(captureData, showData) {
 
 app.post('/data',(req,res) => {
 	const showData = require('./data/showData.json');
+	const searchQuery = req.body.search;
 	const category = req.body.category;
-	const shows = {};
-	showData.forEach((item, i) => {
-		if (item[category] !== null) {
-			if (shows.hasOwnProperty(item[category])) {
-				shows[item[category]].push(item);
-			} else {
-				shows[item[category]] = [item];
-			}
+	if (searchQuery === 'categories')
+	{
+		if (category === undefined) {
+			res.sendStatus(403).end();
 		}
-	});
-	res.status(200).json(shows);
+		const shows = {};
+		showData.forEach((item, i) => {
+			if (item[category] !== null) {
+				if (shows.hasOwnProperty(item[category])) {
+					shows[item[category]].push(item);
+				} else {
+					shows[item[category]] = [item];
+				}
+			}
+		});
+		res.status(200).json(shows);
+	}
+	else if (searchQuery === 'shows') {
+		const shows = {};
+		const keyword = req.body.keyword;
+		showData.forEach((item,i) => {
+			if (item['name'] !== null) {
+				if(item['name'].toLowerCase().includes(keyword.toLowerCase())){
+					shows[item['id']] = item['name'];
+				}
+			}
+		})
+		res.status(200).json(shows);
+	}
+	else
+		res.sendStatus(500).end();
+
 })
 
 app.listen(8000, function () {

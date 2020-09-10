@@ -1,28 +1,27 @@
 import React, { Component } from "react";
 import "../css/SearchComponent.css";
-import showData from "../data/showData.json";
 import SidebarBlockComponent from "./SidebarBlockComponent";
-import SliderComponent from './SliderComponent';
+import SliderComponent from "./SliderComponent";
 import axios from "axios";
 
 export default class SearchComponent extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			searchResults:'Your results appear here'
-		}
+			searchResults: "Your results appear here",
+		};
 	}
 
 	filterData = (category) => {
 		console.log(category);
 		category = category.toLowerCase();
 		axios
-		.post('http://localhost:8000/data',{'category':category})
-		.then((response) => {
-			this.loadData(response.data)
-		})
-		.catch(err => console.log(err));	
-	}
+			.post("http://localhost:8000/data", { category: category })
+			.then((response) => {
+				this.loadData(response.data);
+			})
+			.catch((err) => console.log(err));
+	};
 
 	loadData = (filterResults) => {
 		const results = [];
@@ -61,10 +60,10 @@ export default class SearchComponent extends Component {
 				},
 			],
 		};
-		for(const category in filterResults){
+		for (const category in filterResults) {
 			let row = (
 				<SliderComponent
-					key = {category}
+					key={category}
 					container="modal-gallery"
 					heading={category}
 					data={filterResults[category]}
@@ -75,10 +74,9 @@ export default class SearchComponent extends Component {
 		}
 
 		this.setState({ searchResults: results });
+	};
 
-	}
-
-	contentClick(e){
+	contentClick(e) {
 		e.stopPropagation();
 	}
 
