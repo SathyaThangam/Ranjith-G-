@@ -1,0 +1,33 @@
+@import "variables.scss";
+
+.header{
+    display: flex;
+    justify-content: space-between;
+    height: 50px;
+    align-items: center;
+}
+
+.header-nav{
+    &>:first-child{
+        padding-left: 0px;
+        padding-right: 10px;
+    }
+}
+
+.header-logo{
+    color: $accent-color;
+    text-decoration: none;
+}
+
+.nav-link{
+    text-decoration: none;
+    color:$accent-color;
+    &:hover{
+        text-decoration: underline;
+    }
+}
+
+.selected{
+     
+    font-weight: bold;
+}
