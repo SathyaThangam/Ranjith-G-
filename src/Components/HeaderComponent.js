@@ -1,16 +1,28 @@
-import React from 'react'
+import React from "react";
 import { NavLink } from "react-router-dom";
-import OutlinedButtonComponent from './OutlinedButtonComponent';
-
+import OutlinedButtonComponent from "./OutlinedButtonComponent";
 import "../css/HeaderComponent.scss";
 
 export default function HeaderComponent() {
-    return (
+	return (
 		<div className="header">
 			<div className="header-logo">
 				<NavLink to="/" className="header-logo">
 					<h1>getBus</h1>
 				</NavLink>
+			</div>
+			{/* <div class="burger">
+				<img src={"burger_accent.png"} alt="menu" />
+			</div> */}
+			<div className="burger-content">
+				<NavLink
+					to="/viewtickets"
+					className="nav-link"
+					activeClassName="selected"
+				>
+					View Tickets
+				</NavLink>
+				<OutlinedButtonComponent innerHTML="Login/Signup" />
 			</div>
 			<div className="header-nav">
 				<NavLink

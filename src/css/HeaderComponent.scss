@@ -5,12 +5,48 @@
     justify-content: space-between;
     height: 50px;
     align-items: center;
+
+    @media screen and (max-width:400px) {
+        display: block;
+        align-items: center;
+        height: fit-content;
+        justify-content: flex-start;
+    }
+
+}
+
+.burger{
+    display: none;
+    @media screen and (max-width:400px) {
+        display: block;
+        color:$accent-color;
+        cursor: pointer;
+    }
+
+}
+
+.burger-content{
+    display: none;
+    min-width: 160px;
+    padding: 12px 16px;
+    &>:first-child{
+        margin-right: 15px;
+    }
+    @media screen and (max-width:400px) {
+    display: block;
+    }
+
+
 }
 
 .header-nav{
     &>:first-child{
         padding-left: 0px;
         padding-right: 10px;
+    }
+
+    @media screen and (max-width:400px) {
+        display: none;
     }
 }
 

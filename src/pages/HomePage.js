@@ -1,14 +1,12 @@
-import React, { Component } from 'react'
-import InputComponent from '../Components/InputComponent';
+import React, { Component } from 'react';
+import InputDropdownComponent from '../Components/InputDropdownComponent';
 import "../css/Homepage.scss";
-import SearchIcon from "@material-ui/icons/Search";
 
 
 class HomePage extends Component {
     
     constructor(props) {
         super(props);
-
         this.resultRef = React.createRef();
     
     }
@@ -24,9 +22,9 @@ class HomePage extends Component {
 			<div>
 				<div className="search-container">
 					<div className="input-group">
-						<InputComponent type="text" placeholder="From.. " />
-						<InputComponent type="text" placeholder="To.. " />
-						<InputComponent type="text" placeholder="Date.. " />
+						<InputDropdownComponent type="text" placeholder="From.. " />
+						<InputDropdownComponent type="text" placeholder="To.. " />
+						<InputDropdownComponent type="text" placeholder="Date.. " />
 						<div className="search-btn-container">
 							<button
 								className="search-btn"
