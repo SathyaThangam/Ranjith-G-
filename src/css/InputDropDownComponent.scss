@@ -1,41 +1,54 @@
-@import 'variables.scss';
+@import "variables.scss";
 
-.input-container{
-    position: relative;
-    display: inline-block;
-    margin: 2px;
+.input-container {
+	position: relative;
+	display: inline-block;
+	margin: 2px;
     width: 100%;
-    input{
-        padding: 5px 20px;
-        margin-right: 2px;
-        outline: none;
-        padding-left: 4px;
-        font-size: $medium-font;
-        border: 1px solid #DDD;
+    .dropdown-content {
+		display: none;
+		position: absolute;
+		left: 0;
+		right: 0;
+		width: 100%;
+		margin: 0 auto;
+		background-color: white;
+		border: 1px solid #ddd;
+		z-index: 1;
+		cursor: pointer;
 
-        &:focus{
-            border:1px solid $accent-color;
-        }
+		p {
+            list-style: none;
+            padding:5px;
+            margin: 5px;
+			&:hover,:focus {
+				background-color: $accent-color;
+				color: white;
+			}
+		}
+	}
+	input {
+		padding: 5px 20px;
+		margin-right: 2px;
+		outline: none;
+		padding-left: 4px;
+		font-size: $medium-font;
+		border: 1px solid #ddd;
 
-        @media screen and (max-width: 358px ) {
-            font-size: $small-font;
+		&:focus {
+            border: 1px solid $accent-color;
+            & ~ div {
+			display: block;
         }
-    }
-    .dropdown-content{
-        display: none;
-        position: absolute;
-        left: 0;
-        right: 0;
-        width: 100%;
-        margin: 0 auto;
-        background-color: white;
-        border: 1px solid #ddd;
-        z-index: 1;
-        cursor: pointer;
-    }
-    &:hover{
-        .dropdown-content{
-            display: block;
+		}
+
+		@media screen and (max-width: 358px) {
+			font-size: $small-font;
+		}
+	}
+	&:hover{
+		.dropdown-content {
+			display: block;
         }
-    }
+	}
 }

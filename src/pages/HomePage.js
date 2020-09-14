@@ -1,30 +1,46 @@
 import React, { Component } from 'react';
 import InputDropdownComponent from '../Components/InputDropdownComponent';
+
 import "../css/Homepage.scss";
 
-
 class HomePage extends Component {
-    
-    constructor(props) {
-        super(props);
-        this.resultRef = React.createRef();
-    
-    }
-    
-    resultHandler = () =>{
-        this.resultRef.current.scrollIntoView({
-            behavior:'smooth'
-        });
-    }
+	constructor(props) {
+		super(props);
+		this.resultRef = React.createRef();
+		this.state = {
+			startDate: new Date()
+		}
+	}
 
-    render() {
-        return (
+	resultHandler = () => {
+		this.resultRef.current.scrollIntoView({
+			behavior: "smooth",
+		});
+	};
+
+	handleChange = (date) => {
+		this.setState({
+			startDate: date,
+		});
+	};
+
+	render() {
+		return (
 			<div>
 				<div className="search-container">
 					<div className="input-group">
-						<InputDropdownComponent type="text" placeholder="From.. " />
-						<InputDropdownComponent type="text" placeholder="To.. " />
-						<InputDropdownComponent type="text" placeholder="Date.. " />
+						<InputDropdownComponent
+							type="text"
+							placeholder="From.. "
+						/>
+						<InputDropdownComponent
+							type="text"
+							placeholder="To.. "
+						/>
+						<InputDropdownComponent
+							type="date"
+							placeholder=""
+						/>
 						<div className="search-btn-container">
 							<button
 								className="search-btn"
@@ -45,7 +61,7 @@ class HomePage extends Component {
 				</div>
 			</div>
 		);
-    }
+	}
 }
 
 export default HomePage;
