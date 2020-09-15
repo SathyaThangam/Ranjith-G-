@@ -11,6 +11,7 @@
 # production
 /build
 
+test_api.rest
 # misc
 .DS_Store
 .env.local

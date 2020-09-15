@@ -4,6 +4,8 @@ import InputComponent from "./InputComponent";
 import "../css/AuthenticateModalComponent.scss";
 import OutlinedButtonComponent from "./OutlinedButtonComponent";
 
+import ErrorIcon from "@material-ui/icons/Error";
+
 class AuthenticateModalComponent extends Component {
 	constructor(props) {
 		super(props);
@@ -15,20 +17,20 @@ class AuthenticateModalComponent extends Component {
 			signupEmail: "",
 			signupPwd: "",
 			signupCPwd: "",
+			errorMessage: "",
+			inputError: false,
 		};
 	}
 
 	toggleTab = () => {
-
-        console.log(this.state);
+		console.log(this.state);
 		if (this.state.loginModal) {
 			this.setState((prev) => ({
 				loginEmail: "",
 				loginPwd: "",
-				signupEmail: "",
-				signupPwd: "",
-				signupCPwd: "",
 				loginModal: !prev.loginModal,
+				inputError:false,
+				errorMessage:""
 			}));
 		} else {
 			this.setState((prev) => ({
@@ -36,6 +38,8 @@ class AuthenticateModalComponent extends Component {
 				signupPwd: "",
 				signupCPwd: "",
 				loginModal: !prev.loginModal,
+				inputError:false,
+				errorMessage:""
 			}));
 		}
 	};
@@ -53,6 +57,7 @@ class AuthenticateModalComponent extends Component {
 
 	validateConfirmPassword = (value) => {
 		let pwd = this.state.signupPwd;
+		console.log(pwd)
 		let valid = "";
 		if (value === "") valid = false;
 		else valid = pwd === value;
@@ -63,18 +68,63 @@ class AuthenticateModalComponent extends Component {
 	//Login
 	userLogin = () => {
 		const { loginEmail, loginPwd } = this.state;
+
+		this.setState({
+			inputError: false,
+			errorMessage: "",
+		});
+
 		if (this.validateEmail(loginEmail) && this.validatePassword(loginPwd)) {
 			console.log("login success");
+		} else {
+			if (!this.validateEmail(loginEmail))
+				this.setState((prevState) => ({
+					inputError: true,
+					errorMessage: prevState.errorMessage+"Incorrect Email",
+				}));
+			if (!this.validatePassword(loginPwd))
+				this.setState((prevState) => ({
+					inputError: true,
+					errorMessage: prevState.errorMessage + " / Incorrect Password",
+				}));
 		}
-    };
-    
-    //Signup 
-    userSignup = () => {
-        const {signupEmail,signupPwd,signupCPwd} = this.state;
-        if (this.validateEmail(signupEmail) && this.validatePassword(signupPwd) && this.validateConfirmPassword(signupCPwd)) {
+	};
+
+	//Signup
+	userSignup = () => {
+
+		const { signupEmail, signupPwd, signupCPwd } = this.state;
+
+		this.setState({
+			inputError: false,
+			errorMessage: "",
+		});
+
+		if (
+			this.validateEmail(signupEmail) &&
+			this.validatePassword(signupPwd) &&
+			this.validateConfirmPassword(signupCPwd)
+		) {
 			console.log("signup success");
+		} else {
+			if (!this.validateEmail(signupEmail))
+				this.setState((prevState) => ({
+					inputError: true,
+					errorMessage: prevState.errorMessage + "Incorrect Email",
+				}));
+			if (!this.validatePassword(signupPwd))
+				this.setState((prevState) => ({
+					inputError: true,
+					errorMessage: prevState.errorMessage + " / Incorrect Password",
+				}));
+			if (this.validateConfirmPassword(signupCPwd))
+				console.log(this.state)
+				this.setState((prevState) => ({
+					inputError: true,
+					errorMessage: prevState.errorMessage + " / Passwords Doesn't match",
+				}));
 		}
-    }
+	};
 
 	render() {
 		const LoginComponent = (
@@ -133,12 +183,22 @@ class AuthenticateModalComponent extends Component {
 						this.setState({ signupCPwd: event.target.value })
 					}
 				/>
-				<OutlinedButtonComponent innerHTML="Signup for a new Journey" onClick={this.userSignup} />
+				<OutlinedButtonComponent
+					innerHTML="Signup for a new Journey"
+					onClick={this.userSignup}
+				/>
 				<div className="tab-content-bottom">
 					<button className="underlined-btn" onClick={this.toggleTab}>
 						Know your way? Log in..
 					</button>
 				</div>
+			</div>
+		);
+
+		const Error = (
+			<div className="alert">
+				<ErrorIcon />
+				{this.state.errorMessage}
 			</div>
 		);
 		return (
@@ -171,6 +231,7 @@ class AuthenticateModalComponent extends Component {
 							? LoginComponent
 							: SignupComponent}
 					</div>
+					{this.state.inputError ? Error : ""}
 				</div>
 			</div>
 		);

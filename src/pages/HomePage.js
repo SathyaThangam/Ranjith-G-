@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import InputComponent from '../Components/InputComponent';
 import InputDropdownComponent from '../Components/InputDropdownComponent';
 
 import "../css/Homepage.scss";
@@ -37,7 +38,7 @@ class HomePage extends Component {
 							type="text"
 							placeholder="To.. "
 						/>
-						<InputDropdownComponent
+						<InputComponent
 							type="date"
 							placeholder=""
 						/>
