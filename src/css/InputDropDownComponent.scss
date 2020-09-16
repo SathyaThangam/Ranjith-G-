@@ -1,11 +1,11 @@
 @import "variables.scss";
 
-.input-container {
+.input-dropdown-container {
 	position: relative;
 	display: inline-block;
 	margin: 2px;
-    width: 100%;
-    .dropdown-content {
+	width: 100%;
+	.dropdown-content {
 		display: none;
 		position: absolute;
 		left: 0;
@@ -18,10 +18,11 @@
 		cursor: pointer;
 
 		p {
-            list-style: none;
-            padding:5px;
-            margin: 5px;
-			&:hover,:focus {
+			list-style: none;
+			padding: 5px;
+			margin: 5px;
+			&:hover,
+			:focus {
 				background-color: $accent-color;
 				color: white;
 			}
@@ -36,19 +37,19 @@
 		border: 1px solid #ddd;
 
 		&:focus {
-            border: 1px solid $accent-color;
-            & ~ div {
-			display: block;
-        }
+			border: 1px solid $accent-color;
+			& ~ div {
+				display: block;
+			}
 		}
 
 		@media screen and (max-width: 358px) {
 			font-size: $small-font;
 		}
 	}
-	&:hover{
+	&:hover {
 		.dropdown-content {
 			display: block;
-        }
+		}
 	}
 }

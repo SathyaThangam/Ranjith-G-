@@ -14,7 +14,15 @@ app.use(express.json());
 // 	res.sendFile(path.join(__dirname, "build", "index.html"));
 // });
 
-//TODO Add server side validation
+validateEmail = (value) => {
+	const re = /^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/;
+	return re.test(value);
+};
+
+validatePassword = (value) => {
+	let re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$/;
+	return re.test(value);
+};
 
 //Endpoint to check if connection has established
 app.get("/ping", function (req, res) {
@@ -28,57 +36,85 @@ app.post("/usersignup", (req, res) => {
 	const password = req.body.password;
 	const saltRounds = 10;
 
-	//Check if the email is unique for eliminating duplication
-	Users.findOne({ where: { email: email } }).then((token) => {
-		//if email doesn't exist in the server
-		if (token === null) {
-			//Generate a unique id
-			const id = helper.uid({ prefix: "IND" });
-			//hash the password and store it in the DB
-			bcrypt.hash(password, saltRounds, function (err, hash) {
-				if (err) throw err;
-				Users.create({
-					id: id,
-					email: email,
-					password: hash,
-				})
-					.then((data) => {
-						res.json({ message: "success" });
+	if (validateEmail(email) && validatePassword(password)) {
+		//Check if the email is unique for eliminating duplication
+		Users.findOne({ where: { email: email } }).then((token) => {
+			//if email doesn't exist in the server
+			if (token === null) {
+				//Generate a unique id
+				const id = helper.uid({ prefix: "IND" });
+				//hash the password and store it in the DB
+				bcrypt.hash(password, saltRounds, function (err, hash) {
+					if (err) throw err;
+					Users.create({
+						id: id,
+						email: email,
+						password: hash,
 					})
-					.catch((err) => console.log(err));
-			});
-		} else {
-			console.log(token);
-			res.json({ message: "duplication" });
-		}
-	});
+						.then((data) => {
+							res.json({ message: "success" });
+						})
+						.catch((err) => console.log(err));
+				});
+			} else {
+				console.log(token);
+				res.json({ message: "duplication" });
+			}
+		});
+	} else {
+		res.json({ message: "Invalid" });
+	}
 });
 
 //Login Endpoint
 app.post("/userlogin", (req, res) => {
 	const email = req.body.email;
-	const pwd = req.body.password;
+	const password = req.body.password;
 
-	//Check if account exists
-	Users.findOne({
-		where: { email: email },
-		attributes: ["email", "password"],
-	})
-		.then((response) => {
-			//if account exists
-			if (response !== null) {
-				const userData = response.dataValues;
-
-				bcrypt.compare(pwd, userData.password).then((result) => {
-					res.json({ message: result });
-				});
-			}
-			//account doesn't exist
-			else {
-				res.json({ message: "Unavailable" });
-			}
+	if (validateEmail(email) && validatePassword(password)) {
+		//Check if account exists
+		Users.findOne({
+			where: { email: email },
+			attributes: ["email", "password"],
 		})
-		.catch((err) => console.log(err));
+			.then((response) => {
+				//if account exists
+				if (response !== null) {
+					const userData = response.dataValues;
+
+					bcrypt
+						.compare(password, userData.password)
+						.then((result) => {
+							res.json({ message: result });
+						});
+				}
+				//account doesn't exist
+				else {
+					res.json({ message: "Unavailable" });
+				}
+			})
+			.catch((err) => console.log(err));
+	} else {
+		res.json({ message: "Invalid" });
+	}
+});
+
+app.post("/gettravels", (req, res) => {
+	const ticketData = require("./ticketData.json");
+	const response = [];
+	ticketData.forEach((item, i) => {
+		if (item.source.toLowerCase() === req.body.source.toLowerCase()) {
+			response.push(item);
+		}
+	});
+	if(response.length === 0){
+		// res.json({ data: "No data found" });
+		res.status(404).send("Unavailable");
+	}
+	else{
+		res.json(response);
+	}
+	
 });
 
 app.listen(process.env.PORT || 8080, () => console.log("Server is running"));

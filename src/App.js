@@ -5,6 +5,7 @@ import HeaderComponent from "./Components/HeaderComponent";
 import HomePage from "./pages/HomePage";
 import ViewTicketsPage from "./pages/ViewTicketsPage";
 import AuthenticateModalComponent from "./Components/AuthenticateModalComponent";
+import Errorpage from "./pages/Errorpage";
 
 function App() {
 	return (
@@ -22,6 +23,9 @@ function App() {
 						<Route
 							path="/login"
 							component={AuthenticateModalComponent}
+						/>
+						<Route
+							component={Errorpage}
 						/>
 					</Switch>
 				</div>

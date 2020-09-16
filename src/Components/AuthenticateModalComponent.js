@@ -70,6 +70,12 @@ class AuthenticateModalComponent extends Component {
 		return valid;
 	};
 
+	//Format error message while Login/Signup
+	formatErrorMessage = (prevMessage, newMessage) => {
+		if (prevMessage !== "") return prevMessage + " / " + newMessage;
+		else return newMessage;
+	};
+
 	//Signup
 	userSignup = () => {
 		const { signupEmail, signupPwd, signupCPwd } = this.state;
@@ -102,15 +108,21 @@ class AuthenticateModalComponent extends Component {
 						if (message === "success") {
 							this.toggleTab();
 						} else if (message === "duplication") {
-							this.setState((prevState) => ({
+							this.setState({
 								signupEmail: "",
 								signupPwd: "",
 								signupCPwd: "",
 								inputError: true,
-								errorMessage:
-									prevState.errorMessage +
-									"Account already exists",
-							}));
+								errorMessage: "Account already exists",
+							});
+						} else if (message === "Invalid") {
+							this.setState({
+								signupEmail: "",
+								signupPwd: "",
+								signupCPwd: "",
+								inputError: true,
+								errorMessage: "Invalid Email/Password",
+							});
 						}
 					}
 				})
@@ -121,21 +133,24 @@ class AuthenticateModalComponent extends Component {
 			if (!this.validateEmail(signupEmail))
 				this.setState((prevState) => ({
 					inputError: true,
-					errorMessage: prevState.errorMessage + "Incorrect Email",
+					errorMessage: this.formatErrorMessage(prevState.errorMessage , "Incorrect Email"),
 				}));
 			if (!this.validatePassword(signupPwd))
 				this.setState((prevState) => ({
 					inputError: true,
-					//TODO add formatErrorMessage for combining error messages
-					errorMessage:
-						prevState.errorMessage + " / Incorrect Password",
+					errorMessage: this.formatErrorMessage(
+						prevState.errorMessage,
+						"Incorrect Password"
+					),
 				}));
 			if (this.validateConfirmPassword(signupCPwd))
 				console.log(this.state);
 			this.setState((prevState) => ({
 				inputError: true,
-				errorMessage:
-					prevState.errorMessage + " / Passwords Doesn't match",
+				errorMessage: this.formatErrorMessage(
+					prevState.errorMessage,
+					"Passwords Doesn't match"
+				),
 			}));
 		}
 	};
@@ -188,6 +203,14 @@ class AuthenticateModalComponent extends Component {
 								errorMessage: "No account available",
 							});
 						}
+						if(message === "Invalid") {
+							this.setState({
+								loginEmail: "",
+								loginPwd: "",
+								inputError: true,
+								errorMessage: "Invalid Email/Password",
+							});
+						}
 					}
 				})
 				.catch((err) => console.error(err));
@@ -195,13 +218,18 @@ class AuthenticateModalComponent extends Component {
 			if (!this.validateEmail(loginEmail))
 				this.setState((prevState) => ({
 					inputError: true,
-					errorMessage: prevState.errorMessage + "Incorrect Email",
+					errorMessage: this.formatErrorMessage(
+						prevState.errorMessage,
+						"Incorrect Email"
+					),
 				}));
 			if (!this.validatePassword(loginPwd))
 				this.setState((prevState) => ({
 					inputError: true,
-					errorMessage:
-						prevState.errorMessage + " / Incorrect Password",
+					errorMessage: this.formatErrorMessage(
+						prevState.errorMessage,
+						"Incorrect Password"
+					),
 				}));
 		}
 	};
@@ -210,6 +238,7 @@ class AuthenticateModalComponent extends Component {
 		const LoginComponent = (
 			<div className="tab-content">
 				<InputComponent
+					label="Email address"
 					placeholder="Email-id"
 					type="email"
 					value={this.state.loginEmail}
@@ -218,6 +247,7 @@ class AuthenticateModalComponent extends Component {
 					}
 				/>
 				<InputComponent
+					label="Password"
 					placeholder="Password"
 					type="password"
 					value={this.state.loginPwd}
@@ -226,7 +256,8 @@ class AuthenticateModalComponent extends Component {
 					}
 				/>
 				<OutlinedButtonComponent
-					innerHTML="Login to continue the Journey"
+					className=" "
+					innerHTML="Login to continue the Journey ▶"
 					onClick={this.userLogin}
 				/>
 				{/* TODO ADD FORGOT PASSWORD */}
@@ -241,6 +272,7 @@ class AuthenticateModalComponent extends Component {
 		const SignupComponent = (
 			<div className="tab-content">
 				<InputComponent
+					label="Email address"
 					placeholder="Email-id"
 					type="email"
 					value={this.state.signupEmail}
@@ -249,6 +281,7 @@ class AuthenticateModalComponent extends Component {
 					}
 				/>
 				<InputComponent
+					label="Password"
 					placeholder="Password"
 					type="password"
 					value={this.state.signupPwd}
@@ -257,6 +290,7 @@ class AuthenticateModalComponent extends Component {
 					}
 				/>
 				<InputComponent
+					label="Confirm Password"
 					placeholder="Confirm Password"
 					type="password"
 					value={this.state.signupCPwd}
@@ -265,12 +299,13 @@ class AuthenticateModalComponent extends Component {
 					}
 				/>
 				<OutlinedButtonComponent
-					innerHTML="Signup for a new Journey"
+					className=" "
+					innerHTML="Signup for a new Journey ▶"
 					onClick={this.userSignup}
 				/>
 				<div className="tab-content-bottom">
 					<button className="underlined-btn" onClick={this.toggleTab}>
-						Know your way? Log in..
+						Know your way? Log in.. 
 					</button>
 				</div>
 			</div>
@@ -294,35 +329,25 @@ class AuthenticateModalComponent extends Component {
 		return (
 			<div className="modal-container">
 				<div className="modal-content">
-					<div className="tab-title-container">
-						<div className="tab-title">
-							<button
-								className={
-									this.state.loginModal ? "active" : ""
-								}
-								onClick={this.toggleTab}
-							>
-								Login
-							</button>
-						</div>
-						<div className="tab-title">
-							<button
-								className={
-									this.state.loginModal ? "" : "active"
-								}
-								onClick={this.toggleTab}
-							>
-								Signup
-							</button>
-						</div>
+					<div className="modal-content-left">
+						<img src="loginscene.svg" alt="login scene" />
 					</div>
-					<div className="tab-container">
-						{this.state.loginModal
-							? LoginComponent
-							: SignupComponent}
+					<div className="modal-content-right">
+						<div className="tab-title-container">
+							<div className="tab-title">
+								<button onClick={this.toggleTab}>
+									Login/Signup
+								</button>
+							</div>
+						</div>
+						<div className="tab-container">
+							{this.state.loginModal
+								? LoginComponent
+								: SignupComponent}
+						</div>
+						{this.state.inputError ? ErrorAlert : ""}
+						{this.state.loginsuccess ? SuccessAlert : ""}
 					</div>
-					{this.state.inputError ? ErrorAlert : ""}
-					{this.state.loginsuccess ? SuccessAlert : ""}
 				</div>
 			</div>
 		);

@@ -1,24 +1,31 @@
-@import 'variables.scss';
+@import "variables.scss";
 
-.input-container{
-    position: relative;
-    display: inline-block;
-    margin: 2px;
-    width: 100%;
-    input{
-        padding: 5px 20px;
-        margin-right: 2px;
-        outline: none;
-        padding-left: 4px;
-        font-size: $medium-font;
-        border: 1px solid #DDD;
+.input-container {
+	position: relative;
+	display: flex;
+	margin: 2px;
+	width: 100%;
+	flex-direction: column;
+	label {
+		margin-bottom: 5px;
+		font-weight: bold;
+	}
 
-        &:focus{
-            border:1px solid $accent-color;
-        }
+	input {
+		padding: 5px 20px;
+		margin-right: 2px;
+		outline: none;
+		padding-left: 4px;
+		font-size: 1rem;
+		border: 1px solid #ddd;
+		border-radius: 3px;
 
-        @media screen and (max-width: 358px ) {
-            font-size: $small-font;
-        }
-    }
+		&:focus {
+			border: 1px solid $accent-color;
+		}
+
+		@media screen and (max-width: 358px) {
+			font-size: $small-font;
+		}
+	}
 }

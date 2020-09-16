@@ -9,26 +9,31 @@ class InputDropdownComponent extends Component {
 		super(props);
 		// console.log(cities);
 		this.state = {
-            dropdownContent: "",
-            inputValue:''
+			dropdownContent: "",
+			inputValue: "",
 		};
 	}
 
 	searchResults = (value) => {
-        this.setState({inputValue:value})
-        var displayResults = ''
-        const results =  cities.filter(city => city.toLowerCase().includes(value.toLowerCase()));
-        // console.log(results);
-        if(results.length === 0)
-            displayResults = <p>{'No results Found'}</p>;
-        else
-            displayResults = results.map(city => <p onClick = {() => this.setState({inputValue:city})}>{city}</p>)
-        this.setState({dropdownContent : displayResults});
-    };
+		this.setState({ inputValue: value });
+		var displayResults = "";
+		const results = cities.filter((city) =>
+			city.toLowerCase().includes(value.toLowerCase())
+		);
+		// console.log(results);
+		if (results.length === 0) displayResults = <p>{"No results Found"}</p>;
+		else
+			displayResults = results.map((city) => (
+				<p onClick={() => this.setState({ inputValue: city })}>
+					{city}
+				</p>
+			));
+		this.setState({ dropdownContent: displayResults });
+	};
 
 	render() {
 		return (
-			<div className="input-container">
+			<div className="input-dropdown-container">
 				<input
 					type={this.props.type}
 					placeholder={this.props.placeholder}
