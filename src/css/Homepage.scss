@@ -1,49 +1,60 @@
 @import "variables.scss";
 
-.search-container,.search-results-container{
-    height: 100vh;
-    padding-top: 20px;
-    // flex-grow: 1;
-    // align-self: center;
+.search-container,
+.search-results-container {
+	height: 100vh;
+	padding-top: 20px;
+	// flex-grow: 1;
+	// align-self: center;
 
-    .input-group{
-        max-width:1120px;
-        margin: 0 auto;
-        padding-top: 50px;
-        display: grid;
-        grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
-    
-        @media screen  and (min-width:1000px){
-        padding-top: 150px;
-    }
-    }
-    
+	.input-group {
+		max-width: 1120px;
+		margin: 0 auto;
+		padding-top: 50px;
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+
+		@media screen and (min-width: 1000px) {
+			padding-top: 150px;
+		}
+	}
 }
 
-.search-btn-container{
-    margin: 2px;
+.search-btn-container {
+	margin: 2px;
 }
 
-.search-btn{
-        height: 100%;
-        width: 100%;
-        max-height: 40.4px;
-        padding: 7px 20px;
-        outline: none;
-        background-color: $secondary-color;
-        text-align: center;
-        font-size: 1.2em;
-        color:$pale-color-2;
-        border:none;
-        .icon{
-            padding-top: 4px;
-        }
+.search-btn {
+	height: 100%;
+	width: 100%;
+	max-height: 40.4px;
+	padding: 7px 20px;
+	outline: none;
+	background-color: $secondary-color;
+	text-align: center;
+	font-size: 1.2em;
+	color: $pale-color-2;
+	border: none;
+	.icon {
+		padding-top: 4px;
+	}
 
-        &:hover{
-            color:white;
-        }
-        @media screen and (max-width: 358px ) {
-            font-size: $small-font;
-            width: auto;
-        }
-    }
+	&:hover {
+		color: white;
+	}
+	@media screen and (max-width: 358px) {
+		font-size: $small-font;
+		width: auto;
+	}
+}
+
+.search-result-title {
+	display: flex;
+	background-color: $secondary-color;
+	color: white;
+	border: 1px solid #ddd;
+	cursor: pointer;
+	align-items: center;
+	justify-content: space-evenly;
+	flex-wrap: wrap;
+}

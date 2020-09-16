@@ -16,15 +16,24 @@ class InputDropdownComponent extends Component {
 
 	searchResults = (value) => {
 		this.setState({ inputValue: value });
+		this.props.handleInput(value);
 		var displayResults = "";
 		const results = cities.filter((city) =>
 			city.toLowerCase().includes(value.toLowerCase())
 		);
+		const generateKey = (pre,i) => {
+			return `${pre}_${i}_${new Date().getTime()}`;
+		};
 		// console.log(results);
 		if (results.length === 0) displayResults = <p>{"No results Found"}</p>;
 		else
-			displayResults = results.map((city) => (
-				<p onClick={() => this.setState({ inputValue: city })}>
+			displayResults = results.map((city,i) => (
+				<p 
+				key = {generateKey(city,i)}
+				onClick={() => {
+					this.setState({ inputValue: city });
+					this.props.handleInput(city);
+				}}>
 					{city}
 				</p>
 			));

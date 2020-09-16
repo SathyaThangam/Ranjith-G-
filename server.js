@@ -4,8 +4,15 @@ const bcrypt = require("bcrypt");
 const helper = require("./helper");
 const { Users } = require("./models");
 
+const cors = require('cors');
+
 const app = express();
 app.use(express.json());
+// app.use(cors({
+// 	origin:"http://localhost:3000",
+// 	credentials:true
+// }))
+app.use(cors())
 
 // To serve react file in the same port
 // const path = require("path");

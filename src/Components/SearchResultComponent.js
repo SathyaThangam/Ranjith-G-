@@ -1,9 +1,9 @@
-import React from 'react'
+import React from "react";
 
 import "../css/SearchResultComponent.scss";
 
 function SearchResultComponent(props) {
-    return (
+	return (
 		<div className="search-result">
 			<p>{props.name}</p>
 			<p>{props.agency}</p>
@@ -18,4 +18,4 @@ function SearchResultComponent(props) {
 	);
 }
 
-export default SearchResultComponent
+export default SearchResultComponent;

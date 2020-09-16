@@ -12,28 +12,75 @@ class HomePage extends Component {
 		this.resultRef = React.createRef();
 		this.state = {
 			startDate: new Date(),
-			searchResults:""
+			searchResults: "",
+			source: "",
+			destination: "",
+			travelDate: "",
 		};
 	}
 
+	setSource = (value) => {
+		this.setState({ source: value });
+	};
+
+	setDestination = (value) => {
+		this.setState({ destination: value });
+	};
+
+	setTravelDate = (value) => {
+		this.setState({ travelDate: value });
+	};
+
 	resultHandler = () => {
-		const travelData = { source: "Chennai", destination: "Erode" };
+		const { source, destination } = this.state;
+		const travelData = { source, destination };
+		console.log(travelData);
+		const formatDate = (dateString) => {
+			const date = new Date(dateString);
+			var dd = String(date.getDate()).padStart(2, "0");
+			var mm = String(date.getMonth() + 1).padStart(2, "0"); //January is 0!
+			var yyyy = date.getFullYear();
+
+			const resultdate = mm + "-" + dd + "-" + yyyy;
+			return resultdate;
+		};
+		// console.log(this.state.source, this.state.destination);
 		axios
-			.post("/gettravels", travelData)
+			.post("http://localhost:8080/gettravels", travelData)
 			.then((response) => {
 				if (response.status === 200) {
 					const data = response.data;
 					console.log(data[0]);
+					if (data !== null && data.length !== 0) {
+						const searchResults = data.map((bus) => (
+							<SearchResultComponent
+								key={bus.id}
+								agency={bus.agency}
+								name={bus.name}
+								seats={bus.seats}
+								source={bus.source}
+								destination={bus.destination}
+								price={bus.ticketprice}
+								departure={formatDate(bus.sourceTime)}
+								arrival={formatDate(bus.destinationTime)}
+							/>
+						));
+						this.setState({ searchResults });
+					}
 				}
 			})
 			.catch((err) => {
-				if (err.response.data === "Unavailable") {
-					console.log("No data available");
-				}
-				else{
-					console.error(err);
-				}
+				console.log(err);
+				// if (err.response.data === "Unavailable") {
+				// 	console.log("No data available");
+				// } else {
+				// 	console.error(err);
+				// }
 			});
+		// axios
+		// 	.get("http://localhost:8080/ping")
+		// 	.then((res) => console.log(res))
+		// 	.catch((err) => console.log(err));
 		this.resultRef.current.scrollIntoView({
 			behavior: "smooth",
 		});
@@ -53,12 +100,18 @@ class HomePage extends Component {
 						<InputDropdownComponent
 							type="text"
 							placeholder="From.. "
+							handleInput={this.setSource}
 						/>
 						<InputDropdownComponent
 							type="text"
 							placeholder="To.. "
+							handleInput={this.setDestination}
 						/>
-						<InputComponent type="date" placeholder="" />
+						<InputComponent
+							type="date"
+							placeholder=""
+							// value can be accessed using onchange
+						/>
 						<div className="search-btn-container">
 							<button
 								className="search-btn"
@@ -72,17 +125,18 @@ class HomePage extends Component {
 				</div>
 				<div ref={this.resultRef} className="search-results-container">
 					<h1>Search Results</h1>
+					<div className="search-result-title">
+						<p>{"agency"}</p>
+						<p>{"name"}</p>
+						<p>{"seats"}</p>
+						<p>{"source"}</p>
+						<p>{"destination"}</p>
+						<p>{"price"}</p>
+						<p>{"departure"}</p>
+						<p>{"arrival"}</p>
+						<p>{"Get seats"}</p>
+					</div>
 					{this.state.searchResults}
-					<SearchResultComponent
-						agency="Deluxe travels"
-						name="Deluxe travels BUS#5"
-						seats="45"
-						source="Chennai"
-						destination="Pernampattu"
-						price="426"
-						departure="2020-09-16T10:05:19.844Z"
-						arrival="2020-09-17T10:05:19.844Z"
-					/>
 				</div>
 			</div>
 		);
