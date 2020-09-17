@@ -10,15 +10,21 @@
 		"@testing-library/user-event": "^7.2.1",
 		"axios": "^0.20.0",
 		"bcrypt": "^5.0.0",
+		"cookie-parser": "^1.4.5",
 		"cors": "^2.8.5",
+		"dotenv": "^8.2.0",
 		"express": "^4.17.1",
+		"js-cookie": "^2.2.1",
+		"jsonwebtoken": "^8.5.1",
 		"node-sass": "^4.14.1",
 		"pg": "^8.3.3",
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1",
 		"react-router-dom": "^5.2.0",
 		"react-scripts": "3.4.3",
-		"sequelize": "^6.3.5"
+		"react-top-loading-bar": "^2.0.1",
+		"sequelize": "^6.3.5",
+		"uuid": "^8.3.0"
 	},
 	"stylelint": {
 		"extends": "stylelint-config-recommended",
@@ -58,5 +64,6 @@
 	"devDependencies": {
 		"nodemon": "^2.0.4",
 		"sequelize-cli": "^6.2.0"
-	}
+	},
+	"proxy": "http://localhost:8080"
 }

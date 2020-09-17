@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import ErrorIcon from "@material-ui/icons/Error";
 // import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import axios from "axios";
-
+import {withRouter} from "react-router-dom";
+import Cookies from "js-cookie";
 import InputComponent from "./InputComponent";
 import OutlinedButtonComponent from "./OutlinedButtonComponent";
 
@@ -106,7 +107,9 @@ class AuthenticateModalComponent extends Component {
 					const { message } = response.data;
 					if (message !== undefined) {
 						if (message === "success") {
-							this.toggleTab();
+							//TODO go to booking page
+							this.props.handleSession(true);
+							this.props.handleModalClose();
 						} else if (message === "duplication") {
 							this.setState({
 								signupEmail: "",
@@ -133,7 +136,10 @@ class AuthenticateModalComponent extends Component {
 			if (!this.validateEmail(signupEmail))
 				this.setState((prevState) => ({
 					inputError: true,
-					errorMessage: this.formatErrorMessage(prevState.errorMessage , "Incorrect Email"),
+					errorMessage: this.formatErrorMessage(
+						prevState.errorMessage,
+						"Incorrect Email"
+					),
 				}));
 			if (!this.validatePassword(signupPwd))
 				this.setState((prevState) => ({
@@ -187,6 +193,8 @@ class AuthenticateModalComponent extends Component {
 								successMessage: "Login Success",
 								loginsuccess: true,
 							});
+							this.props.handleSession(true);
+							this.props.handleModalClose();
 						}
 						if (message === false) {
 							this.setState({
@@ -203,7 +211,7 @@ class AuthenticateModalComponent extends Component {
 								errorMessage: "No account available",
 							});
 						}
-						if(message === "Invalid") {
+						if (message === "Invalid") {
 							this.setState({
 								loginEmail: "",
 								loginPwd: "",
@@ -233,6 +241,7 @@ class AuthenticateModalComponent extends Component {
 				}));
 		}
 	};
+
 
 	render() {
 		const LoginComponent = (
@@ -305,7 +314,7 @@ class AuthenticateModalComponent extends Component {
 				/>
 				<div className="tab-content-bottom">
 					<button className="underlined-btn" onClick={this.toggleTab}>
-						Know your way? Log in.. 
+						Know your way? Log in..
 					</button>
 				</div>
 			</div>
@@ -354,4 +363,4 @@ class AuthenticateModalComponent extends Component {
 	}
 }
 
-export default AuthenticateModalComponent;
+export default withRouter(AuthenticateModalComponent);
