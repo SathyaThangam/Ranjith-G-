@@ -8,23 +8,22 @@ import AuthenticateModalComponent from "./Components/AuthenticateModalComponent"
 import Errorpage from "./pages/Errorpage";
 import BookingPage from "./pages/BookingPage";
 import ProtectedRoute from "./Components/ProtectedRoute";
-import Cookie from "js-cookie";
-class App extends Component {
 
+class App extends Component {
 	constructor(props) {
-		super(props)
-	
+		super(props);
+
 		this.state = {
-			session:false
-		}
+			session: false,
+		};
 	}
 
 	setSession = (value) => {
 		console.log("session updated");
-		this.setState({session:value});
-	}
+		this.setState({ session: value });
+	};
 
-	render(){
+	render() {
 		return (
 			<Router>
 				<div className="App">
@@ -34,16 +33,21 @@ class App extends Component {
 							<Route
 								path="/"
 								exact
-								render={() => <HomePage handleSession = {this.setSession}/>}
+								render={() => (
+									<HomePage handleSession={this.setSession} />
+								)}
 							/>
 							<ProtectedRoute
 								path="/viewtickets"
 								exact
 								component={ViewTicketsPage}
+								redirect={"/login"}
 							/>
 							<Route
 								path="/login"
-								component={AuthenticateModalComponent}
+								render={() => (
+									<AuthenticateModalComponent handleSession={this.setSession} />
+								)}
 							/>
 							<Route
 								path="/booking/:id"

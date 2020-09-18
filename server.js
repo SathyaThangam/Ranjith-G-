@@ -37,7 +37,6 @@ validatePassword = (value) => {
 generateAccessToken = (data) => {
 	const sessionID = uuidv4();
 	data.sessionID = sessionID;
-	console.log(data);
 	return {
 		accessToken: jwt.sign(data, process.env.ACCESS_TOKEN_SECRET, {
 			expiresIn: "30m",
@@ -47,14 +46,21 @@ generateAccessToken = (data) => {
 };
 
 authenticateUser = (req, res, next) => {
-	//TODO add verfiaction of sessionID
+	//TODO add verfication of sessionID
 	// console.log(req.cookies.token)
+	console.log("sessionID",req.body.sessionID);
 	jwt.verify(
 		req.cookies.token,
 		process.env.ACCESS_TOKEN_SECRET,
 		(err, data) => {
 			if (err) return res.sendStatus(403);
-			else next();
+			else {
+				console.log(data);
+				if(req.body.sessionID === data.sessionID)
+					next();
+				else
+					res.sendStatus(403);
+			}
 		}
 	);
 };
@@ -95,9 +101,13 @@ app.post("/usersignup", (req, res) => {
 							res.cookie("token", accessToken, {
 								httpOnly: true,
 								maxAge: maxAge,
+								sameSite: "strict",
+								secure: true,
 							});
 							res.cookie("sessionID", sessionID, {
 								maxAge: maxAge,
+								sameSite: "strict",
+								secure: true,
 							});
 							res.json({ message: "success" });
 						})
@@ -141,9 +151,13 @@ app.post("/userlogin", (req, res) => {
 							res.cookie("token", accessToken, {
 								httpOnly: true,
 								maxAge: maxAge,
+								sameSite: "strict",
+								secure: true,
 							});
 							res.cookie("sessionID", sessionID, {
 								maxAge: maxAge,
+								sameSite: "strict",
+								secure: true,
 							});
 							res.json({ message: result });
 						});
@@ -173,6 +187,15 @@ app.post("/gettravels", authenticateUser, (req, res) => {
 	} else {
 		res.json(response);
 	}
+});
+
+app.post("/getbusdetails", authenticateUser, (req, res) => {
+	const ticketData = require("./ticketData.json");
+	const busData = ticketData.filter(item => item.id === req.body.busid)[0];
+	if(busData !== undefined)
+		res.json({travelData:busData});
+	else
+		res.sendStatus(403);
 });
 
 app.get("/logout", (req, res) => {

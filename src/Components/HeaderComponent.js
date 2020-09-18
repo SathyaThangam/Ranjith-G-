@@ -5,14 +5,14 @@ import "../css/HeaderComponent.scss";
 import Modal from "@material-ui/core/Modal";
 import AuthenticateModalComponent from "./AuthenticateModalComponent";
 import Cookie from "js-cookie";
-import axios from 'axios';
+import axios from "axios";
 class HeaderComponent extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
 			modalOpen: false,
-			session:false
+			session: false,
 		};
 	}
 
@@ -22,9 +22,7 @@ class HeaderComponent extends Component {
 
 	checkSession = () => {
 		const sessionID = Cookie.get("sessionID");
-		console.log(Cookie.get());
 		const session = sessionID !== undefined;
-		console.log(session,sessionID);
 		if (session !== this.state.session) this.setState({ session });
 	};
 	componentDidMount() {
@@ -37,12 +35,15 @@ class HeaderComponent extends Component {
 
 	logoutHandler = () => {
 		Cookie.remove("sessionID");
-		axios.get('/logout').then((response)=>{
-			this.checkSession();
-		}).catch(err => console.log(err));
-		
+		axios
+			.get("/logout")
+			.then((response) => {
+				this.checkSession();
+			})
+			.catch((err) => console.log(err));
+
 		// this.setState({session:false});
-	}
+	};
 
 	loginButton = (
 		<OutlinedButtonComponent
@@ -58,9 +59,7 @@ class HeaderComponent extends Component {
 		/>
 	);
 
-
 	render() {
-		console.log("header render");
 		return (
 			<div className="header">
 				<div className="header-logo">
@@ -77,7 +76,7 @@ class HeaderComponent extends Component {
 					>
 						View Tickets
 					</NavLink>
-					{this.state.session ? this.logOutButton:this.loginButton}
+					{this.state.session ? this.logOutButton : this.loginButton}
 					<Modal
 						open={this.state.modalOpen}
 						onClose={this.modalClose}

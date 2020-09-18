@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import ErrorIcon from "@material-ui/icons/Error";
-// import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import axios from "axios";
-import {withRouter} from "react-router-dom";
-import Cookies from "js-cookie";
 import InputComponent from "./InputComponent";
 import OutlinedButtonComponent from "./OutlinedButtonComponent";
 
@@ -194,6 +191,7 @@ class AuthenticateModalComponent extends Component {
 								loginsuccess: true,
 							});
 							this.props.handleSession(true);
+							
 							this.props.handleModalClose();
 						}
 						if (message === false) {
@@ -363,4 +361,4 @@ class AuthenticateModalComponent extends Component {
 	}
 }
 
-export default withRouter(AuthenticateModalComponent);
+export default AuthenticateModalComponent;

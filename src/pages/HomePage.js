@@ -7,6 +7,7 @@ import SearchResultComponent from "../Components/SearchResultComponent";
 import Modal from "@material-ui/core/Modal";
 import "../css/Homepage.scss";
 import "/data_unavailable.svg";
+import Cookie from "js-cookie"
 class HomePage extends Component {
 	constructor(props) {
 		super(props);
@@ -39,15 +40,17 @@ class HomePage extends Component {
 	};
 
 	resultHandler = () => {
+		//TODO remove login for accessing this button
 		const { source, destination } = this.state;
-		const travelData = { source, destination };
+		const sessionID = Cookie.get("sessionID");
+		const travelData = { source, destination,sessionID };
 		const formatDate = (dateString) => {
 			const date = new Date(dateString);
 			var dd = String(date.getDate()).padStart(2, "0");
 			var mm = String(date.getMonth() + 1).padStart(2, "0"); //January is 0!
 			var yyyy = date.getFullYear();
 
-			const resultdate = mm + "-" + dd + "-" + yyyy;
+			const resultdate = dd + "-" + mm + "-" + yyyy;
 			return resultdate;
 		};
 		// console.log(this.state.source, this.state.destination);
@@ -78,28 +81,18 @@ class HomePage extends Component {
 			.catch((error) => {
 				console.log(error);
 				if (error.response) {
-					console.log(error.response.data);
-					console.log(error.response.status);
-					console.log(error.response.headers);
+					// console.log(error.response.data);
+					// console.log(error.response.status);
+					// console.log(error.response.headers);
 					var searchResults = <h1>Error</h1>;
 					var search = true;
-					switch (error.response.status) {
-						case 404:
-							searchResults = (
-								<img
-									src="data_unavailable.svg"
-									alt="data unavailable"
-								/>
-							);
-							break;
-						case 403:
-							searchResults = "";
-							search = false;
-							this.setState({modalOpen:true});
-							break;
-						default:
-							searchResults = <h1>Error</h1>;
-							break;
+					if (error.response.status === 404) {
+						searchResults = (
+							<img
+								src="data_unavailable.svg"
+								alt="data unavailable"
+							/>
+						);
 					}
 					this.setState({ searchResults, search });
 				}
@@ -148,21 +141,27 @@ class HomePage extends Component {
 				</div>
 				<div ref={this.resultRef} className="search-results-container">
 					<h1>Search Results</h1>
-					<div className="search-result-title">
-						<p>{"agency"}</p>
-						<p>{"name"}</p>
-						<p>{"seats"}</p>
-						<p>{"source"}</p>
-						<p>{"destination"}</p>
-						<p>{"price"}</p>
-						<p>{"departure"}</p>
-						<p>{"arrival"}</p>
-						<p>{"Get seats"}</p>
-					</div>
-					{this.state.searchResults}
+					<table className="search-table">
+						<thead>
+							<tr className="search-result-title">
+								<td>{"Agency"}</td>
+								<td>{"Source"}</td>
+								<td>{"Departure"}</td>
+								<td>{"Destination"}</td>
+								<td>{"Arrival"}</td>
+								<td>{"Seats"}</td>
+								<td>{"Price"}</td>
+								<td>{"Get seats"}</td>
+							</tr>
+						</thead>
+						<tbody>{this.state.searchResults}</tbody>
+					</table>
 				</div>
 				<Modal open={this.state.modalOpen} onClose={this.modalClose}>
-					<AuthenticateModalComponent handleModalClose = {this.modalClose} handleSession = {this.props.handleSession} />
+					<AuthenticateModalComponent
+						handleModalClose={this.modalClose}
+						handleSession={this.props.handleSession}
+					/>
 				</Modal>
 			</div>
 		);
