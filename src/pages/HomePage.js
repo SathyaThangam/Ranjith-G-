@@ -7,7 +7,7 @@ import SearchResultComponent from "../Components/SearchResultComponent";
 import Modal from "@material-ui/core/Modal";
 import "../css/Homepage.scss";
 import "/data_unavailable.svg";
-import Cookie from "js-cookie"
+import Cookie from "js-cookie";
 class HomePage extends Component {
 	constructor(props) {
 		super(props);
@@ -43,16 +43,8 @@ class HomePage extends Component {
 		//TODO remove login for accessing this button
 		const { source, destination } = this.state;
 		const sessionID = Cookie.get("sessionID");
-		const travelData = { source, destination,sessionID };
-		const formatDate = (dateString) => {
-			const date = new Date(dateString);
-			var dd = String(date.getDate()).padStart(2, "0");
-			var mm = String(date.getMonth() + 1).padStart(2, "0"); //January is 0!
-			var yyyy = date.getFullYear();
+		const travelData = { source, destination, sessionID };
 
-			const resultdate = dd + "-" + mm + "-" + yyyy;
-			return resultdate;
-		};
 		// console.log(this.state.source, this.state.destination);
 		axios
 			.post("/gettravels", travelData)
@@ -70,8 +62,8 @@ class HomePage extends Component {
 								source={bus.source}
 								destination={bus.destination}
 								price={bus.ticketprice}
-								departure={formatDate(bus.sourceTime)}
-								arrival={formatDate(bus.destinationTime)}
+								departure={bus.sourceTime}
+								arrival={bus.destinationTime}
 							/>
 						));
 						this.setState({ searchResults, search: true });

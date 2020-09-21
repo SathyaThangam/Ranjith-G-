@@ -18,22 +18,31 @@ class InputDropdownComponent extends Component {
 		this.setState({ inputValue: value });
 		this.props.handleInput(value);
 		var displayResults = "";
-		const results = cities.filter((city) =>
-			city.toLowerCase().includes(value.toLowerCase())
-		);
-		const generateKey = (pre,i) => {
+		var results = "";
+		if (this.props.dropdownList === undefined) {
+			results = cities.filter((city) =>
+				city.toLowerCase().includes(value.toLowerCase())
+			);
+		} else {
+			const { dropdownList } = this.props;
+			results = dropdownList.filter((city) =>
+				city.toLowerCase().includes(value.toLowerCase())
+			);
+		}
+		const generateKey = (pre, i) => {
 			return `${pre}_${i}_${new Date().getTime()}`;
 		};
 		// console.log(results);
 		if (results.length === 0) displayResults = <p>{"No results Found"}</p>;
 		else
-			displayResults = results.map((city,i) => (
-				<p 
-				key = {generateKey(city,i)}
-				onClick={() => {
-					this.setState({ inputValue: city });
-					this.props.handleInput(city);
-				}}>
+			displayResults = results.map((city, i) => (
+				<p
+					key={generateKey(city, i)}
+					onClick={() => {
+						this.setState({ inputValue: city });
+						this.props.handleInput(city);
+					}}
+				>
 					{city}
 				</p>
 			));

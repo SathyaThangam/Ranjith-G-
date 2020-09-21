@@ -46,7 +46,9 @@ class App extends Component {
 							<Route
 								path="/login"
 								render={() => (
-									<AuthenticateModalComponent handleSession={this.setSession} />
+									<AuthenticateModalComponent
+										handleSession={this.setSession}
+									/>
 								)}
 							/>
 							<Route

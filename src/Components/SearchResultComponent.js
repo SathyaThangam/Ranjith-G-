@@ -3,6 +3,15 @@ import { Link } from "react-router-dom";
 import "../css/SearchResultComponent.scss";
 
 function SearchResultComponent(props) {
+	const formatDate = (dateString) => {
+		const date = new Date(dateString);
+		var dd = String(date.getDate()).padStart(2, "0");
+		var mm = String(date.getMonth() + 1).padStart(2, "0"); //January is 0!
+		var yyyy = date.getFullYear();
+
+		const resultdate = dd + "-" + mm + "-" + yyyy;
+		return resultdate;
+	};
 	return (
 		<React.Fragment>
 			<tr className="search-result">
@@ -16,7 +25,7 @@ function SearchResultComponent(props) {
 				</td>
 				<td>
 					<label>{"Departure: "}</label>
-					{props.departure}
+					{formatDate(props.departure)}
 				</td>
 				<td>
 					<label>{"Destination: "}</label>
@@ -24,7 +33,7 @@ function SearchResultComponent(props) {
 				</td>
 				<td>
 					<label>{"Arrival: "}</label>
-					{props.arrival}
+					{formatDate(props.arrival)}
 				</td>
 				<td>
 					<label>{"Seats: "}</label>
