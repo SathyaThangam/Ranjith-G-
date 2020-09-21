@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { Component } from "react";
 import AuthenticateModalComponent from "../Components/AuthenticateModalComponent";
-import InputComponent from "../Components/InputComponent";
+import DateComponent from "../Components/DateComponent";
 import InputDropdownComponent from "../Components/InputDropdownComponent";
 import SearchResultComponent from "../Components/SearchResultComponent";
 import Modal from "@material-ui/core/Modal";
@@ -115,11 +115,7 @@ class HomePage extends Component {
 							placeholder="To.. "
 							handleInput={this.setDestination}
 						/>
-						<InputComponent
-							type="date"
-							placeholder=""
-							// value can be accessed using onchange
-						/>
+						<DateComponent/>
 						<div className="search-btn-container">
 							<button
 								className="search-btn"
