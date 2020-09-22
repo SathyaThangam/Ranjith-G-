@@ -20,6 +20,7 @@ class AuthenticateModalComponent extends Component {
 			inputError: false,
 			loginsuccess: false,
 		};
+		console.log(props);
 	}
 
 	//Toggle between Login and Signup Component
@@ -107,6 +108,8 @@ class AuthenticateModalComponent extends Component {
 							//TODO go to booking page
 							this.props.handleSession(true);
 							this.props.handleModalClose();
+							if (this.props.location.pathname === "/login")
+								this.props.history.goBack();
 						} else if (message === "duplication") {
 							this.setState({
 								signupEmail: "",
@@ -191,8 +194,11 @@ class AuthenticateModalComponent extends Component {
 								loginsuccess: true,
 							});
 							this.props.handleSession(true);
-							
-							this.props.handleModalClose();
+
+							if (this.props.location !== undefined) {
+								if (this.props.location.pathname === "/login")
+									this.props.history.goBack();
+							} else this.props.handleModalClose();
 						}
 						if (message === false) {
 							this.setState({
@@ -239,7 +245,6 @@ class AuthenticateModalComponent extends Component {
 				}));
 		}
 	};
-
 
 	render() {
 		const LoginComponent = (

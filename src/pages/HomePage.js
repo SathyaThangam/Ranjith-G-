@@ -61,7 +61,7 @@ class HomePage extends Component {
 								seats={bus.seats}
 								source={bus.source}
 								destination={bus.destination}
-								price={bus.ticketprice}
+								ticketprice={bus.ticketprice}
 								departure={bus.sourceTime}
 								arrival={bus.destinationTime}
 							/>
@@ -89,15 +89,9 @@ class HomePage extends Component {
 					this.setState({ searchResults, search });
 				}
 			});
-		// axios
-		// 	.get("http://localhost:8080/ping")
-		// 	.then((res) => console.log(res))
-		// 	.catch((err) => console.log(err));
-		if (this.state.search) {
-			this.resultRef.current.scrollIntoView({
-				behavior: "smooth",
-			});
-		}
+		this.resultRef.current.scrollIntoView({
+			behavior: "smooth",
+		});
 	};
 
 	render() {
@@ -115,7 +109,7 @@ class HomePage extends Component {
 							placeholder="To.. "
 							handleInput={this.setDestination}
 						/>
-						<DateComponent/>
+						<DateComponent />
 						<div className="search-btn-container">
 							<button
 								className="search-btn"

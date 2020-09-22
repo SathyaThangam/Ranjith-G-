@@ -41,7 +41,7 @@ function SearchResultComponent(props) {
 				</td>
 				<td>
 					<label>{"Price: "}</label>
-					{props.price}
+					{props.ticketprice}
 				</td>
 				<td>
 					<Link

@@ -7,10 +7,13 @@ const cookieparser = require("cookie-parser");
 const { v4: uuidv4 } = require("uuid");
 
 const helper = require("./helper");
-const { Users } = require("./models");
+const { Users } = require("../models");
 
 const app = express();
 app.use(express.json());
+
+const razorpayroutes = require("./routes/razorpayroutes");
+
 // app.use(cors({
 // 	origin:"http://localhost:3000",
 // 	credentials:true
@@ -39,7 +42,7 @@ generateAccessToken = (data) => {
 	data.sessionID = sessionID;
 	return {
 		accessToken: jwt.sign(data, process.env.ACCESS_TOKEN_SECRET, {
-			expiresIn: "30m",
+			expiresIn: "60m",
 		}),
 		sessionID: sessionID,
 	};
@@ -48,7 +51,7 @@ generateAccessToken = (data) => {
 authenticateUser = (req, res, next) => {
 	//TODO add verfication of sessionID
 	// console.log(req.cookies.token)
-	console.log("sessionID",req.body.sessionID);
+	console.log("sessionID", req.body.sessionID);
 	jwt.verify(
 		req.cookies.token,
 		process.env.ACCESS_TOKEN_SECRET,
@@ -56,10 +59,8 @@ authenticateUser = (req, res, next) => {
 			if (err) return res.sendStatus(403);
 			else {
 				console.log(data);
-				if(req.body.sessionID === data.sessionID)
-					next();
-				else
-					res.sendStatus(403);
+				if (req.body.sessionID === data.sessionID) next();
+				else res.sendStatus(403);
 			}
 		}
 	);
@@ -76,7 +77,7 @@ app.post("/usersignup", (req, res) => {
 	const email = req.body.email;
 	const password = req.body.password;
 	const saltRounds = 10;
-	const maxAge = 30 * 60 * 1000;
+	const maxAge = 60 * 60 * 1000;
 
 	if (validateEmail(email) && validatePassword(password)) {
 		//Check if the email is unique for eliminating duplication
@@ -127,7 +128,7 @@ app.post("/usersignup", (req, res) => {
 app.post("/userlogin", (req, res) => {
 	const email = req.body.email;
 	const password = req.body.password;
-	const maxAge = 30 * 60 * 1000;
+	const maxAge = 60 * 60 * 1000;
 	if (validateEmail(email) && validatePassword(password)) {
 		//Check if account exists
 		Users.findOne({
@@ -174,7 +175,7 @@ app.post("/userlogin", (req, res) => {
 });
 
 app.post("/gettravels", authenticateUser, (req, res) => {
-	const ticketData = require("./ticketData.json");
+	const ticketData = require("../ticketData.json");
 	const response = [];
 	ticketData.forEach((item, i) => {
 		if (item.source.toLowerCase() === req.body.source.toLowerCase()) {
@@ -190,16 +191,17 @@ app.post("/gettravels", authenticateUser, (req, res) => {
 });
 
 app.post("/getbusdetails", authenticateUser, (req, res) => {
-	const ticketData = require("./ticketData.json");
-	const busData = ticketData.filter(item => item.id === req.body.busid)[0];
-	if(busData !== undefined)
-		res.json({travelData:busData});
-	else
-		res.sendStatus(403);
+	const ticketData = require("../ticketData.json");
+	const busData = ticketData.filter((item) => item.id === req.body.busid)[0];
+	if (busData !== undefined) res.json({ travelData: busData });
+	else res.sendStatus(403);
 });
 
 app.get("/logout", (req, res) => {
 	res.cookie("token", "", { httpOnly: true, maxAge: 0 });
 	res.sendStatus(200);
 });
+
+app.use("/razorpay", razorpayroutes);
+
 app.listen(process.env.PORT || 8080, () => console.log("Server is running"));

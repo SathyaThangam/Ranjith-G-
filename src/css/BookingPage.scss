@@ -10,6 +10,23 @@
 		font-size: $medium-font;
 		color: $secondary-color;
 		margin-bottom: 10px;
+
+		& > button {
+			margin-left: 20px;
+			font-size: $small-font;
+			background-color: $secondary-color;
+			color: white;
+			border: none;
+			cursor: pointer;
+
+			&:hover {
+				background-color: white;
+				color: $secondary-color;
+			}
+			&:disabled {
+				cursor: not-allowed;
+			}
+		}
 	}
 }
 
@@ -132,9 +149,9 @@
 		}
 		&:last-child {
 			border-bottom: none;
-        }
-        &:only-child{
-            border-bottom: none;
-        }
+		}
+		&:only-child {
+			border-bottom: none;
+		}
 	}
 }

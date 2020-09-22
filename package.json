@@ -19,6 +19,7 @@
 		"jsonwebtoken": "^8.5.1",
 		"node-sass": "^4.14.1",
 		"pg": "^8.3.3",
+		"razorpay": "^2.0.6",
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1",
 		"react-nice-dates": "^3.0.7",
@@ -26,6 +27,7 @@
 		"react-scripts": "3.4.3",
 		"react-top-loading-bar": "^2.0.1",
 		"sequelize": "^6.3.5",
+		"uid": "^1.0.0",
 		"uuid": "^8.3.0"
 	},
 	"stylelint": {
@@ -46,7 +48,7 @@
 		"build": "react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject",
-		"dev": "nodemon server.js"
+		"dev": "nodemon server/server.js"
 	},
 	"eslintConfig": {
 		"extends": "react-app"
