@@ -25,13 +25,6 @@ class HeaderComponent extends Component {
 		const session = sessionID !== undefined;
 		if (session !== this.state.session) this.setState({ session });
 	};
-	componentDidMount() {
-		this.checkSession();
-	}
-
-	componentDidUpdate() {
-		this.checkSession();
-	}
 
 	logoutHandler = () => {
 		Cookie.remove("sessionID");
@@ -58,6 +51,14 @@ class HeaderComponent extends Component {
 			onClick={this.logoutHandler}
 		/>
 	);
+
+	componentDidMount() {
+		this.checkSession();
+	}
+
+	componentDidUpdate() {
+		this.checkSession();
+	}
 
 	render() {
 		return (

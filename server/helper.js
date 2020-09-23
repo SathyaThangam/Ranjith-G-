@@ -19,4 +19,35 @@ function uid(options = {}) {
 	return output;
 }
 
+//JWT helper functions
+const jwt = require("jsonwebtoken");
+const { v4: uuidv4 } = require("uuid");
+
+authenticateUser = (req, res, next) => {
+	jwt.verify(
+		req.cookies.token,
+		process.env.ACCESS_TOKEN_SECRET,
+		(err, data) => {
+			if (err) return res.sendStatus(403);
+			else {
+				if (req.body.sessionID === data.sessionID) next();
+				else res.sendStatus(403);
+			}
+		}
+	);
+};
+
+generateAccessToken = (data) => {
+	const sessionID = uuidv4();
+	data.sessionID = sessionID;
+	return {
+		accessToken: jwt.sign(data, process.env.ACCESS_TOKEN_SECRET, {
+			expiresIn: "60m",
+		}),
+		sessionID: sessionID,
+	};
+};
+
 exports.uid = uid;
+exports.authenticateUser = authenticateUser;
+exports.generateAccessToken = generateAccessToken;

@@ -184,7 +184,6 @@ class AuthenticateModalComponent extends Component {
 					const { message } = response.data;
 					if (message !== undefined) {
 						if (message === true) {
-							//TODO add protect routes
 							this.setState({
 								loginEmail: "",
 								loginPwd: "",
@@ -193,6 +192,7 @@ class AuthenticateModalComponent extends Component {
 								successMessage: "Login Success",
 								loginsuccess: true,
 							});
+							
 							this.props.handleSession(true);
 
 							if (this.props.location !== undefined) {
@@ -332,8 +332,6 @@ class AuthenticateModalComponent extends Component {
 
 		const SuccessAlert = (
 			<div className="alert success">
-				{/* //TODO remove icon if not needed */}
-				{/* <CheckCircleIcon /> */}
 				{this.state.successMessage}
 			</div>
 		);

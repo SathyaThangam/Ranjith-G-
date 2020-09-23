@@ -2,24 +2,20 @@ const express = require("express");
 require("dotenv").config();
 const bcrypt = require("bcrypt");
 const cors = require("cors");
-const jwt = require("jsonwebtoken");
 const cookieparser = require("cookie-parser");
-const { v4: uuidv4 } = require("uuid");
 
-const helper = require("./helper");
+const { uid, authenticateUser, generateAccessToken } = require("./helper");
 const { Users } = require("../models");
-
-const app = express();
-app.use(express.json());
-
 const razorpayroutes = require("./routes/razorpayroutes");
 
-// app.use(cors({
-// 	origin:"http://localhost:3000",
-// 	credentials:true
-// }))
+const app = express();
+
+//middlewares
+app.use(express.json());
 app.use(cors());
 app.use(cookieparser());
+app.use("/razorpay", authenticateUser, razorpayroutes);
+
 // To serve react file in the same port
 // const path = require("path");
 // app.use(express.static(path.join(__dirname, "build")));
@@ -27,6 +23,7 @@ app.use(cookieparser());
 // 	res.sendFile(path.join(__dirname, "build", "index.html"));
 // });
 
+//Server side Validation
 validateEmail = (value) => {
 	const re = /^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/;
 	return re.test(value);
@@ -37,39 +34,9 @@ validatePassword = (value) => {
 	return re.test(value);
 };
 
-generateAccessToken = (data) => {
-	const sessionID = uuidv4();
-	data.sessionID = sessionID;
-	return {
-		accessToken: jwt.sign(data, process.env.ACCESS_TOKEN_SECRET, {
-			expiresIn: "60m",
-		}),
-		sessionID: sessionID,
-	};
-};
-
-authenticateUser = (req, res, next) => {
-	//TODO add verfication of sessionID
-	// console.log(req.cookies.token)
-	console.log("sessionID", req.body.sessionID);
-	jwt.verify(
-		req.cookies.token,
-		process.env.ACCESS_TOKEN_SECRET,
-		(err, data) => {
-			if (err) return res.sendStatus(403);
-			else {
-				console.log(data);
-				if (req.body.sessionID === data.sessionID) next();
-				else res.sendStatus(403);
-			}
-		}
-	);
-};
-
 //Endpoint to check if connection has established
 app.get("/ping", function (req, res) {
 	return res.send("pong");
-	// return res.send(helper.uid({ prefix: "IND" }));
 });
 
 //Signup Endopint
@@ -77,7 +44,7 @@ app.post("/usersignup", (req, res) => {
 	const email = req.body.email;
 	const password = req.body.password;
 	const saltRounds = 10;
-	const maxAge = 60 * 60 * 1000;
+	const maxAge = 60 * 60 * 1000; // minutes * seconds * milliseconds
 
 	if (validateEmail(email) && validatePassword(password)) {
 		//Check if the email is unique for eliminating duplication
@@ -85,7 +52,7 @@ app.post("/usersignup", (req, res) => {
 			//if email doesn't exist in the server
 			if (token === null) {
 				//Generate a unique id
-				const id = helper.uid({ prefix: "IND" });
+				const id = uid({ prefix: "IND" });
 				//hash the password and store it in the DB
 				const userData = { id: id, email };
 				const { accessToken, sessionID } = generateAccessToken(
@@ -171,6 +138,7 @@ app.post("/userlogin", (req, res) => {
 	}
 });
 
+//Endpoint to get buses available for a source
 app.post("/gettravels", authenticateUser, (req, res) => {
 	const ticketData = require("../ticketData.json");
 	const response = [];
@@ -180,13 +148,13 @@ app.post("/gettravels", authenticateUser, (req, res) => {
 		}
 	});
 	if (response.length === 0) {
-		// res.json({ data: "No data found" });
 		res.status(404).send("Unavailable");
 	} else {
 		res.json(response);
 	}
 });
 
+//get the bus details using id
 app.post("/getbusdetails", authenticateUser, (req, res) => {
 	const ticketData = require("../ticketData.json");
 	const busData = ticketData.filter((item) => item.id === req.body.busid)[0];
@@ -194,11 +162,10 @@ app.post("/getbusdetails", authenticateUser, (req, res) => {
 	else res.sendStatus(403);
 });
 
-app.get("/logout", (req, res) => {
+//Logout Endpoint
+app.get("/logout", authenticateUser, (req, res) => {
 	res.cookie("token", "", { httpOnly: true, maxAge: 0 });
 	res.sendStatus(200);
 });
-
-app.use("/razorpay", razorpayroutes);
 
 app.listen(process.env.PORT || 8080, () => console.log("Server is running"));

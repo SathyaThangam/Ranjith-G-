@@ -1,11 +1,11 @@
-import React from 'react'
-import {Link} from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
 import "/error404.svg";
-import "../css/Errorpage.scss"
+import "../css/Errorpage.scss";
 
 function Errorpage() {
-    return (
+	return (
 		<div className="error-img-container">
 			<img src="error404.svg" alt="404 not found" />
 			<h1>Can't seem to find the page...</h1>
@@ -16,4 +16,4 @@ function Errorpage() {
 	);
 }
 
-export default Errorpage
+export default Errorpage;

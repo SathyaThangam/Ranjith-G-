@@ -1,55 +1,22 @@
-//RAZORPAY include the requirements
 const express = require("express");
 const router = express.Router();
 const cookieparser = require("cookie-parser");
 const Razorpay = require("razorpay");
 const request = require("request");
-const jwt = require("jsonwebtoken");
 const uid = require("uid");
 
-
+//Razorpay instance
 const instance = new Razorpay({
 	key_id: process.env.RAZORPAY_API_KEY,
 	key_secret: process.env.RAZORPAY_API_SECRET,
 });
 
-authenticateUser = (req, res, next) => {
-	//TODO add verfication of sessionID
-	// console.log(req.cookies.token)
-	console.log("sessionID", req.body.sessionID);
-	console.log("token", req.cookies);
-	jwt.verify(
-		req.cookies.token,
-		process.env.ACCESS_TOKEN_SECRET,
-		(err, data) => {
-			if (err) return res.sendStatus(403);
-			else {
-				console.log("authenticate",data);
-				if (req.body.sessionID === data.sessionID) next();
-				else res.sendStatus(403);
-			}
-		}
-	);
-};
-
-parseJWT = (jwtToken) => {
-	jwt.verify(
-		jwtToken,
-		process.env.ACCESS_TOKEN_SECRET,
-		(err, data) => {
-			if (err) return null;
-			else {
-				console.log("authenticate", data);
-				return data;
-			}
-		}
-	);
-
-}
-
+//middlewares
 router.use(express.json());
 router.use(cookieparser());
-router.post("/order",authenticateUser, (req, res) => {
+
+//Endpoint to create an order object for the transaction
+router.post("/order", (req, res) => {
 	const amount = req.body.totalprice;
 	console.log(req.body);
 	try {
@@ -63,7 +30,7 @@ router.post("/order",authenticateUser, (req, res) => {
 		console.log("options", options);
 		instance.orders.create(options, async function (err, order) {
 			if (err) {
-				console.log("inside",err);
+				console.log("inside", err);
 				return res.status(500).json({
 					message: "Something Went Wrong",
 				});
@@ -71,13 +38,14 @@ router.post("/order",authenticateUser, (req, res) => {
 			return res.status(200).json(order);
 		});
 	} catch (err) {
-		console.log("outside err",err);
+		console.log("outside err", err);
 		return res.status(500).json({
 			message: "Something Went Wrong",
 		});
 	}
 });
 
+//Capture the payment
 router.post("/capture/:paymentId", (req, res) => {
 	const token = req.cookies.token;
 	const url = `https://${process.env.RAZORPAY_API_KEY}:${process.env.RAZORPAY_API_SECRET}@api.razorpay.com/v1/payments/${req.params.paymentId}/capture`;
@@ -101,9 +69,7 @@ router.post("/capture/:paymentId", (req, res) => {
 				// console.log("Headers:", JSON.stringify(response.headers));
 				// const captureData = JSON.parse(body);
 				console.log(req.body);
-				const userData = parseJWT(token);
-				console.log("userData",userData);
-				console.log("ticketData",req.body.bookingDetails.ticketData);
+				console.log("ticketData", req.body.bookingDetails.ticketData);
 				return res.status(200).json(body);
 			}
 		);
@@ -116,4 +82,3 @@ router.post("/capture/:paymentId", (req, res) => {
 });
 
 module.exports = router;
-

@@ -8,19 +8,20 @@ import AuthenticateModalComponent from "./Components/AuthenticateModalComponent"
 import Errorpage from "./pages/Errorpage";
 import BookingPage from "./pages/BookingPage";
 import ProtectedRoute from "./Components/ProtectedRoute";
-import VerifyDetails from "./pages/VerifyDetails";
 
 class App extends Component {
 	constructor(props) {
 		super(props);
 
+		//state to handle login session
 		this.state = {
 			session: false,
 		};
 	}
 
+	// session Handler - passed through props to handle login session
 	setSession = (value) => {
-		console.log("session updated",value);
+		console.log("session updated", value);
 		this.setState({ session: value });
 	};
 
@@ -56,11 +57,6 @@ class App extends Component {
 							<Route
 								path="/booking/:id"
 								component={BookingPage}
-							/>
-							<ProtectedRoute
-								path="/verifydetails"
-								component={VerifyDetails}
-								redirect={"/login"}
 							/>
 							{/* 404 Error page Should be last route of switch */}
 							<Route component={Errorpage} />

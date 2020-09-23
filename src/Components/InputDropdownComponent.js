@@ -7,7 +7,6 @@ import cities from "../data/cities-name-list.json";
 class InputDropdownComponent extends Component {
 	constructor(props) {
 		super(props);
-		// console.log(cities);
 		this.state = {
 			dropdownContent: "",
 			inputValue: "",

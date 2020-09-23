@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "../css/SearchResultComponent.scss";
 
 function SearchResultComponent(props) {
+	// Format date to DDD, DD-MM-YYYY Tue, 23-09-2020
 	const formatDate = (dateString) => {
 		const date = new Date(dateString);
 		var dd = String(date.getDate()).padStart(2, "0");
@@ -12,6 +13,7 @@ function SearchResultComponent(props) {
 		const resultdate = dd + "-" + mm + "-" + yyyy;
 		return resultdate;
 	};
+	//React.Fragment used since we only need the table rows to be nested inside the table
 	return (
 		<React.Fragment>
 			<tr className="search-result">

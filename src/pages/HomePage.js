@@ -11,6 +11,7 @@ import Cookie from "js-cookie";
 class HomePage extends Component {
 	constructor(props) {
 		super(props);
+		//Reference for search results
 		this.resultRef = React.createRef();
 		this.state = {
 			startDate: new Date(),
@@ -18,11 +19,11 @@ class HomePage extends Component {
 			source: "",
 			destination: "",
 			travelDate: "",
-			search: null,
 			modalOpen: false,
 		};
 	}
 
+	// state Controllers
 	setSource = (value) => {
 		this.setState({ source: value });
 	};
@@ -40,12 +41,11 @@ class HomePage extends Component {
 	};
 
 	resultHandler = () => {
-		//TODO remove login for accessing this button
 		const { source, destination } = this.state;
 		const sessionID = Cookie.get("sessionID");
 		const travelData = { source, destination, sessionID };
 
-		// console.log(this.state.source, this.state.destination);
+		// Fetch the bus data
 		axios
 			.post("/gettravels", travelData)
 			.then((response) => {
@@ -66,18 +66,14 @@ class HomePage extends Component {
 								arrival={bus.destinationTime}
 							/>
 						));
-						this.setState({ searchResults, search: true });
+						this.setState({ searchResults });
 					}
 				}
 			})
 			.catch((error) => {
 				console.log(error);
 				if (error.response) {
-					// console.log(error.response.data);
-					// console.log(error.response.status);
-					// console.log(error.response.headers);
 					var searchResults = <h1>Error</h1>;
-					var search = true;
 					if (error.response.status === 404) {
 						searchResults = (
 							<img
@@ -86,9 +82,10 @@ class HomePage extends Component {
 							/>
 						);
 					}
-					this.setState({ searchResults, search });
+					this.setState({ searchResults });
 				}
 			});
+		//scroll to results
 		this.resultRef.current.scrollIntoView({
 			behavior: "smooth",
 		});
@@ -126,14 +123,14 @@ class HomePage extends Component {
 					<table className="search-table">
 						<thead>
 							<tr className="search-result-title">
-								<td>{"Agency"}</td>
-								<td>{"Source"}</td>
-								<td>{"Departure"}</td>
-								<td>{"Destination"}</td>
-								<td>{"Arrival"}</td>
-								<td>{"Seats"}</td>
-								<td>{"Price"}</td>
-								<td>{"Get seats"}</td>
+								<td>Agency</td>
+								<td>Source</td>
+								<td>Departure</td>
+								<td>Destination</td>
+								<td>Arrival</td>
+								<td>Seats</td>
+								<td>Price</td>
+								<td>Get seats</td>
 							</tr>
 						</thead>
 						<tbody>{this.state.searchResults}</tbody>
