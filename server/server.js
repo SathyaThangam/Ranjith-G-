@@ -103,12 +103,11 @@ app.post("/usersignup", (req, res) => {
 								httpOnly: true,
 								maxAge: maxAge,
 								sameSite: "strict",
-								secure: true,
 							});
 							res.cookie("sessionID", sessionID, {
 								maxAge: maxAge,
 								sameSite: "strict",
-								secure: true,
+								// secure: true,
 							});
 							res.json({ message: "success" });
 						})
@@ -153,12 +152,10 @@ app.post("/userlogin", (req, res) => {
 								httpOnly: true,
 								maxAge: maxAge,
 								sameSite: "strict",
-								secure: true,
 							});
 							res.cookie("sessionID", sessionID, {
 								maxAge: maxAge,
 								sameSite: "strict",
-								secure: true,
 							});
 							res.json({ message: result });
 						});

@@ -179,7 +179,7 @@ class AuthenticateModalComponent extends Component {
 				password: loginPwd,
 			};
 			axios
-				.post("/userlogin", userData)
+				.post("/userlogin", userData,)
 				.then((response) => {
 					const { message } = response.data;
 					if (message !== undefined) {
