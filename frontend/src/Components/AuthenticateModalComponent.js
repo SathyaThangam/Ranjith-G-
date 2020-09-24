@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import ErrorIcon from "@material-ui/icons/Error";
-import axios from "axios";
-
+import { postRequest } from "../helpers/request-helper";
 import {
 	validateEmail,
 	validatePassword,
@@ -38,7 +37,7 @@ class AuthenticateModalComponent extends Component {
 	};
 
 	//Signup
-	userSignup = async () => {
+	userSignup = () => {
 		const { signupEmail, signupPwd, signupCPwd } = this.state;
 
 		this.setState({
@@ -51,7 +50,7 @@ class AuthenticateModalComponent extends Component {
 		if (
 			validateEmail(signupEmail) &&
 			validatePassword(signupPwd) &&
-			validateConfirmPassword(signupCPwd)
+			validateConfirmPassword(signupPwd,signupCPwd)
 		) {
 			//Data for server
 			const userData = {
@@ -60,42 +59,37 @@ class AuthenticateModalComponent extends Component {
 			};
 
 			//Connect to server
-			try {
-				await axios
-					.post("/user/signup", userData)
-					.then((response) => {
-						//get response body
-						const { message } = response.data;
-						if (message !== undefined) {
-							if (message === "success") {
-								//TODO go to booking page
-								this.props.handleSession(true);
-								this.props.handleModalClose();
-								if (this.props.location.pathname === "/login")
-									this.props.history.goBack();
-							} else if (message === "duplication") {
-								this.setState({
-									signupEmail: "",
-									signupPwd: "",
-									signupCPwd: "",
-									inputError: true,
-									errorMessage: "Account already exists",
-								});
-							} else if (message === "Invalid") {
-								this.setState({
-									signupEmail: "",
-									signupPwd: "",
-									signupCPwd: "",
-									inputError: true,
-									errorMessage: "Invalid Email/Password",
-								});
-							}
+			postRequest("/user/signup", userData)
+				.then((response) => {
+					//get response body
+					const { message } = response.data;
+					if (message !== undefined) {
+						if (message === "success") {
+							//TODO go to booking page
+							this.props.handleSession(true);
+							this.props.handleModalClose();
+							if (this.props.location.pathname === "/login")
+								this.props.history.goBack();
+						} else if (message === "duplication") {
+							this.setState({
+								signupEmail: "",
+								signupPwd: "",
+								signupCPwd: "",
+								inputError: true,
+								errorMessage: "Account already exists",
+							});
+						} else if (message === "Invalid") {
+							this.setState({
+								signupEmail: "",
+								signupPwd: "",
+								signupCPwd: "",
+								inputError: true,
+								errorMessage: "Invalid Email/Password",
+							});
 						}
-					})
-					.catch((err) => console.error(err));
-			} catch (error) {
-				console.log(error);
-			}
+					}
+				})
+				.catch((err) => console.error(err));
 		}
 		//Validation Error
 		else {
@@ -115,7 +109,8 @@ class AuthenticateModalComponent extends Component {
 						"Incorrect Password"
 					),
 				}));
-			if (!validateConfirmPassword(signupPwd,signupCPwd)) console.log(this.state);
+			if (!validateConfirmPassword(signupPwd, signupCPwd))
+				console.log(this.state);
 			this.setState((prevState) => ({
 				inputError: true,
 				errorMessage: formatErrorMessage(
@@ -127,7 +122,7 @@ class AuthenticateModalComponent extends Component {
 	};
 
 	//Login
-	userLogin = async () => {
+	userLogin = () => {
 		const { loginEmail, loginPwd } = this.state;
 
 		this.setState({
@@ -143,61 +138,53 @@ class AuthenticateModalComponent extends Component {
 				email: loginEmail,
 				password: loginPwd,
 			};
-			try {
-				await axios
-					.post("/user/login", userData)
-					.then((response) => {
-						const { message } = response.data;
-						if (message !== undefined) {
-							if (message === true) {
-								this.setState({
-									loginEmail: "",
-									loginPwd: "",
-									inputError: false,
-									errorMessage: "",
-									successMessage: "Login Success",
-									loginsuccess: true,
-								});
+			postRequest("/user/login", userData)
+				.then((response) => {
+					const { message } = response.data;
+					if (message !== undefined) {
+						if (message === true) {
+							this.setState({
+								loginEmail: "",
+								loginPwd: "",
+								inputError: false,
+								errorMessage: "",
+								successMessage: "Login Success",
+								loginsuccess: true,
+							});
 
-								this.props.handleSession(true);
+							this.props.handleSession(true);
 
-								if (this.props.location !== undefined) {
-									if (
-										this.props.location.pathname ===
-										"/login"
-									)
-										this.props.history.goBack();
-								} else this.props.handleModalClose();
-							}
-							if (message === false) {
-								this.setState({
-									loginEmail: "",
-									loginPwd: "",
-									inputError: true,
-									errorMessage: "Incorrect Email/Password",
-								});
-							}
-							if (message === "Unavailable") {
-								this.toggleTab();
-								this.setState({
-									inputError: true,
-									errorMessage: "No account available",
-								});
-							}
-							if (message === "Invalid") {
-								this.setState({
-									loginEmail: "",
-									loginPwd: "",
-									inputError: true,
-									errorMessage: "Invalid Email/Password",
-								});
-							}
+							if (this.props.location !== undefined) {
+								if (this.props.location.pathname === "/login")
+									this.props.history.goBack();
+							} else this.props.handleModalClose();
 						}
-					})
-					.catch((err) => console.error(err));
-			} catch (error) {
-				console.log(error);
-			}
+						if (message === false) {
+							this.setState({
+								loginEmail: "",
+								loginPwd: "",
+								inputError: true,
+								errorMessage: "Incorrect Email/Password",
+							});
+						}
+						if (message === "Unavailable") {
+							this.toggleTab();
+							this.setState({
+								inputError: true,
+								errorMessage: "No account available",
+							});
+						}
+						if (message === "Invalid") {
+							this.setState({
+								loginEmail: "",
+								loginPwd: "",
+								inputError: true,
+								errorMessage: "Invalid Email/Password",
+							});
+						}
+					}
+				})
+				.catch((err) => console.error(err));
 		} else {
 			if (!validateEmail(loginEmail))
 				this.setState((prevState) => ({
@@ -219,7 +206,6 @@ class AuthenticateModalComponent extends Component {
 	};
 
 	render() {
-
 		const ErrorAlert = (
 			<div className="alert">
 				<ErrorIcon />

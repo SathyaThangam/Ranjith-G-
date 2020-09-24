@@ -1,3 +1,4 @@
+//filter cities
 exports.getMatchingCities = (city) => {
 	const cities = require("../data/cities-name-list.json");
 	return cities.filter((value) =>

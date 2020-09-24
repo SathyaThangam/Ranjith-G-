@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { Component } from "react";
 import AuthenticateModalComponent from "../Components/AuthenticateModalComponent";
 import DateComponent from "../Components/DateComponent";
@@ -8,6 +7,7 @@ import Modal from "@material-ui/core/Modal";
 import "../css/Homepage.scss";
 import "/data_unavailable.svg";
 import Cookie from "js-cookie";
+import { postRequest } from "../helpers/request-helper";
 class HomePage extends Component {
 	constructor(props) {
 		super(props);
@@ -40,55 +40,50 @@ class HomePage extends Component {
 		this.setState({ modalOpen: false });
 	};
 
-	resultHandler = async () => {
+	resultHandler = () => {
 		const { source, destination } = this.state;
 		const sessionID = Cookie.get("sessionID");
 		const travelData = { source, destination, sessionID };
 
 		// Fetch the bus data
-		try {
-			await axios
-				.post("/data/gettravels", travelData)
-				.then((response) => {
-					if (response.status === 200) {
-						const data = response.data;
-						if (data !== null && data.length !== 0) {
-							const searchResults = data.map((bus) => (
-								<SearchResultComponent
-									key={bus.id}
-									id={bus.id}
-									agency={bus.agency}
-									name={bus.name}
-									seats={bus.seats}
-									source={bus.source}
-									destination={bus.destination}
-									ticketprice={bus.ticketprice}
-									departure={bus.sourceTime}
-									arrival={bus.destinationTime}
-								/>
-							));
-							this.setState({ searchResults });
-						}
-					}
-				})
-				.catch((error) => {
-					console.log(error);
-					if (error.response) {
-						var searchResults = <h1>Error</h1>;
-						if (error.response.status === 404) {
-							searchResults = (
-								<img
-									src="data_unavailable.svg"
-									alt="data unavailable"
-								/>
-							);
-						}
+		postRequest("/data/gettravels", travelData)
+			.then((response) => {
+				if (response.status === 200) {
+					const data = response.data;
+					if (data !== null && data.length !== 0) {
+						const searchResults = data.map((bus) => (
+							<SearchResultComponent
+								key={bus.id}
+								id={bus.id}
+								agency={bus.agency}
+								name={bus.name}
+								seats={bus.seats}
+								source={bus.source}
+								destination={bus.destination}
+								ticketprice={bus.ticketprice}
+								departure={bus.sourceTime}
+								arrival={bus.destinationTime}
+							/>
+						));
 						this.setState({ searchResults });
 					}
-				});
-		} catch (error) {
-			console.log(error);
-		}
+				}
+			})
+			.catch((error) => {
+				console.log(error);
+				if (error.response) {
+					var searchResults = <h1>Error</h1>;
+					if (error.response.status === 404) {
+						searchResults = (
+							<img
+								src="data_unavailable.svg"
+								alt="data unavailable"
+							/>
+						);
+					}
+					this.setState({ searchResults });
+				}
+			});
 		//scroll to results
 		this.resultRef.current.scrollIntoView({
 			behavior: "smooth",

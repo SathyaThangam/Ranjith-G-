@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { v4 as uuidv4 } from "uuid";
-import axios from "axios";
 import Cookie from "js-cookie";
 import "../css/BookingPage.scss";
 import TicketComponent from "../Components/TicketComponent";
 import { getTravelTimeObject } from "../helpers/helper";
+import { postRequest } from "../helpers/request-helper";
 class BookingPage extends Component {
 	constructor(props) {
 		super(props);
@@ -82,9 +82,7 @@ class BookingPage extends Component {
 
 	//Payment Gateway
 	paymentHandler = async (bookingDetails) => {
-		const { routeData } = this.state;
-		console.log(routeData.price);
-		const API_URL = "/payment/";
+		const API_ENDPOINT = "/payment/";
 		const sessionID = Cookie.get("sessionID");
 		const itemData = {
 			bookingDetails,
@@ -92,22 +90,20 @@ class BookingPage extends Component {
 			sessionID,
 		};
 		console.log("Payment handler");
-		const orderUrl = `${API_URL}order`;
+		const orderUrl = `${API_ENDPOINT}order`;
 		try {
-			const response = await axios.post(orderUrl, itemData);
+			const response = await postRequest(orderUrl, itemData);
 			const { data } = response;
-			console.log("response", response);
 			const options = {
 				key: process.env.RAZORPAY_API_KEY,
 				name: "getBus",
 				description: "Tickets",
 				order_id: data.id,
-				handler: async (response) => {
+				handler: (response) => {
 					try {
 						const paymentId = response.razorpay_payment_id;
-						const url = `${API_URL}capture/${paymentId}`;
-						await axios
-							.post(url, itemData)
+						const url = `${API_ENDPOINT}capture/${paymentId}`;
+							postRequest(url, itemData)
 							.then((res) => {
 								const data = JSON.parse(res.data);
 								if (data.status === "captured") {
@@ -142,36 +138,33 @@ class BookingPage extends Component {
 		) {
 			bookingDetails = { contactEmail, contactPhoneNo, ticketData };
 			this.paymentHandler(bookingDetails);
-			console.log(bookingDetails);
-			console.log("ticketData", this.state.ticketData);
 		} else {
 			console.log("check again");
 		}
 	};
 
 	// Load data from server if the props is missing
-	loadBookingData = async () => {
+	loadBookingData = () => {
 		if (this.props.location.routeData === undefined) {
 			const busID = this.props.match.params.id;
 			var routeData = "";
 			const sessionID = Cookie.get("sessionID");
-			try {
-				await axios
-					.post("/data/getbusdetails", { busid: busID, sessionID })
-					.then((res) => {
-						console.log("Props from server", res);
-						routeData = res.data.travelData;
-						this.setState({
-							routeData: routeData,
-							...getTravelTimeObject(
-								routeData.sourceTime,
-								routeData.destinationTime
-							),
-						});
+			postRequest("/data/getbusdetails", {
+				busid: busID,
+				sessionID,
+			}).then((res) => {
+				if(res !== undefined){
+					console.log("Props from server", res);
+					routeData = res.data.travelData;
+					this.setState({
+						routeData: routeData,
+						...getTravelTimeObject(
+							routeData.sourceTime,
+							routeData.destinationTime
+						),
 					});
-			} catch (error) {
-				console.log(error);
-			}
+				}
+			}).catch(err => console.log(err))
 		} else {
 			console.log("Props", this.props.location.routeData);
 			routeData = this.props.location.routeData;
@@ -179,10 +172,9 @@ class BookingPage extends Component {
 				routeData: routeData,
 				...getTravelTimeObject(routeData.departure, routeData.arrival),
 			});
-			console.log(this.state);
 		}
 	};
-	
+
 	componentDidMount() {
 		this.loadBookingData();
 	}

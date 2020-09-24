@@ -5,8 +5,8 @@ import "../css/HeaderComponent.scss";
 import Modal from "@material-ui/core/Modal";
 import AuthenticateModalComponent from "./AuthenticateModalComponent";
 import Cookie from "js-cookie";
-import axios from "axios";
 import { isAuthenticated } from "../helpers/helper";
+import { postRequest } from "../helpers/request-helper";
 class HeaderComponent extends Component {
 	constructor(props) {
 		super(props);
@@ -28,19 +28,14 @@ class HeaderComponent extends Component {
 		if (session !== this.state.session) this.setState({ session });
 	};
 
-	logoutHandler = async () => {
+	logoutHandler = () => {
 		const sessionID = Cookie.get("sessionID");
-		try {
-			await axios
-				.post("/user/logout", { sessionID })
-				.then((response) => {
-					Cookie.remove("sessionID");
-					this.setState({ session: false });
-				})
-				.catch((err) => console.log(err));
-		} catch (error) {
-			console.log(error);
-		}
+		postRequest("/user/logout", { sessionID })
+			.then((response) => {
+				Cookie.remove("sessionID");
+				this.setState({ session: false });
+			})
+			.catch((err) => console.log(err));
 	};
 
 	loginButton = (
