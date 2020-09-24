@@ -47,7 +47,7 @@ class HomePage extends Component {
 
 		// Fetch the bus data
 		axios
-			.post("/gettravels", travelData)
+			.post("/data/gettravels", travelData)
 			.then((response) => {
 				if (response.status === 200) {
 					const data = response.data;

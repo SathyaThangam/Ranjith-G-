@@ -1,6 +1,3 @@
-const express = require("express");
-const router = express.Router();
-const cookieparser = require("cookie-parser");
 const Razorpay = require("razorpay");
 const request = require("request");
 const uid = require("uid");
@@ -11,12 +8,8 @@ const instance = new Razorpay({
 	key_secret: process.env.RAZORPAY_API_SECRET,
 });
 
-//middlewares
-router.use(express.json());
-router.use(cookieparser());
-
-//Endpoint to create an order object for the transaction
-router.post("/order", (req, res) => {
+//Generate order object
+exports.generateOrder = (req, res) => {
 	const amount = req.body.totalprice;
 	console.log(req.body);
 	try {
@@ -43,11 +36,10 @@ router.post("/order", (req, res) => {
 			message: "Something Went Wrong",
 		});
 	}
-});
+};
 
-//Capture the payment
-router.post("/capture/:paymentId", (req, res) => {
-	const token = req.cookies.token;
+//Capture Payment
+exports.capturePayment = (req, res) => {
 	const url = `https://${process.env.RAZORPAY_API_KEY}:${process.env.RAZORPAY_API_SECRET}@api.razorpay.com/v1/payments/${req.params.paymentId}/capture`;
 	try {
 		return request(
@@ -79,6 +71,4 @@ router.post("/capture/:paymentId", (req, res) => {
 			message: "Something Went Wrong out capture",
 		});
 	}
-});
-
-module.exports = router;
+};

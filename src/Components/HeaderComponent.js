@@ -29,7 +29,7 @@ class HeaderComponent extends Component {
 	logoutHandler = () => {
 		Cookie.remove("sessionID");
 		axios
-			.get("/logout")
+			.get("/user/logout")
 			.then((response) => {
 				this.checkSession();
 			})

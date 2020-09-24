@@ -3,7 +3,12 @@ import ErrorIcon from "@material-ui/icons/Error";
 import axios from "axios";
 import InputComponent from "./InputComponent";
 import OutlinedButtonComponent from "./OutlinedButtonComponent";
-
+import {
+	validateEmail,
+	validatePassword,
+	validateConfirmPassword,
+	formatErrorMessage,
+} from "../helpers/helper";
 import "../css/AuthenticateModalComponent.scss";
 
 class AuthenticateModalComponent extends Component {
@@ -49,32 +54,6 @@ class AuthenticateModalComponent extends Component {
 		}
 	};
 
-	//validation
-	validateEmail = (value) => {
-		const re = /^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/;
-		return re.test(value);
-	};
-
-	validatePassword = (value) => {
-		let re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$/;
-		return re.test(value);
-	};
-
-	validateConfirmPassword = (value) => {
-		let pwd = this.state.signupPwd;
-		let valid = "";
-		if (value === "") valid = false;
-		else valid = pwd === value;
-
-		return valid;
-	};
-
-	//Format error message while Login/Signup
-	formatErrorMessage = (prevMessage, newMessage) => {
-		if (prevMessage !== "") return prevMessage + " / " + newMessage;
-		else return newMessage;
-	};
-
 	//Signup
 	userSignup = () => {
 		const { signupEmail, signupPwd, signupCPwd } = this.state;
@@ -87,9 +66,9 @@ class AuthenticateModalComponent extends Component {
 		});
 
 		if (
-			this.validateEmail(signupEmail) &&
-			this.validatePassword(signupPwd) &&
-			this.validateConfirmPassword(signupCPwd)
+			validateEmail(signupEmail) &&
+			validatePassword(signupPwd) &&
+			validateConfirmPassword(signupCPwd)
 		) {
 			//Data for server
 			const userData = {
@@ -99,7 +78,7 @@ class AuthenticateModalComponent extends Component {
 
 			//Connect to server
 			axios
-				.post("/usersignup", userData)
+				.post("/user/signup", userData)
 				.then((response) => {
 					//get response body
 					const { message } = response.data;
@@ -133,27 +112,26 @@ class AuthenticateModalComponent extends Component {
 		}
 		//Validation Error
 		else {
-			if (!this.validateEmail(signupEmail))
+			if (!validateEmail(signupEmail))
 				this.setState((prevState) => ({
 					inputError: true,
-					errorMessage: this.formatErrorMessage(
+					errorMessage: formatErrorMessage(
 						prevState.errorMessage,
 						"Incorrect Email"
 					),
 				}));
-			if (!this.validatePassword(signupPwd))
+			if (!validatePassword(signupPwd))
 				this.setState((prevState) => ({
 					inputError: true,
-					errorMessage: this.formatErrorMessage(
+					errorMessage: formatErrorMessage(
 						prevState.errorMessage,
 						"Incorrect Password"
 					),
 				}));
-			if (this.validateConfirmPassword(signupCPwd))
-				console.log(this.state);
+			if (!validateConfirmPassword(signupCPwd)) console.log(this.state);
 			this.setState((prevState) => ({
 				inputError: true,
-				errorMessage: this.formatErrorMessage(
+				errorMessage: formatErrorMessage(
 					prevState.errorMessage,
 					"Passwords Doesn't match"
 				),
@@ -173,13 +151,13 @@ class AuthenticateModalComponent extends Component {
 		});
 
 		//Validation
-		if (this.validateEmail(loginEmail) && this.validatePassword(loginPwd)) {
+		if (validateEmail(loginEmail) && validatePassword(loginPwd)) {
 			const userData = {
 				email: loginEmail,
 				password: loginPwd,
 			};
 			axios
-				.post("/userlogin", userData,)
+				.post("/user/login", userData)
 				.then((response) => {
 					const { message } = response.data;
 					if (message !== undefined) {
@@ -192,7 +170,7 @@ class AuthenticateModalComponent extends Component {
 								successMessage: "Login Success",
 								loginsuccess: true,
 							});
-							
+
 							this.props.handleSession(true);
 
 							if (this.props.location !== undefined) {
@@ -227,18 +205,18 @@ class AuthenticateModalComponent extends Component {
 				})
 				.catch((err) => console.error(err));
 		} else {
-			if (!this.validateEmail(loginEmail))
+			if (!validateEmail(loginEmail))
 				this.setState((prevState) => ({
 					inputError: true,
-					errorMessage: this.formatErrorMessage(
+					errorMessage: formatErrorMessage(
 						prevState.errorMessage,
 						"Incorrect Email"
 					),
 				}));
-			if (!this.validatePassword(loginPwd))
+			if (!validatePassword(loginPwd))
 				this.setState((prevState) => ({
 					inputError: true,
-					errorMessage: this.formatErrorMessage(
+					errorMessage: formatErrorMessage(
 						prevState.errorMessage,
 						"Incorrect Password"
 					),
@@ -331,9 +309,7 @@ class AuthenticateModalComponent extends Component {
 		);
 
 		const SuccessAlert = (
-			<div className="alert success">
-				{this.state.successMessage}
-			</div>
+			<div className="alert success">{this.state.successMessage}</div>
 		);
 
 		return (

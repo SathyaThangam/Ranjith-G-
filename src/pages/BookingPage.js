@@ -113,7 +113,7 @@ class BookingPage extends Component {
 	paymentHandler = async (bookingDetails) => {
 		const { routeData } = this.state;
 		console.log(routeData.price);
-		const API_URL = "/razorpay/";
+		const API_URL = "/payment/";
 		const sessionID = Cookie.get("sessionID");
 		const itemData = {
 			bookingDetails,
@@ -181,7 +181,7 @@ class BookingPage extends Component {
 			var routeData = "";
 			const sessionID = Cookie.get("sessionID");
 			axios
-				.post("/getbusdetails", { busid: busID, sessionID })
+				.post("/data/getbusdetails", { busid: busID, sessionID })
 				.then((res) => {
 					console.log("Props from server", res);
 					routeData = res.data.travelData;
