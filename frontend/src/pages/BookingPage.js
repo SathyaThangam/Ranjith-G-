@@ -4,7 +4,7 @@ import axios from "axios";
 import Cookie from "js-cookie";
 import "../css/BookingPage.scss";
 import TicketComponent from "../Components/TicketComponent";
-
+import { getTravelTimeObject } from "../helpers/helper";
 class BookingPage extends Component {
 	constructor(props) {
 		super(props);
@@ -22,35 +22,6 @@ class BookingPage extends Component {
 			contactPhoneNo: "",
 			totalprice: 0,
 		};
-	}
-
-	//Helper functions
-	// Format date to DDD, DD-MM-YYYY Tue, 23-09-2020
-	formatDate = (dateString) => {
-		const date = new Date(dateString);
-		var dd = String(date.getDate()).padStart(2, "0");
-		var mm = String(date.getMonth() + 1).padStart(2, "0"); //January is 0!
-		var yyyy = date.getFullYear();
-
-		var resultdate = dd + "-" + mm + "-" + yyyy;
-
-		const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-		const day = days[date.getDay()];
-		resultdate = `${day}, ${resultdate}`;
-		return resultdate;
-	};
-
-	// format 24 hour to 12 hour format gets Date object returns string hh:mm am/pm
-	formatAMPM(date) {
-		var hours = date.getHours();
-		var minutes = date.getMinutes();
-
-		var ampm = hours >= 12 ? "pm" : "am";
-		hours = hours % 12;
-		hours = hours ? hours : 12; // the hour '0' should be '12'
-		minutes = minutes < 10 ? "0" + minutes : minutes;
-
-		return hours + ":" + minutes + " " + ampm;
 	}
 
 	// Generates bus seat components
@@ -122,38 +93,42 @@ class BookingPage extends Component {
 		};
 		console.log("Payment handler");
 		const orderUrl = `${API_URL}order`;
-		const response = await axios.post(orderUrl, itemData);
-		const { data } = response;
-		console.log("response", response);
-		const options = {
-			key: process.env.RAZORPAY_API_KEY,
-			name: "getBus",
-			description: "Tickets",
-			order_id: data.id,
-			handler: (response) => {
-				try {
-					const paymentId = response.razorpay_payment_id;
-					const url = `${API_URL}capture/${paymentId}`;
-					axios
-						.post(url, itemData)
-						.then((res) => {
-							const data = JSON.parse(res.data);
-							if (data.status === "captured") {
-								//TODO add success route
-							}
-						})
-						.catch((err) => console.log(err));
-					// console.log(captureResponse);
-				} catch (err) {
-					console.log(err);
-				}
-			},
-			theme: {
-				color: "#6cfc6a",
-			},
-		};
-		const rzp1 = new window.Razorpay(options);
-		rzp1.open();
+		try {
+			const response = await axios.post(orderUrl, itemData);
+			const { data } = response;
+			console.log("response", response);
+			const options = {
+				key: process.env.RAZORPAY_API_KEY,
+				name: "getBus",
+				description: "Tickets",
+				order_id: data.id,
+				handler: async (response) => {
+					try {
+						const paymentId = response.razorpay_payment_id;
+						const url = `${API_URL}capture/${paymentId}`;
+						await axios
+							.post(url, itemData)
+							.then((res) => {
+								const data = JSON.parse(res.data);
+								if (data.status === "captured") {
+									//TODO add success route
+								}
+							})
+							.catch((err) => console.log(err));
+						// console.log(captureResponse);
+					} catch (err) {
+						console.log(err);
+					}
+				},
+				theme: {
+					color: "#6cfc6a",
+				},
+			};
+			const rzp1 = new window.Razorpay(options);
+			rzp1.open();
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	bookingHandler = () => {
@@ -175,52 +150,41 @@ class BookingPage extends Component {
 	};
 
 	// Load data from server if the props is missing
-	componentDidMount() {
+	loadBookingData = async () => {
 		if (this.props.location.routeData === undefined) {
 			const busID = this.props.match.params.id;
 			var routeData = "";
 			const sessionID = Cookie.get("sessionID");
-			axios
-				.post("/data/getbusdetails", { busid: busID, sessionID })
-				.then((res) => {
-					console.log("Props from server", res);
-					routeData = res.data.travelData;
-					this.setState({
-						routeData: routeData,
-						sourceTimeformat: this.formatAMPM(
-							new Date(routeData.sourceTime)
-						),
-						sourceDateformat: this.formatDate(
-							new Date(routeData.sourceTime)
-						),
-						destTimeformat: this.formatAMPM(
-							new Date(routeData.destinationTime)
-						),
-						destDateformat: this.formatDate(
-							new Date(routeData.destinationTime)
-						),
+			try {
+				await axios
+					.post("/data/getbusdetails", { busid: busID, sessionID })
+					.then((res) => {
+						console.log("Props from server", res);
+						routeData = res.data.travelData;
+						this.setState({
+							routeData: routeData,
+							...getTravelTimeObject(
+								routeData.sourceTime,
+								routeData.destinationTime
+							),
+						});
 					});
-				});
+			} catch (error) {
+				console.log(error);
+			}
 		} else {
 			console.log("Props", this.props.location.routeData);
 			routeData = this.props.location.routeData;
-			const sourceTimeformat = this.formatAMPM(
-				new Date(routeData.departure)
-			);
-			const sourceDateformat = this.formatDate(
-				new Date(routeData.departure)
-			);
-			const destTimeformat = this.formatAMPM(new Date(routeData.arrival));
-			const destDateformat = this.formatDate(new Date(routeData.arrival));
 			this.setState({
 				routeData: routeData,
-				sourceTimeformat: sourceTimeformat,
-				sourceDateformat: sourceDateformat,
-				destTimeformat: destTimeformat,
-				destDateformat: destDateformat,
+				...getTravelTimeObject(routeData.departure, routeData.arrival),
 			});
 			console.log(this.state);
 		}
+	};
+	
+	componentDidMount() {
+		this.loadBookingData();
 	}
 
 	render() {

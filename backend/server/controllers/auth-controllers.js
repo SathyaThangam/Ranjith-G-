@@ -6,7 +6,7 @@ const {
 	generateHash,
 	validatePassword,
 } = require("../helpers/helpers");
-const {getUserByEmail,createNewUser} = require("../helpers/DB-helper");
+const { getUserByEmail, createNewUser } = require("../helpers/DB-helper");
 
 exports.userLogin = (req, res) => {
 	const email = req.body.email;
@@ -14,7 +14,7 @@ exports.userLogin = (req, res) => {
 
 	if (validateEmail(email) && validatePassword(password)) {
 		//Check if account exists
-		getUserByEmail(email).then(User => {
+		getUserByEmail(email).then((User) => {
 			//if account exists
 			if (User !== null) {
 				const userData = User.dataValues;
@@ -22,15 +22,17 @@ exports.userLogin = (req, res) => {
 					id: userData.id,
 					email: userData.email,
 				};
-				compareHash(password, userData.password).then((result) => {
-					sendResponseWithAuthCookies(res,tokenData,result)
-				}).catch(err => console.log(err));
+				compareHash(password, userData.password)
+					.then((result) => {
+						sendResponseWithAuthCookies(res, tokenData, result);
+					})
+					.catch((err) => console.log(err));
 			}
 			//account doesn't exist
 			else {
 				res.json({ message: "Unavailable" });
 			}
-		})
+		});
 	} else {
 		res.json({ message: "Invalid" });
 	}
@@ -49,8 +51,8 @@ exports.userSignup = (req, res) => {
 				const id = uid({ prefix: "IND" });
 				//hash the password and store it in the DB
 				const userData = { id: id, email };
-				
-				generateHash(password).then(hash => {
+
+				generateHash(password).then((hash) => {
 					createNewUser({
 						id: id,
 						email: email,
@@ -64,7 +66,7 @@ exports.userSignup = (req, res) => {
 							);
 						})
 						.catch((err) => console.log(err));
-				})
+				});
 			} else {
 				console.log(token);
 				res.json({ message: "duplication" });

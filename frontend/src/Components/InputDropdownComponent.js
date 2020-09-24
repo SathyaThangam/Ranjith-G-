@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 
+import {getMatchingCities} from "../helpers/helper";
+import "loginscene.svg";
 import "../css/InputDropDownComponent.scss";
-
-import cities from "../data/cities-name-list.json";
 
 class InputDropdownComponent extends Component {
 	constructor(props) {
@@ -17,22 +17,12 @@ class InputDropdownComponent extends Component {
 		this.setState({ inputValue: value });
 		this.props.handleInput(value);
 		var displayResults = "";
-		var results = "";
-		if (this.props.dropdownList === undefined) {
-			results = cities.filter((city) =>
-				city.toLowerCase().includes(value.toLowerCase())
-			);
-		} else {
-			const { dropdownList } = this.props;
-			results = dropdownList.filter((city) =>
-				city.toLowerCase().includes(value.toLowerCase())
-			);
-		}
-		const generateKey = (pre, i) => {
-			return `${pre}_${i}_${new Date().getTime()}`;
-		};
-		// console.log(results);
+		var results = getMatchingCities(value);
+
+		const generateKey = (pre, i) => `${pre}_${i}_${new Date().getTime()}`;
+		
 		if (results.length === 0) displayResults = <p>{"No results Found"}</p>;
+		
 		else
 			displayResults = results.map((city, i) => (
 				<p

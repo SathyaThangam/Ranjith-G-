@@ -6,6 +6,7 @@ import Modal from "@material-ui/core/Modal";
 import AuthenticateModalComponent from "./AuthenticateModalComponent";
 import Cookie from "js-cookie";
 import axios from "axios";
+import { isAuthenticated } from "../helpers/helper";
 class HeaderComponent extends Component {
 	constructor(props) {
 		super(props);
@@ -21,21 +22,25 @@ class HeaderComponent extends Component {
 	};
 
 	checkSession = () => {
-		const sessionID = Cookie.get("sessionID");
-		const session = sessionID !== undefined;
+		const session = isAuthenticated();
+		//update only if the session state has changed
+		// checking to prevent recursively calling componentDidUpdate
 		if (session !== this.state.session) this.setState({ session });
 	};
 
-	logoutHandler = () => {
-		Cookie.remove("sessionID");
-		axios
-			.get("/user/logout")
-			.then((response) => {
-				this.checkSession();
-			})
-			.catch((err) => console.log(err));
-
-		// this.setState({session:false});
+	logoutHandler = async () => {
+		const sessionID = Cookie.get("sessionID");
+		try {
+			await axios
+				.post("/user/logout", { sessionID })
+				.then((response) => {
+					Cookie.remove("sessionID");
+					this.setState({ session: false });
+				})
+				.catch((err) => console.log(err));
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	loginButton = (

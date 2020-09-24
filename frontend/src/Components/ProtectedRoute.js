@@ -1,12 +1,7 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
-import Cookie from "js-cookie";
+import { isAuthenticated } from "../helpers/helper";
 function ProtectedRoute(props) {
-
-	const isAuthenticated = () => {
-		const sessionID = Cookie.get("sessionID");
-		return sessionID !== undefined;
-	};
 
 	const Component = props.component;
 

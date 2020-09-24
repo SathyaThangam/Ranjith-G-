@@ -40,51 +40,55 @@ class HomePage extends Component {
 		this.setState({ modalOpen: false });
 	};
 
-	resultHandler = () => {
+	resultHandler = async () => {
 		const { source, destination } = this.state;
 		const sessionID = Cookie.get("sessionID");
 		const travelData = { source, destination, sessionID };
 
 		// Fetch the bus data
-		axios
-			.post("/data/gettravels", travelData)
-			.then((response) => {
-				if (response.status === 200) {
-					const data = response.data;
-					if (data !== null && data.length !== 0) {
-						const searchResults = data.map((bus) => (
-							<SearchResultComponent
-								key={bus.id}
-								id={bus.id}
-								agency={bus.agency}
-								name={bus.name}
-								seats={bus.seats}
-								source={bus.source}
-								destination={bus.destination}
-								ticketprice={bus.ticketprice}
-								departure={bus.sourceTime}
-								arrival={bus.destinationTime}
-							/>
-						));
+		try {
+			await axios
+				.post("/data/gettravels", travelData)
+				.then((response) => {
+					if (response.status === 200) {
+						const data = response.data;
+						if (data !== null && data.length !== 0) {
+							const searchResults = data.map((bus) => (
+								<SearchResultComponent
+									key={bus.id}
+									id={bus.id}
+									agency={bus.agency}
+									name={bus.name}
+									seats={bus.seats}
+									source={bus.source}
+									destination={bus.destination}
+									ticketprice={bus.ticketprice}
+									departure={bus.sourceTime}
+									arrival={bus.destinationTime}
+								/>
+							));
+							this.setState({ searchResults });
+						}
+					}
+				})
+				.catch((error) => {
+					console.log(error);
+					if (error.response) {
+						var searchResults = <h1>Error</h1>;
+						if (error.response.status === 404) {
+							searchResults = (
+								<img
+									src="data_unavailable.svg"
+									alt="data unavailable"
+								/>
+							);
+						}
 						this.setState({ searchResults });
 					}
-				}
-			})
-			.catch((error) => {
-				console.log(error);
-				if (error.response) {
-					var searchResults = <h1>Error</h1>;
-					if (error.response.status === 404) {
-						searchResults = (
-							<img
-								src="data_unavailable.svg"
-								alt="data unavailable"
-							/>
-						);
-					}
-					this.setState({ searchResults });
-				}
-			});
+				});
+		} catch (error) {
+			console.log(error);
+		}
 		//scroll to results
 		this.resultRef.current.scrollIntoView({
 			behavior: "smooth",
@@ -113,7 +117,6 @@ class HomePage extends Component {
 								onClick={this.resultHandler}
 							>
 								Search
-								{/* <SearchIcon fontSize="small" className="icon" /> */}
 							</button>
 						</div>
 					</div>

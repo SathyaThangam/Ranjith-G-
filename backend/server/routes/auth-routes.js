@@ -19,6 +19,6 @@ router.post("/signup", userSignup);
 router.post("/login", userLogin);
 
 //Logout Endpoint
-router.get("/logout", authenticateUser, userLogOut);
+router.post("/logout", authenticateUser, userLogOut);
 
 module.exports = router;
