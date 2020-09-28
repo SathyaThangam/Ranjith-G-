@@ -13,7 +13,7 @@ import "./loginscene.svg";
 import SignupComponent from "./SignupComponent";
 import LoginComponent from "./LoginComponent";
 import { connect } from "react-redux";
-import { mapDispatchToProps,mapStateToProps } from "../helpers/redux-helpers";
+import { sessionChange } from "../redux";
 class AuthenticateModalComponent extends Component {
 	constructor(props) {
 		super(props);
@@ -286,5 +286,16 @@ class AuthenticateModalComponent extends Component {
 }
 
 
+const mapStateToProps = (state) => {
+	return {
+		session: state.sessionStore.loginSession,
+	};
+};
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		sessionChange: (session) => dispatch(sessionChange(session)),
+	};
+};
 
 export default connect(mapStateToProps,mapDispatchToProps)(AuthenticateModalComponent);

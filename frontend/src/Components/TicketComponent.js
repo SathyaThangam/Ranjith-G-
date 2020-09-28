@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import "../css/TicketComponent.scss";
+import { updateTicket } from "../redux";
+import { connect } from "react-redux";
 class TicketComponent extends Component {
+	
 	constructor(props) {
 		super(props);
 
@@ -8,7 +11,6 @@ class TicketComponent extends Component {
 			gender: "",
 			name: "",
 			age: "",
-			seat: this.props.seatNumber,
 		};
 	}
 
@@ -24,8 +26,12 @@ class TicketComponent extends Component {
 		this.setState({ age: value });
 	};
 
-	componentDidUpdate() {
-		this.props.handleTicket(this.state, this.props.value);
+	componentDidUpdate(prevProps,prevState) {
+		if(prevState !== this.state)
+			this.props.updateTicket({
+				seat: this.props.seatNumber,
+				...this.state,
+			});
 	}
 
 	render() {
@@ -36,16 +42,19 @@ class TicketComponent extends Component {
 					<input
 						type="text"
 						placeholder="Traveller Name"
+						value={this.props.ticketData.name}
 						onChange={(e) => this.handleNameInput(e.target.value)}
 					/>
 					<input
 						type="number"
 						placeholder="Age"
+						value={this.props.ticketData.age}
 						onChange={(e) => this.handleAgeInput(e.target.value)}
 					/>
 					<input
 						type="text"
 						placeholder="Gender"
+						value={this.props.ticketData.gender}
 						onChange={(e) => this.handleGenderInput(e.target.value)}
 					/>
 				</div>
@@ -54,4 +63,20 @@ class TicketComponent extends Component {
 	}
 }
 
-export default TicketComponent;
+const mapStateToProps = (state,ownProps) => {
+	const tickets = state.ticketStore.ticketData;
+	 const index = tickets
+			.map((item) => item.seat)
+			.indexOf(ownProps.seatNumber);
+	return {
+		ticketData: tickets[index],
+	};
+};
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		updateTicket:(ticket) => dispatch(updateTicket(ticket))
+	};
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(TicketComponent);

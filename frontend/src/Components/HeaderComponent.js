@@ -8,7 +8,7 @@ import Cookie from "js-cookie";
 import { isAuthenticated } from "../helpers/helper";
 import { postRequest } from "../helpers/request-helper";
 import { connect } from "react-redux";
-import { mapStateToProps,mapDispatchToProps } from "../helpers/redux-helpers";
+import { sessionChange } from "../redux";
 class HeaderComponent extends Component {
 	constructor(props) {
 		super(props);
@@ -16,7 +16,6 @@ class HeaderComponent extends Component {
 		this.state = {
 			modalOpen: false,
 		};
-		console.log(props);
 	}
 
 	modalClose = () => {
@@ -25,7 +24,7 @@ class HeaderComponent extends Component {
 
 	checkSession = () => {
 		const session = isAuthenticated();
-		console.log("session in header",session);
+		console.log("session in header", session);
 		//update only if the session state has changed
 		// checking to prevent recursively calling componentDidUpdate
 		if (session !== this.props.session) this.props.sessionChange(session);
@@ -95,4 +94,16 @@ class HeaderComponent extends Component {
 	}
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(HeaderComponent);
+const mapStateToProps = (state) => {
+	return {
+		session: state.sessionStore.loginSession,
+	};
+};
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		sessionChange: (session) => dispatch(sessionChange(session)),
+	};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(HeaderComponent);
