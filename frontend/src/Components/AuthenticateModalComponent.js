@@ -12,6 +12,8 @@ import "../css/AuthenticateModalComponent.scss";
 import "./loginscene.svg";
 import SignupComponent from "./SignupComponent";
 import LoginComponent from "./LoginComponent";
+import { connect } from "react-redux";
+import { mapDispatchToProps,mapStateToProps } from "../helpers/redux-helpers";
 class AuthenticateModalComponent extends Component {
 	constructor(props) {
 		super(props);
@@ -66,7 +68,7 @@ class AuthenticateModalComponent extends Component {
 					if (message !== undefined) {
 						if (message === "success") {
 							//TODO go to booking page
-							this.props.handleSession(true);
+							this.props.sessionChange(true);
 							this.props.handleModalClose();
 							if (this.props.location.pathname === "/login")
 								this.props.history.goBack();
@@ -152,7 +154,7 @@ class AuthenticateModalComponent extends Component {
 								loginsuccess: true,
 							});
 
-							this.props.handleSession(true);
+							this.props.sessionChange(true);
 
 							if (this.props.location !== undefined) {
 								if (this.props.location.pathname === "/login")
@@ -283,4 +285,6 @@ class AuthenticateModalComponent extends Component {
 	}
 }
 
-export default AuthenticateModalComponent;
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(AuthenticateModalComponent);

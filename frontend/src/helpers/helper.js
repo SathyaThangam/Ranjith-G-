@@ -101,5 +101,7 @@ exports.getTravelTimeObject = (sourceTime, destinationTime) => {
 exports.isAuthenticated = () => {
 	const Cookie = require("js-cookie");
 	const sessionID = Cookie.get("sessionID");
-	return sessionID !== undefined;
+	const session =  sessionID !== undefined;
+	console.log(session);
+	return session;
 };

@@ -7,14 +7,16 @@ import AuthenticateModalComponent from "./AuthenticateModalComponent";
 import Cookie from "js-cookie";
 import { isAuthenticated } from "../helpers/helper";
 import { postRequest } from "../helpers/request-helper";
+import { connect } from "react-redux";
+import { mapStateToProps,mapDispatchToProps } from "../helpers/redux-helpers";
 class HeaderComponent extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
 			modalOpen: false,
-			session: false,
 		};
+		console.log(props);
 	}
 
 	modalClose = () => {
@@ -23,9 +25,10 @@ class HeaderComponent extends Component {
 
 	checkSession = () => {
 		const session = isAuthenticated();
+		console.log("session in header",session);
 		//update only if the session state has changed
 		// checking to prevent recursively calling componentDidUpdate
-		if (session !== this.state.session) this.setState({ session });
+		if (session !== this.props.session) this.props.sessionChange(session);
 	};
 
 	logoutHandler = () => {
@@ -33,7 +36,7 @@ class HeaderComponent extends Component {
 		postRequest("/user/logout", { sessionID })
 			.then((response) => {
 				Cookie.remove("sessionID");
-				this.setState({ session: false });
+				this.props.sessionChange(false);
 			})
 			.catch((err) => console.log(err));
 	};
@@ -77,13 +80,12 @@ class HeaderComponent extends Component {
 					>
 						View Tickets
 					</NavLink>
-					{this.state.session ? this.logOutButton : this.loginButton}
+					{this.props.session ? this.logOutButton : this.loginButton}
 					<Modal
 						open={this.state.modalOpen}
 						onClose={this.modalClose}
 					>
 						<AuthenticateModalComponent
-							handleSession={this.props.handleSession}
 							handleModalClose={this.modalClose}
 						/>
 					</Modal>
@@ -93,4 +95,4 @@ class HeaderComponent extends Component {
 	}
 }
 
-export default HeaderComponent;
+export default connect(mapStateToProps,mapDispatchToProps)(HeaderComponent);

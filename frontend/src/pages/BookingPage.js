@@ -103,7 +103,7 @@ class BookingPage extends Component {
 					try {
 						const paymentId = response.razorpay_payment_id;
 						const url = `${API_ENDPOINT}capture/${paymentId}`;
-							postRequest(url, itemData)
+						postRequest(url, itemData)
 							.then((res) => {
 								const data = JSON.parse(res.data);
 								if (data.status === "captured") {
@@ -152,19 +152,21 @@ class BookingPage extends Component {
 			postRequest("/data/getbusdetails", {
 				busid: busID,
 				sessionID,
-			}).then((res) => {
-				if(res !== undefined){
-					console.log("Props from server", res);
-					routeData = res.data.travelData;
-					this.setState({
-						routeData: routeData,
-						...getTravelTimeObject(
-							routeData.sourceTime,
-							routeData.destinationTime
-						),
-					});
-				}
-			}).catch(err => console.log(err))
+			})
+				.then((res) => {
+					if (res !== undefined) {
+						console.log("Props from server", res);
+						routeData = res.data.travelData;
+						this.setState({
+							routeData: routeData,
+							...getTravelTimeObject(
+								routeData.sourceTime,
+								routeData.destinationTime
+							),
+						});
+					}
+				})
+				.catch((err) => console.log(err));
 		} else {
 			console.log("Props", this.props.location.routeData);
 			routeData = this.props.location.routeData;
