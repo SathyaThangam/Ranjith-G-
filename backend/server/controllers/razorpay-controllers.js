@@ -11,7 +11,6 @@ const instance = new Razorpay({
 //Generate order object
 exports.generateOrder = (req, res) => {
 	const amount = req.body.totalprice;
-	console.log(req.body);
 	try {
 		const options = {
 			amount: amount * 100, // amount  == Rs 10
@@ -40,6 +39,7 @@ exports.generateOrder = (req, res) => {
 
 //Capture Payment
 exports.capturePayment = (req, res) => {
+	console.log("request",req.body);
 	const url = `https://${process.env.RAZORPAY_API_KEY}:${process.env.RAZORPAY_API_SECRET}@api.razorpay.com/v1/payments/${req.params.paymentId}/capture`;
 	try {
 		return request(
@@ -47,7 +47,7 @@ exports.capturePayment = (req, res) => {
 				method: "POST",
 				url: url,
 				form: {
-					amount: req.body.showPrice * 100, // amount == Rs 10 // Same As Order amount
+					amount: req.body.totalprice * 100, // amount == Rs 10 // Same As Order amount
 					currency: "INR",
 				},
 			},
