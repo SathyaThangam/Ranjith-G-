@@ -16,7 +16,7 @@ exports.validatePassword = (value) => {
 	return re.test(value);
 };
 
-exports.validateConfirmPassword = (password,confirmPassword) => {
+exports.validateConfirmPassword = (password, confirmPassword) => {
 	if (confirmPassword === "") return false;
 	else return password === confirmPassword;
 };
@@ -101,7 +101,7 @@ exports.getTravelTimeObject = (sourceTime, destinationTime) => {
 exports.isAuthenticated = () => {
 	const Cookie = require("js-cookie");
 	const sessionID = Cookie.get("sessionID");
-	const session =  sessionID !== undefined;
+	const session = sessionID !== undefined;
 	console.log(session);
 	return session;
 };

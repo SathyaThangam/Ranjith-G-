@@ -1,9 +1,12 @@
 const axios = require("axios");
 
 const API_URL = "http://localhost:8080";
-exports.postRequest = async (path, data, options) => {
+exports.postRequest = async (path, data, options,use_api=true) => {
+	
+	const request_url = use_api ? API_URL + path : path;
+
 	try {
-		return await axios.post(API_URL + path, data, {
+		return await axios.post(request_url, data, {
 			withCredentials: true,
 			...options,
 		});
@@ -12,9 +15,12 @@ exports.postRequest = async (path, data, options) => {
 	}
 };
 
-exports.getRequest = async (path, data, options) => {
+exports.getRequest = async (path, data, options,use_api=true) => {
+	
+	const request_url = use_api ? API_URL + path : path;
+
 	try {
-		return await axios.get(API_URL + path, data, {
+		return await axios.get(request_url, data, {
 			withCredentials: true,
 			...options,
 		});
