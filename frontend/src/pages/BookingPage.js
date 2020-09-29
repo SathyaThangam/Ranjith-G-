@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { v4 as uuidv4 } from "uuid";
+import uid from "uid";
 import Cookie from "js-cookie";
 import "../css/BookingPage.scss";
 import TicketComponent from "../Components/TicketComponent";
@@ -37,7 +37,7 @@ class BookingPage extends Component {
 			seats.push(
 				<button
 					className={classList}
-					key={uuidv4()}
+					key={uid(20)}
 					value={i}
 					onClick={(e) => this.seatHandler(e)}
 				></button>
@@ -65,7 +65,7 @@ class BookingPage extends Component {
 		//Generate ticket components
 		var tickets = seats.map((item, i) => (
 			<TicketComponent
-				key={uuidv4()}
+				key={uid(20)}
 				seatNumber={item}
 				value={i}
 			/>

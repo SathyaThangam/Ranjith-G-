@@ -102,6 +102,40 @@ exports.isAuthenticated = () => {
 	const Cookie = require("js-cookie");
 	const sessionID = Cookie.get("sessionID");
 	const session = sessionID !== undefined;
-	console.log(session);
+	// console.log(session);
 	return session;
 };
+
+const getLocation = async () => {
+	return new Promise((resolve, reject) => {
+		navigator.geolocation.getCurrentPosition((position) => {
+			const latitude = round(position.coords.latitude);
+			const longitude = round(position.coords.longitude);
+			resolve({ lat: latitude, lng: longitude });
+		},(error) => reject(error),{
+			enableHighAccuracy:true
+		});
+	});
+};
+
+exports.getGeolocation = async () => {
+	if ("geolocation" in navigator) {
+		try{
+			const data = await getLocation();
+			console.log(data);
+			return data;
+		}
+		catch(err){
+			return new Error(err);
+		}
+	} else {
+		console.log("Not Available");
+		return null;
+	}
+};
+
+const round = (value, position = 5) => {
+	const x = position === 0 ? 1 : Math.pow(10, position);
+	return Math.round(value * x) / x;
+};
+exports.round = round;

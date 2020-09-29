@@ -27,6 +27,7 @@ class AuthenticateModalComponent extends Component {
 			errorMessage: "",
 			inputError: false,
 			loginsuccess: false,
+			locationState: false,
 		};
 	}
 
@@ -37,6 +38,23 @@ class AuthenticateModalComponent extends Component {
 			loginModal: !prev.loginModal,
 		}));
 	};
+
+	setLocationState = (value) => {
+		this.setState({ locationState: value });
+	};
+
+	setLocationErrorMessage = (value) => {
+		if(value){
+			this.setState((prevState) => ({
+				inputError: true,
+				errorMessage: formatErrorMessage(
+					prevState.errorMessage,
+					"Allow location permission to access"
+				),
+			}));
+	
+		}
+	}
 
 	//Signup
 	userSignup = () => {
@@ -52,12 +70,14 @@ class AuthenticateModalComponent extends Component {
 		if (
 			validateEmail(signupEmail) &&
 			validatePassword(signupPwd) &&
-			validateConfirmPassword(signupPwd,signupCPwd)
+			validateConfirmPassword(signupPwd, signupCPwd) &&
+			this.state.locationState
 		) {
 			//Data for server
 			const userData = {
 				email: signupEmail,
 				password: signupPwd,
+				location: this.props.coords,
 			};
 
 			//Connect to server
@@ -112,14 +132,13 @@ class AuthenticateModalComponent extends Component {
 					),
 				}));
 			if (!validateConfirmPassword(signupPwd, signupCPwd))
-				console.log(this.state);
-			this.setState((prevState) => ({
-				inputError: true,
-				errorMessage: formatErrorMessage(
-					prevState.errorMessage,
-					"Passwords Doesn't match"
-				),
-			}));
+				this.setState((prevState) => ({
+					inputError: true,
+					errorMessage: formatErrorMessage(
+						prevState.errorMessage,
+						"Passwords Doesn't match"
+					),
+				}));
 		}
 	};
 
@@ -273,6 +292,11 @@ class AuthenticateModalComponent extends Component {
 									}
 									userSignup={this.userSignup}
 									toggleTab={this.toggleTab}
+									locationState={this.state.locationState}
+									setLocationState={this.setLocationState}
+									setLocationErrorMessage={
+										this.setLocationErrorMessage
+									}
 								/>
 							)}
 						</div>
@@ -285,10 +309,10 @@ class AuthenticateModalComponent extends Component {
 	}
 }
 
-
 const mapStateToProps = (state) => {
 	return {
 		session: state.sessionStore.loginSession,
+		coords: state.coordsStore,
 	};
 };
 
@@ -298,4 +322,7 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(AuthenticateModalComponent);
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(AuthenticateModalComponent);

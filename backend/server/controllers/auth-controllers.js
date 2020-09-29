@@ -41,7 +41,7 @@ exports.userLogin = (req, res) => {
 exports.userSignup = (req, res) => {
 	const email = req.body.email;
 	const password = req.body.password;
-
+	const {lat:lat_location,lng:lng_location} = req.body.location;
 	if (validateEmail(email) && validatePassword(password)) {
 		//Check if the email is unique for eliminating duplication
 		getUserByEmail(email).then((token) => {
@@ -57,7 +57,9 @@ exports.userSignup = (req, res) => {
 						id: id,
 						email: email,
 						password: hash,
-					})
+						lat_location,
+						lng_location
+					})	
 						.then(() => {
 							sendResponseWithAuthCookies(
 								res,
@@ -65,7 +67,10 @@ exports.userSignup = (req, res) => {
 								"success"
 							);
 						})
-						.catch((err) => console.log(err));
+						.catch((err) => {
+							console.log(err);
+							return new Error("User cannot be created");
+						});
 				});
 			} else {
 				console.log(token);

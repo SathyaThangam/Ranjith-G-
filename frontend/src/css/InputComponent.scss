@@ -20,6 +20,7 @@
 		border: 1px solid #ddd;
 		border-radius: 3px;
 		font-size: $medium-font;
+		word-wrap: break-word;
 
 		&:focus {
 			border: 1px solid $accent-color;
@@ -27,6 +28,18 @@
 
 		@media screen and (max-width: 358px) {
 			font-size: $small-font;
+		}
+	}
+
+	input[type="button"] {
+		font-size: $small-font;
+		background-color: #f2dedf;
+		color: #9b5565;
+	}
+	&.success {
+		input[type="button"] {
+			color: #4d764f;
+			background-color: #def0d8;
 		}
 	}
 }

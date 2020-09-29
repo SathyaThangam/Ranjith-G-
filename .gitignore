@@ -12,8 +12,7 @@
 /build
 
 test_api.rest
-.env
-/backend/.env
+**/.env
 /backend/node_modules
 # misc
 .DS_Store

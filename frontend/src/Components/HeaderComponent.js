@@ -24,7 +24,6 @@ class HeaderComponent extends Component {
 
 	checkSession = () => {
 		const session = isAuthenticated();
-		console.log("session in header", session);
 		//update only if the session state has changed
 		// checking to prevent recursively calling componentDidUpdate
 		if (session !== this.props.session) this.props.sessionChange(session);

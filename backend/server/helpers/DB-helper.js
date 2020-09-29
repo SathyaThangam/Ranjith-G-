@@ -13,8 +13,9 @@ exports.getUserByEmail = async (email) => {
 };
 
 exports.createNewUser = async (userData) => {
+	console.log(userData);
 	try {
-		return await Users.create({userData});
+		return await Users.create(userData);
 	} catch (err) {
 		console.log(err);
 	}

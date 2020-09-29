@@ -15,7 +15,7 @@ class HomePage extends Component {
 		this.resultRef = React.createRef();
 		this.state = {
 			startDate: new Date(),
-			searchResults: "",
+			searchResults: <tr></tr>,
 			source: "",
 			destination: "",
 			travelDate: "",

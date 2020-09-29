@@ -1,5 +1,5 @@
 "use strict";
-const { Model } = require("sequelize");
+const { Model,Sequelize } = require("sequelize");
 // const Buses = require("./buses");
 module.exports = (sequelize, DataTypes) => {
 	class Agency extends Model {
@@ -9,8 +9,8 @@ module.exports = (sequelize, DataTypes) => {
 		 * The `models/index` file will call this method automatically.
 		 */
 		static associate(models) {
-      // define association here
-      Agency.hasMany(models.Buses);
+			// define association here
+			Agency.hasMany(models.Buses);
 		}
 	}
 	Agency.init(
