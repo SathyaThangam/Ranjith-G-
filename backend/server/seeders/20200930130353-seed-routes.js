@@ -1,0 +1,116 @@
+"use strict";
+const { v4: uuidv4 } = require("uuid");
+module.exports = {
+	up: async (queryInterface, Sequelize) => {
+		await queryInterface.bulkInsert(
+			"Routes",
+			[
+				{
+					route_id: uuidv4(),
+					source: "Mumbai",
+					source_time: new Date("2020-09-16T10:05:19.843Z"),
+					destination: "Madikeri",
+					destination_time: new Date("2020-09-17T15:05:19.843Z"),
+					price: 426,
+					createdAt: new Date(),
+					updatedAt: new Date(),
+				},
+				{
+					route_id: uuidv4(),
+					source: "Delhi",
+					source_time: new Date("2020-09-16T10:05:19.843Z"),
+					destination: "Thrissur",
+					destination_time: new Date("2020-09-17T15:05:19.843Z"),
+					price: 699,
+					createdAt: new Date(),
+					updatedAt: new Date(),
+				},
+				{
+					route_id: uuidv4(),
+					source: "Bengaluru",
+					source_time: new Date("2020-09-16T10:05:19.843Z"),
+					destination: "Suratgarh",
+					destination_time: new Date("2020-09-17T15:05:19.843Z"),
+					price: 473,
+					createdAt: new Date(),
+					updatedAt: new Date(),
+				},
+				{
+					route_id: uuidv4(),
+					source: "Ahmedabad",
+					source_time: new Date("2020-09-16T10:05:19.843Z"),
+					destination: "North Lakhimpur",
+					destination_time: new Date("2020-09-17T15:05:19.843Z"),
+					price: 634,
+					createdAt: new Date(),
+					updatedAt: new Date(),
+				},
+				{
+					route_id: uuidv4(),
+					source: "Hyderabad",
+					source_time: new Date("2020-09-16T10:05:19.843Z"),
+					destination: "Pipar City",
+					destination_time: new Date("2020-09-17T15:05:19.843Z"),
+					price: 699,
+					createdAt: new Date(),
+					updatedAt: new Date(),
+				},
+				{
+					route_id: uuidv4(),
+					source: "Chennai",
+					source_time: new Date("2020-09-16T10:05:19.843Z"),
+					destination: "Pernampattu",
+					destination_time: new Date("2020-09-17T15:05:19.843Z"),
+					price: 426,
+					createdAt: new Date(),
+					updatedAt: new Date(),
+				},
+				{
+					route_id: uuidv4(),
+					source: "Kolkata",
+					source_time: new Date("2020-09-16T10:05:19.843Z"),
+					destination: "Ludhiana",
+					destination_time: new Date("2020-09-17T15:05:19.843Z"),
+					price: 442,
+					createdAt: new Date(),
+					updatedAt: new Date(),
+				},
+				{
+					route_id: uuidv4(),
+					source: "Pune",
+					source_time: new Date("2020-09-16T10:05:19.843Z"),
+					destination: "Uthamapalayam",
+					destination_time: new Date("2020-09-17T15:05:19.843Z"),
+					price: 549,
+					createdAt: new Date(),
+					updatedAt: new Date(),
+				},
+				{
+					route_id: uuidv4(),
+					source: "Jaipur",
+					source_time: new Date("2020-09-16T10:05:19.843Z"),
+					destination: "Tumkur",
+					destination_time: new Date("2020-09-17T15:05:19.843Z"),
+					price: 553,
+					createdAt: new Date(),
+					updatedAt: new Date(),
+				},
+				{
+					route_id: uuidv4(),
+					source: "Surat",
+					source_time: new Date("2020-09-16T10:05:19.843Z"),
+					destination: "Palacole",
+					destination_time: new Date("2020-09-17T15:05:19.843Z"),
+					price: 488,
+					createdAt: new Date(),
+					updatedAt: new Date(),
+				},
+			],
+			{}
+		);
+	},
+
+	down: async (queryInterface, Sequelize) => {
+		await queryInterface.bulkDelete("Routes", null, {});
+	},
+};

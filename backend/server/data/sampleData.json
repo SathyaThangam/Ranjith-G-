@@ -1,0 +1,112 @@
+[
+	{
+		"agency": "Volvo travels",
+		"name": "Volvo travels BUS#0",
+		"seats": 46,
+		"source": "Mumbai",
+		"destination": "Madikeri",
+		"sourceTime": "2020-09-16T10:05:19.843Z",
+		"destinationTime": "2020-09-17T15:05:19.843Z",
+		"ticketprice": 426,
+		"id": "93971e2b89dfd33fa0ed229e648b5f67"
+	},
+	{
+		"agency": "Deluxe travels",
+		"name": "Deluxe travels BUS#1",
+		"seats": 43,
+		"source": "Delhi",
+		"destination": "Thrissur",
+		"sourceTime": "2020-09-16T10:05:19.844Z",
+		"destinationTime": "2020-09-17T12:05:19.844Z",
+		"ticketprice": 699,
+		"id": "c8f561369059c1e0f1ee73319871f3bb"
+	},
+	{
+		"agency": "XYZ travels",
+		"name": "XYZ travels BUS#2",
+		"seats": 45,
+		"source": "Bengaluru",
+		"destination": "Suratgarh",
+		"sourceTime": "2020-09-16T10:05:19.844Z",
+		"destinationTime": "2020-09-17T16:05:19.844Z",
+		"ticketprice": 473,
+		"id": "de0d1f22bcc41c7110b1fa94d3275f95"
+	},
+	{
+		"agency": "FAST travels",
+		"name": "FAST travels BUS#3",
+		"seats": 53,
+		"source": "Ahmedabad",
+		"destination": "North Lakhimpur",
+		"sourceTime": "2020-09-16T10:05:19.844Z",
+		"destinationTime": "2020-09-17T07:05:19.844Z",
+		"ticketprice": 634,
+		"id": "01513f8f4a3ed305e187726b4f54fcf7"
+	},
+	{
+		"agency": "Volvo travels",
+		"name": "Volvo travels BUS#4",
+		"seats": 41,
+		"source": "Hyderabad",
+		"destination": "Pipar City",
+		"sourceTime": "2020-09-16T10:05:19.844Z",
+		"destinationTime": "2020-09-17T10:05:19.844Z",
+		"ticketprice": 636,
+		"id": "b9bc70c627baf81efe3fab737251e934"
+	},
+	{
+		"agency": "Deluxe travels",
+		"name": "Deluxe travels BUS#5",
+		"seats": 45,
+		"source": "Chennai",
+		"destination": "Pernampattu",
+		"sourceTime": "2020-09-16T10:05:19.844Z",
+		"destinationTime": "2020-09-17T10:05:19.844Z",
+		"ticketprice": 426,
+		"id": "2ee81625adfaa339ebe031b5c44a7dca"
+	},
+	{
+		"agency": "Deluxe travels",
+		"name": "Deluxe travels BUS#6",
+		"seats": 46,
+		"source": "Kolkata",
+		"destination": "Ludhiana",
+		"sourceTime": "2020-09-16T10:05:19.844Z",
+		"destinationTime": "2020-09-17T12:05:19.844Z",
+		"ticketprice": 442,
+		"id": "6cf769916bdd157fb24e9576a855f58d"
+	},
+	{
+		"agency": "Deluxe travels",
+		"name": "Deluxe travels BUS#7",
+		"seats": 47,
+		"source": "Pune",
+		"destination": "Uthamapalayam",
+		"sourceTime": "2020-09-16T10:05:19.844Z",
+		"destinationTime": "2020-09-18T04:05:19.844Z",
+		"ticketprice": 549,
+		"id": "77341003774c18621ba5ec0c64c4c42e"
+	},
+	{
+		"agency": "XYZ travels",
+		"name": "XYZ travels BUS#8",
+		"seats": 45,
+		"source": "Jaipur",
+		"destination": "Tumkur",
+		"sourceTime": "2020-09-16T10:05:19.844Z",
+		"destinationTime": "2020-09-18T00:05:19.844Z",
+		"ticketprice": 553,
+		"id": "7316e8fbe3c83007ae344534b81cb974"
+	},
+	{
+		"agency": "XYZ travels",
+		"name": "XYZ travels BUS#9",
+		"seats": 49,
+		"source": "Surat",
+		"destination": "Palacole",
+		"sourceTime": "2020-09-16T10:05:19.844Z",
+		"destinationTime": "2020-09-17T03:05:19.844Z",
+		"ticketprice": 488,
+		"id": "dbc25ce7e6074de69eab8a5278208ac1"
+	}
+]
