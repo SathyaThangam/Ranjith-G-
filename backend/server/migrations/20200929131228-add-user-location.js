@@ -2,7 +2,7 @@
 
 module.exports = {
 	up: async (queryInterface, Sequelize) => {
-		return Promise.all([
+		return await Promise.all([
 			queryInterface.addColumn("Users", "lat_location", Sequelize.DOUBLE),
 			queryInterface.addColumn("Users", "lng_location", Sequelize.DOUBLE),
 		]);

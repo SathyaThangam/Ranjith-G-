@@ -10,7 +10,7 @@ module.exports = {
 		source: Sequelize.STRING,
 		source_time: Sequelize.TIME,
 		destination: Sequelize.STRING,
-		destination: Sequelize.TIME,
+		destination_time: Sequelize.TIME,
 		price: Sequelize.INTEGER,
 		createdAt: {
 			allowNull: false,

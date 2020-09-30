@@ -9,6 +9,7 @@ exports.getUserByEmail = async (email) => {
 		});
 	} catch (err) {
 		console.log(err);
+		return new Error("Database connection Error");
 	}
 };
 
@@ -18,5 +19,6 @@ exports.createNewUser = async (userData) => {
 		return await Users.create(userData);
 	} catch (err) {
 		console.log(err);
+		return new Error("Database connection Error");
 	}
 };

@@ -8,8 +8,9 @@ module.exports = (sequelize, DataTypes) => {
 		 * The `models/index` file will call this method automatically.
 		 */
 		static associate(models) {
-      // define association here
-      Routes.hasMany(models.Orders);
+			// define association here
+			Routes.hasMany(models.Orders);
+			Routes.belongsTo(models.Buses);
 		}
 	}
 	Routes.init(
@@ -22,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
 			source: DataTypes.STRING,
 			source_time: DataTypes.TIME,
 			destination: DataTypes.STRING,
-			destination: DataTypes.TIME,
+			destination_time: DataTypes.TIME,
 			price: DataTypes.INTEGER,
 		},
 		{
