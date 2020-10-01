@@ -9,8 +9,8 @@ module.exports = (sequelize, DataTypes) => {
 		 */
 		static associate(models) {
 			// define association here
-			Buses.hasOne(models.Routes);
-			Buses.belongsTo(models.Agency);
+			Buses.hasOne(models.Routes, { foreignKey: "route_id" });
+			Buses.belongsTo(models.Agency,{foreignKey:"agency_id"});
 		}
 	}
 	Buses.init(
@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
 			num_of_seats: DataTypes.INTEGER,
 			bus_name: DataTypes.STRING,
 			route_id: DataTypes.UUID,
-			agency: DataTypes.UUID,
+			agency_id: DataTypes.UUID,
 		},
 		{
 			sequelize,

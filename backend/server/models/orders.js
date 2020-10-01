@@ -9,8 +9,8 @@ module.exports = (sequelize, DataTypes) => {
 		 */
 		static associate(models) {
 			// define association here
-			Orders.belongsTo(models.Users);
-			Order.belongsTo(models.Routes);
+			Orders.belongsTo(models.Users,{foreignKey:"user_id"});
+			Orders.belongsTo(models.Routes,{foreignKey:"route_id"});
 		}
 	}
 	Orders.init(
@@ -22,6 +22,9 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			user_id: DataTypes.UUID,
 			route_id: DataTypes.UUID,
+			payment_id: DataTypes.STRING,
+			payment_status: DataTypes.BOOLEAN,
+			passenger_details: DataTypes.JSON,
 		},
 		{
 			sequelize,

@@ -19,3 +19,12 @@ exports.getBusDetails = (req, res) => {
 	if (busData !== undefined) res.json({ travelData: busData });
 	else res.sendStatus(403);
 };
+
+exports.getOrders = async (req,res) => {
+	console.log("request receivef");
+	const {getOrderByUser} = require("../helpers/DB-helper");
+	const response  = await getOrderByUser(req.user_id);
+	if(response){
+		res.status(200).json(response);
+	}
+}

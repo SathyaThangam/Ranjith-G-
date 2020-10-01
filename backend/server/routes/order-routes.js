@@ -2,7 +2,10 @@ const express = require("express");
 const router = express.Router();
 const cookieparser = require("cookie-parser");
 
-const {generateOrder,capturePayment} = require("../controllers/razorpay-controllers");
+const {
+	generateOrder,
+	capturePayment,
+} = require("../controllers/order-controllers");
 //middlewares
 router.use(express.json());
 router.use(cookieparser());
@@ -11,6 +14,6 @@ router.use(cookieparser());
 router.post("/order", generateOrder);
 
 //Capture the payment
-router.post("/capture/:paymentId",capturePayment );
+router.post("/capture/:paymentId", capturePayment);
 
 module.exports = router;

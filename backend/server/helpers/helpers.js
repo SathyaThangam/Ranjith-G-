@@ -26,13 +26,18 @@ exports.uid = (options = {}) => {
 
 //JWT helper functions
 exports.authenticateUser = (req, res, next) => {
+	console.log("request received");
 	jwt.verify(
 		req.cookies.token,
 		process.env.ACCESS_TOKEN_SECRET,
 		(err, data) => {
 			if (err) return res.sendStatus(403);
 			else {
-				if (req.body.sessionID === data.sessionID) next();
+				if (req.body.sessionID === data.sessionID) {
+					req.user_id = data.id
+					console.log("data id",data.id);
+					next()
+				}
 				else res.sendStatus(403);
 			}
 		}

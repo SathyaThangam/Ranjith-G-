@@ -5,8 +5,8 @@ import "../css/BookingPage.scss";
 import TicketComponent from "../Components/TicketComponent";
 import { getTravelTimeObject } from "../helpers/helper";
 import { postRequest } from "../helpers/request-helper";
-import { addTicket,deleteTicket } from "../redux";
-import {connect} from "react-redux";
+import { addTicket, deleteTicket } from "../redux";
+import { connect } from "react-redux";
 class BookingPage extends Component {
 	constructor(props) {
 		super(props);
@@ -53,22 +53,17 @@ class BookingPage extends Component {
 		var seats = this.state.bookedSeats;
 		var ticketPrice = this.state.routeData.ticketprice;
 		// remove seat if already added
-		if (seats.includes(value.toString())){
+		if (seats.includes(value.toString())) {
 			seats = seats.filter((seat) => seat !== value.toString());
-			this.props.deleteTicket(value.toString())
+			this.props.deleteTicket(value.toString());
+		} else {
+			seats.push(value);
+			this.props.addTicket(value.toString());
 		}
-		else {
-			seats.push(value)
-			this.props.addTicket(value.toString())
-		};
 		var totalprice = ticketPrice * seats.length;
 		//Generate ticket components
 		var tickets = seats.map((item, i) => (
-			<TicketComponent
-				key={uid(20)}
-				seatNumber={item}
-				value={i}
-			/>
+			<TicketComponent key={uid(20)} seatNumber={item} value={i} />
 		));
 		this.setState({ bookedSeats: seats, tickets: tickets, totalprice });
 	};
@@ -87,12 +82,12 @@ class BookingPage extends Component {
 			totalprice: this.state.totalprice,
 			sessionID,
 		};
-		console.log("Payment handler",itemData);
+		console.log("Payment handler", itemData);
 		const orderUrl = `${API_ENDPOINT}order`;
 		try {
 			const response = await postRequest(orderUrl, itemData);
 			const { data } = response;
-			console.log("data from order",data);
+			console.log("data from order", data);
 			const options = {
 				key: process.env.RAZORPAY_API_KEY,
 				name: "getBus",
@@ -104,10 +99,13 @@ class BookingPage extends Component {
 						const url = `${API_ENDPOINT}capture/${paymentId}`;
 						postRequest(url, itemData)
 							.then((res) => {
-								const data = JSON.parse(res.data);
+								console.log(res);
+								const data = res.data;
 								console.log(data);
 								if (data && data.status === "captured") {
-									this.props.history.replace("/viewtickets")
+									this.props.history.replace("/viewtickets");
+								} else {
+									console.log("error in captured");
 								}
 							})
 							.catch((err) => console.log(err));
@@ -129,15 +127,15 @@ class BookingPage extends Component {
 
 	bookingHandler = () => {
 		var bookingDetails = {};
-		const { contactEmail, contactPhoneNo } = this.state;
+		const { contactEmail, contactPhoneNo,routeData } = this.state;
 		const ticketData = [...this.props.ticketData];
-		console.log("ticketData",ticketData);
+		console.log("ticketData", ticketData);
 		if (
 			!this.isEmpty(contactEmail) &&
 			!this.isEmpty(contactPhoneNo) &&
 			ticketData.length !== 0
 		) {
-			bookingDetails = { contactEmail, contactPhoneNo, ticketData };
+			bookingDetails = { contactEmail, contactPhoneNo, ticketData,routeData };
 			this.paymentHandler(bookingDetails);
 		} else {
 			console.log("check again");
@@ -285,4 +283,4 @@ const mapDispatchToProps = (dispatch) => {
 		deleteTicket: (seat) => dispatch(deleteTicket(seat)),
 	};
 };
-export default connect(mapStateToProps,mapDispatchToProps)(BookingPage);
+export default connect(mapStateToProps, mapDispatchToProps)(BookingPage);

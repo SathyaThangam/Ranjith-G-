@@ -5,7 +5,7 @@ const cookieparser = require("cookie-parser");
 
 const { authenticateUser } = require("./helpers/helpers");
 
-const paymentRoutes = require("./routes/payment-routes");
+const orderRoutes = require("./routes/order-routes");
 const authRoutes = require("./routes/auth-routes");
 const dataRoutes = require("./routes/data-routes");
 
@@ -26,7 +26,8 @@ app.use("/user", authRoutes);
 app.use("/data", authenticateUser, dataRoutes);
 
 //Payment Route
-app.use("/payment", authenticateUser, paymentRoutes);
+// app.use("/payment", authenticateUser, paymentRoutes);
+app.use("/payment", authenticateUser, orderRoutes);
 
 // To serve react file in the same port
 // const path = require("path");
@@ -36,6 +37,7 @@ app.use("/payment", authenticateUser, paymentRoutes);
 // });
 
 //Endpoint to check if connection has established
+
 app.get("/ping", (req, res) => res.send("pong"));
 
 app.listen(process.env.PORT || 8080, () => console.log("Server is running"));

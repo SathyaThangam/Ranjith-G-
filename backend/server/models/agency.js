@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
 		 */
 		static associate(models) {
 			// define association here
-			Agency.hasMany(models.Buses);
+			Agency.hasMany(models.Buses,{foreignKey:"agency_id"});
 		}
 	}
 	Agency.init(
