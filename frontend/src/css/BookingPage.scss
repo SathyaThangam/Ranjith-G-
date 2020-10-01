@@ -87,6 +87,19 @@
 				}
 			}
 		}
+		@media screen and (max-width:783px) {
+			display: grid;
+			.pull-left{
+				width: 100%;
+			}
+			.pull-right{
+				width: 100%;
+				& > .travel-content-top{
+					display: flex;
+					
+				}
+			}
+		}
 	}
 }
 

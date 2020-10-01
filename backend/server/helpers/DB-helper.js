@@ -1,4 +1,4 @@
-const { Users,Orders,Routes } = require("../models");
+const { Users, Orders, Routes } = require("../models");
 // const {v4:uuidv4} = require("uuid");
 exports.getUserByEmail = async (email) => {
 	try {
@@ -23,7 +23,7 @@ exports.createNewUser = async (userData) => {
 	}
 };
 
-// 
+//
 exports.createNewOrder = async (newOrder) => {
 	console.log(newOrder);
 	try {
@@ -32,7 +32,7 @@ exports.createNewOrder = async (newOrder) => {
 		console.log(err);
 		throw new Error("Database connection Error");
 	}
-}
+};
 
 exports.getRouteIDByLocation = async (source, destination) => {
 	try {
@@ -49,31 +49,35 @@ exports.getRouteIDByLocation = async (source, destination) => {
 	}
 };
 
-exports.updatePaymentStatusByPaymentID = async (payment_id,payment_status) => {
+exports.updatePaymentStatusByPaymentID = async (payment_id, payment_status) => {
 	try {
-		return await Orders.update({
-			payment_status:payment_status
-		},{
-			where:{
-				payment_id:payment_id
+		return await Orders.update(
+			{
+				payment_status: payment_status,
+			},
+			{
+				where: {
+					payment_id: payment_id,
+				},
 			}
-		});
+		);
 	} catch (err) {
 		console.log(err);
 		throw new Error("Database connection Error");
 	}
-}
+};
 
 exports.getOrderByUser = async (user_id) => {
 	try {
-		const data = await Orders.findOne({
-			where: { user_id:user_id },
+		const data = await Orders.findAll({
+			where: { user_id: user_id },
+			attributes: { exclude: ["createdAt", "updatedAt", "user_id"] },
+			raw: true,
 		});
-		if (data !== null && data.dataValues) {
-			return data.dataValues;
-		} else return null;
+		console.log(data);
+		return data;
 	} catch (err) {
 		console.log(err);
 		throw new Error("Database connection Error");
 	}
-}
+};

@@ -1,5 +1,5 @@
 import {FETCH_HISTORY_REQUEST,FETCH_HISTORY_SUCCESS,FETCH_HISTORY_FAILURE} from "../constants/getTicketHistoryConstant";
-import { getRequest } from "../../helpers/request-helper";
+import { postRequest } from "../../helpers/request-helper";
 export const fetchTicketRequest = () => {
 	return {
 		type: FETCH_HISTORY_REQUEST,
@@ -23,13 +23,18 @@ export const fetchTicketFailure = (error) => {
 export const fetchTicketHistory = () => {
 	return function (dispatch) {
 		dispatch(fetchTicketRequest());
-			getRequest("https://jsonplaceholder.typicode.com/users","","",false)
-			.then((response) => {
-				const userID = response.data.map((user) => user.id);
-				dispatch(fetchTicketSuccess(userID));
-			})
-			.catch((err) => {
-				dispatch(fetchTicketFailure(err));
-			});
+			postRequest("/data/getorders")
+				.then((response) => {
+					console.log(response);
+					const ticketData = response.data;
+					dispatch(fetchTicketSuccess(ticketData));
+					// if(ticketData.isArray())
+					// 	dispatch(fetchTicketSuccess(ticketData));
+					// else
+					// 	dispatch(fetchTicketSuccess([ticketData]));
+				})
+				.catch((err) => {
+					dispatch(fetchTicketFailure(err));
+				});
 	};
 };
