@@ -1,7 +1,7 @@
 const axios = require("axios");
 const Cookie = require("js-cookie");
 const API_URL = "http://localhost:8080";
-exports.postRequest = async (path, data, options, use_api = true) => {
+export const postRequest = async (path, data, options, use_api = true) => {
 	const request_url = use_api ? API_URL + path : path;
 	const sessionID = Cookie.get("sessionID");
 	const request_data = { sessionID, ...data };
@@ -22,7 +22,7 @@ exports.postRequest = async (path, data, options, use_api = true) => {
 	}
 };
 
-exports.getRequest = async (path, data, options, use_api = true) => {
+export const getRequest = async (path, data, options, use_api = true) => {
 	const request_url = use_api ? API_URL + path : path;
 	const sessionID = Cookie.get("sessionID");
 	const request_data = { sessionID, ...data };

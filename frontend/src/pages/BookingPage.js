@@ -178,6 +178,10 @@ class BookingPage extends Component {
 
 	componentDidMount() {
 		this.loadBookingData();
+		const script = document.createElement("script");
+		script.src = "https://checkout.razorpay.com/v1/checkout.js";
+		script.defer=true;
+		document.body.appendChild(script);
 	}
 
 	render() {

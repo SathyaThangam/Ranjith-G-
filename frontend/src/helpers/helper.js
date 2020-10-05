@@ -1,28 +1,28 @@
 //filter cities
-exports.getMatchingCities = (city) => {
+export const getMatchingCities = (city) => {
 	const cities = require("../data/cities-name-list.json");
 	return cities.filter((value) =>
 		value.toLowerCase().includes(city.toLowerCase())
 	);
 };
 //validation
-exports.validateEmail = (value) => {
+export const validateEmail = (value) => {
 	const re = /^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/;
 	return re.test(value);
 };
 
-exports.validatePassword = (value) => {
+export const validatePassword = (value) => {
 	let re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$/;
 	return re.test(value);
 };
 
-exports.validateConfirmPassword = (password, confirmPassword) => {
+export const validateConfirmPassword = (password, confirmPassword) => {
 	if (confirmPassword === "") return false;
 	else return password === confirmPassword;
 };
 
 //Format error message while Login/Signup
-exports.formatErrorMessage = (prevMessage, newMessage) => {
+export const formatErrorMessage = (prevMessage, newMessage) => {
 	if (prevMessage !== "") return prevMessage + " / " + newMessage;
 	else return newMessage;
 };
@@ -57,7 +57,7 @@ const formatDate = (dateString, format = "DDD, DD-MM-YYYY") => {
 	}
 	return resultdate;
 };
-exports.formatDate = formatDate;
+export {formatDate};
 
 // format 24 hour to 12 hour format gets Date object returns string hh:mm am/pm
 const formatAMPM = (dateString) => {
@@ -72,9 +72,9 @@ const formatAMPM = (dateString) => {
 
 	return hours + ":" + minutes + " " + ampm;
 };
-exports.formatAMPM = formatAMPM;
+export {formatAMPM};
 
-exports.resetAuthenticationState = () => {
+export const resetAuthenticationState = () => {
 	return {
 		loginEmail: "",
 		loginPwd: "",
@@ -89,7 +89,7 @@ exports.resetAuthenticationState = () => {
 	};
 };
 
-exports.getTravelTimeObject = (sourceTime, destinationTime) => {
+export const getTravelTimeObject = (sourceTime, destinationTime) => {
 	return {
 		sourceTimeformat: formatAMPM(sourceTime),
 		sourceDateformat: formatDate(sourceTime),
@@ -98,7 +98,7 @@ exports.getTravelTimeObject = (sourceTime, destinationTime) => {
 	};
 };
 
-exports.isAuthenticated = () => {
+export const isAuthenticated = () => {
 	const Cookie = require("js-cookie");
 	const sessionID = Cookie.get("sessionID");
 	const session = sessionID !== undefined;
@@ -108,24 +108,27 @@ exports.isAuthenticated = () => {
 
 const getLocation = async () => {
 	return new Promise((resolve, reject) => {
-		navigator.geolocation.getCurrentPosition((position) => {
-			const latitude = round(position.coords.latitude);
-			const longitude = round(position.coords.longitude);
-			resolve({ lat: latitude, lng: longitude });
-		},(error) => reject(error),{
-			enableHighAccuracy:true
-		});
+		navigator.geolocation.getCurrentPosition(
+			(position) => {
+				const latitude = round(position.coords.latitude);
+				const longitude = round(position.coords.longitude);
+				resolve({ lat: latitude, lng: longitude });
+			},
+			(error) => reject(error),
+			{
+				enableHighAccuracy: true,
+			}
+		);
 	});
 };
 
-exports.getGeolocation = async () => {
+export const getGeolocation = async () => {
 	if ("geolocation" in navigator) {
-		try{
+		try {
 			const data = await getLocation();
 			console.log(data);
 			return data;
-		}
-		catch(err){
+		} catch (err) {
 			return new Error(err);
 		}
 	} else {
@@ -138,4 +141,4 @@ const round = (value, position = 5) => {
 	const x = position === 0 ? 1 : Math.pow(10, position);
 	return Math.round(value * x) / x;
 };
-exports.round = round;
+export {round};

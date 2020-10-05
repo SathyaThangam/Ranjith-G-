@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "../css/SearchResultComponent.scss";
-import {formatDate} from "../helpers/helper";
+import { formatDate } from "../helpers/helper.js";
 function SearchResultComponent(props) {
-
 	//React.Fragment used since we only need the table rows to be nested inside the table
+	console.log(formatDate);
 	return (
 		<React.Fragment>
 			<tr className="search-result">
@@ -18,7 +18,7 @@ function SearchResultComponent(props) {
 				</td>
 				<td>
 					<label>{"Departure: "}</label>
-					{formatDate(props.departure,"DD-MM-YYYY")}
+					{formatDate(props.departure, "DD-MM-YYYY")}
 				</td>
 				<td>
 					<label>{"Destination: "}</label>
@@ -26,7 +26,7 @@ function SearchResultComponent(props) {
 				</td>
 				<td>
 					<label>{"Arrival: "}</label>
-					{formatDate(props.arrival,"DD-MM-YYYY")}
+					{formatDate(props.arrival, "DD-MM-YYYY")}
 				</td>
 				<td>
 					<label>{"Seats: "}</label>

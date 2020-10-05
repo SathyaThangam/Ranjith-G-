@@ -9,11 +9,13 @@
 /coverage
 
 # production
-/build
+build
 
 test_api.rest
 **/.env
 /backend/node_modules
+
+
 # misc
 .DS_Store
 .env.local
