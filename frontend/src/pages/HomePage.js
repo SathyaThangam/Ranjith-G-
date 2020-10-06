@@ -7,7 +7,7 @@ import Modal from "@material-ui/core/Modal";
 import "../css/Homepage.scss";
 import "/data_unavailable.svg";
 import Cookie from "js-cookie";
-import { postRequest } from "../helpers/request-helper";
+import { getRequest } from "../helpers/request-helper";
 class HomePage extends Component {
 	constructor(props) {
 		super(props);
@@ -46,7 +46,7 @@ class HomePage extends Component {
 		const travelData = { source, destination, sessionID };
 
 		// Fetch the bus data
-		postRequest("/data/gettravels", travelData)
+		getRequest("/data/gettravels", travelData)
 			.then((response) => {
 				if (response.status === 200) {
 					const data = response.data;

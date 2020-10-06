@@ -7,8 +7,7 @@ import AuthenticateModalComponent from "./AuthenticateModalComponent";
 import Cookie from "js-cookie";
 import { isAuthenticated } from "../helpers/helper";
 import { postRequest } from "../helpers/request-helper";
-import { connect } from "react-redux";
-import { sessionChange } from "../redux";
+import {SessionContext} from "../context/SessionContext"
 class HeaderComponent extends Component {
 	constructor(props) {
 		super(props);
@@ -26,7 +25,8 @@ class HeaderComponent extends Component {
 		const session = isAuthenticated();
 		//update only if the session state has changed
 		// checking to prevent recursively calling componentDidUpdate
-		if (session !== this.props.session) this.props.sessionChange(session);
+		if (session !== this.context.session) this.context.setSession(session);
+		console.log("this.context", this.context);
 	};
 
 	logoutHandler = () => {
@@ -34,7 +34,7 @@ class HeaderComponent extends Component {
 		postRequest("/user/logout", { sessionID })
 			.then((response) => {
 				Cookie.remove("sessionID");
-				this.props.sessionChange(false);
+				this.context.setSession(false);
 			})
 			.catch((err) => console.log(err));
 	};
@@ -72,13 +72,13 @@ class HeaderComponent extends Component {
 
 				<div className="header-nav">
 					<NavLink
-						to="/viewtickets"
+						to="/view	tickets"
 						className="nav-link"
 						activeClassName="selected"
 					>
 						View Tickets
 					</NavLink>
-					{this.props.session ? this.logOutButton : this.loginButton}
+					{this.context.session ? this.logOutButton : this.loginButton}
 					<Modal
 						open={this.state.modalOpen}
 						onClose={this.modalClose}
@@ -93,16 +93,7 @@ class HeaderComponent extends Component {
 	}
 }
 
-const mapStateToProps = (state) => {
-	return {
-		session: state.sessionStore.loginSession,
-	};
-};
+HeaderComponent.contextType = SessionContext;
 
-const mapDispatchToProps = (dispatch) => {
-	return {
-		sessionChange: (session) => dispatch(sessionChange(session)),
-	};
-};
 
-export default connect(mapStateToProps, mapDispatchToProps)(HeaderComponent);
+export default HeaderComponent;

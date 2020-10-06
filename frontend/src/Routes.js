@@ -15,7 +15,7 @@ function Routes() {
 	return (
 		<Router>
 			<HeaderComponent />
-			<Suspense fallback={LazyLoadingBarComponent}>
+			<Suspense fallback={<LazyLoadingBarComponent/>}>
 				<Switch>
 					<Route path="/" exact component={HomePage} />
 					<ProtectedRoute

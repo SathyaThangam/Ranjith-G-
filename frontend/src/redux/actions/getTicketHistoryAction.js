@@ -1,5 +1,5 @@
 import {FETCH_HISTORY_REQUEST,FETCH_HISTORY_SUCCESS,FETCH_HISTORY_FAILURE} from "../constants/getTicketHistoryConstant";
-import { postRequest } from "../../helpers/request-helper";
+import { getRequest } from "../../helpers/request-helper";
 export const fetchTicketRequest = () => {
 	return {
 		type: FETCH_HISTORY_REQUEST,
@@ -23,7 +23,7 @@ export const fetchTicketFailure = (error) => {
 export const fetchTicketHistory = () => {
 	return function (dispatch) {
 		dispatch(fetchTicketRequest());
-			postRequest("/data/getorders")
+			getRequest("/data/getorders")
 				.then((response) => {
 					console.log(response);
 					const ticketData = response.data;

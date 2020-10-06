@@ -4,7 +4,7 @@ import Cookie from "js-cookie";
 import "../css/BookingPage.scss";
 import TicketComponent from "../Components/TicketComponent";
 import { getTravelTimeObject } from "../helpers/helper";
-import { postRequest } from "../helpers/request-helper";
+import { postRequest,getRequest } from "../helpers/request-helper";
 import { addTicket, deleteTicket } from "../redux";
 import { connect } from "react-redux";
 class BookingPage extends Component {
@@ -148,7 +148,7 @@ class BookingPage extends Component {
 			const busID = this.props.match.params.id;
 			var routeData = "";
 			const sessionID = Cookie.get("sessionID");
-			postRequest("/data/getbusdetails", {
+			getRequest("/data/getbusdetails", {
 				busid: busID,
 				sessionID,
 			})

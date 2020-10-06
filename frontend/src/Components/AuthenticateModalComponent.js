@@ -13,7 +13,7 @@ import "./loginscene.svg";
 import SignupComponent from "./SignupComponent";
 import LoginComponent from "./LoginComponent";
 import { connect } from "react-redux";
-import { sessionChange } from "../redux";
+import {SessionContext} from  "../context/SessionContext"
 class AuthenticateModalComponent extends Component {
 	constructor(props) {
 		super(props);
@@ -88,7 +88,8 @@ class AuthenticateModalComponent extends Component {
 					if (message !== undefined) {
 						if (message === "success") {
 							//TODO go to booking page
-							this.props.sessionChange(true);
+							this.context.setSession(true);
+							console.log("this.context", this.context);
 							this.props.handleModalClose();
 							if (this.props.location.pathname === "/login")
 								this.props.history.goBack();
@@ -173,8 +174,9 @@ class AuthenticateModalComponent extends Component {
 								loginsuccess: true,
 							});
 
-							this.props.sessionChange(true);
-
+							this.context.setSession(true);
+							console.log("this.context", this.context);
+							console.log(this.context);
 							if (this.props.location !== undefined) {
 								if (this.props.location.pathname === "/login")
 									this.props.history.goBack();
@@ -309,20 +311,14 @@ class AuthenticateModalComponent extends Component {
 	}
 }
 
+AuthenticateModalComponent.contextType = SessionContext;
 const mapStateToProps = (state) => {
 	return {
-		session: state.sessionStore.loginSession,
 		coords: state.coordsStore,
-	};
-};
-
-const mapDispatchToProps = (dispatch) => {
-	return {
-		sessionChange: (session) => dispatch(sessionChange(session)),
 	};
 };
 
 export default connect(
 	mapStateToProps,
-	mapDispatchToProps
+	null
 )(AuthenticateModalComponent);

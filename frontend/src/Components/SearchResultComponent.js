@@ -4,7 +4,6 @@ import "../css/SearchResultComponent.scss";
 import { formatDate } from "../helpers/helper.js";
 function SearchResultComponent(props) {
 	//React.Fragment used since we only need the table rows to be nested inside the table
-	console.log(formatDate);
 	return (
 		<React.Fragment>
 			<tr className="search-result">

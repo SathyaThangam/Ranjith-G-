@@ -27,7 +27,8 @@ export const getRequest = async (path, data, options, use_api = true) => {
 	const sessionID = Cookie.get("sessionID");
 	const request_data = { sessionID, ...data };
 	try {
-		return await axios.get(request_url, request_data, {
+		return await axios.get(request_url,{
+			params:{...request_data},
 			withCredentials: true,
 			...options,
 		});
