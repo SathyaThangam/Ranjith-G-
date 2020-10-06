@@ -1,0 +1,21 @@
+@import "variables.scss";
+
+.ticket-container {
+	display: flex;
+	flex-direction: column;
+    align-items: flex-start;
+    border-bottom: 1px solid #DDD;
+	padding: 5px;
+	& > label {
+		display: block;
+		text-align: left;
+	}
+	input {
+        font-size: 1.25rem;
+        margin: 5px;
+        padding: 5px;
+
+    }
+    
+    
+}

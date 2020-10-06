@@ -1,0 +1,15 @@
+@import "variables.scss";
+
+.outline-btn {
+	background-color: transparent;
+	padding: 5px 10px;
+	border: 1px solid $accent-color;
+	color: #282c34;
+	border-radius: 5px;
+	font-size: $small-font;
+	cursor: pointer;
+	&:hover {
+		background-color: $accent-color;
+		color: white;
+	}
+}

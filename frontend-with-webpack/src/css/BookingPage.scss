@@ -1,0 +1,170 @@
+@import "variables.scss";
+
+.booking-container {
+	height: 100%;
+	padding: 5px;
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	.heading {
+		font-size: $medium-font;
+		color: $secondary-color;
+		margin-bottom: 10px;
+
+		& > button {
+			margin-left: 20px;
+			font-size: $small-font;
+			background-color: $secondary-color;
+			color: white;
+			border: none;
+			cursor: pointer;
+
+			&:hover {
+				background-color: white;
+				color: $secondary-color;
+			}
+			&:disabled {
+				cursor: not-allowed;
+			}
+		}
+	}
+}
+
+.travel-details-container {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	& > .travel-details-content {
+		background-color: white;
+		width: 100%;
+		padding: 10px;
+		display: flex;
+		box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.3);
+		.pull-left {
+			width: 120px;
+			display: flex;
+			margin: 10px;
+			align-items: center;
+			justify-content: center;
+			& > h1 {
+				font-size: $medium-font;
+				color: $secondary-color;
+				font-weight: 500;
+				word-wrap: break-word;
+			}
+		}
+		.pull-right {
+			display: flex;
+			width: 100%;
+			margin-left: 30px;
+			margin-right: 10px;
+			& > .travel-content-top {
+				display: flex;
+				flex: 1 1 150px;
+				align-items: flex-start;
+				justify-content: space-between;
+
+				.city {
+					font-size: 14px;
+				}
+				.time {
+					text-align: left;
+					font-size: 2rem;
+					font-weight: 600;
+					margin: 0;
+				}
+				.date {
+					text-align: left;
+				}
+				.content-center {
+					height: 100%;
+					display: flex;
+					align-items: center;
+					font-size: 1.5rem;
+					font-weight: 600;
+					margin: 0;
+				}
+			}
+		}
+		@media screen and (max-width:783px) {
+			display: grid;
+			.pull-left{
+				width: 100%;
+			}
+			.pull-right{
+				width: 100%;
+				& > .travel-content-top{
+					display: flex;
+					
+				}
+			}
+		}
+	}
+}
+
+.travel-booking-container {
+	display: flex;
+	margin-top: 30px;
+	flex: 1;
+	& > .seats-container {
+		width: 60%;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		flex: 1;
+		margin-right: 10px;
+		height: 100%;
+		.bus-seat {
+			width: 40px;
+			height: 40px;
+			border: 2px solid rgb(184, 184, 184);
+			border-radius: 3px;
+			margin: 5px;
+			text-align: center;
+			background-color: transparent;
+			cursor: pointer;
+			&:hover {
+				background-color: $secondary-color;
+				color: white;
+			}
+
+			&.active {
+				background-color: $secondary-color;
+				color: white;
+			}
+		}
+
+		.seats-content {
+			background-color: white;
+			padding: 10px;
+			width: 90%;
+			margin-right: 30px;
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+			gap: 0.5rem;
+		}
+	}
+	& > .ticket-container {
+		width: 40%;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		.ticket-content {
+			width: 100%;
+			background-color: white;
+
+			.ticket-contact {
+				margin: 2px;
+				padding-bottom: 10px;
+				border-bottom: 1px solid black;
+			}
+		}
+		&:last-child {
+			border-bottom: none;
+		}
+		&:only-child {
+			border-bottom: none;
+		}
+	}
+}
