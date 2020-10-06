@@ -8,11 +8,11 @@ router.use(express.json());
 router.use(cookieparser());
 
 //Endpoint to get buses available for a source
-router.post("/gettravels", getTravels);
+router.get("/gettravels", getTravels);
 
 //get the bus details using id
-router.post("/getbusdetails", getBusDetails);
+router.get("/getbusdetails", getBusDetails);
 
-router.post("/getorders", getOrders);
+router.get("/getorders", getOrders);
 
 module.exports = router;
