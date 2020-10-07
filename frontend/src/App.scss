@@ -1,9 +1,10 @@
 // @import-normalize;
+@import "./css/variables.scss";
 
 .App {
 	text-align: center;
 	min-height: 100vh;
-	background-color: #b1ffd0;
+	background-color: var(--primary-color);
 	display: flex;
 	flex-direction: column;
 }

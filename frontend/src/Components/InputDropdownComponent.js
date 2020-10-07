@@ -21,9 +21,8 @@ class InputDropdownComponent extends Component {
 		const generateKey = (pre, i) => `${pre}_${i}_${new Date().getTime()}`;
 		
 		if (results.length === 0) displayResults = <p>{"No results Found"}</p>;
-		
 		else
-			displayResults = results.map((city, i) => (
+			displayResults = results.slice(0,12).map((city, i) => (
 				<p
 					key={generateKey(city, i)}
 					onClick={() => {

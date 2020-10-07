@@ -44,10 +44,10 @@
 	max-height: 40.4px;
 	padding: 7px 20px;
 	outline: none;
-	background-color: $secondary-color;
+	background-color: var(--secondary-color);
 	text-align: center;
 	font-size: 1.2em;
-	color: $pale-color-2;
+	color: var(--pale-color-2);
 	border: none;
 	.icon {
 		padding-top: 4px;
@@ -66,7 +66,7 @@
 	padding: 10px 10px;
     width: 100%;
     display: flex;
-    background-color: $secondary-color;
+    background-color: var(--secondary-color);
     color:white;
     border: 1px solid #DDD;
     cursor: pointer;

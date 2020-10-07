@@ -1,11 +1,28 @@
-$accent-color: #FA8334;
-$primary-color: #B1FFD0;
-$secondary-color: #2660A4;
-$bus-color:#68A5FF;
+:root {
+	--accent-color: #fa8334;
+	--primary-color: #b1ffd0;
+	--secondary-color: #2660a4;
+	--color: black;
+	--background-color: white;
+	color: black;
+}
+.dark {
+	--accent-color: #fa8334;
+	--primary-color: #312f2c;
+	--secondary-color: #7f95d1;
+	--color: white;
+	--background-color: rgb(77, 76, 76);
+	color: white;
+}
 
-$pale-color-1: #5C573E;
-$pale-color-2: #95B8D1;
-
+.light {
+	--accent-color: #fa8334;
+	--primary-color: #b1ffd0;
+	--secondary-color: #2660a4;
+	--color: black;
+	--background-color: white;
+	color: black;
+}
 $small-font: 0.9em;
 $medium-font: 1.5em;
 $large-font: 2em;

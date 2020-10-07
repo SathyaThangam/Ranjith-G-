@@ -5,7 +5,6 @@ import "/error404.svg";
 import "../css/Errorpage.scss";
 
 function Errorpage(props) {
-	console.log(props.message);
 	const defaultMessage =
 		"They say that all roads lead to Rome. But we've lost our way, so let's try going home.";
 	return (

@@ -12,8 +12,7 @@
 		right: 0;
 		width: 100%;
 		margin: 0 auto;
-		background-color: white;
-		border: 1px solid #ddd;
+		background-color: var(--background-color);
 		z-index: 1;
 		cursor: pointer;
 
@@ -23,7 +22,7 @@
 			margin: 5px;
 			&:hover,
 			:focus {
-				background-color: $accent-color;
+				background-color: var(--accent-color);
 				color: white;
 			}
 		}
@@ -37,7 +36,7 @@
 		border: 1px solid #ddd;
 
 		&:focus {
-			border: 1px solid $accent-color;
+			border: 1px solid var(--accent-color);
 			& ~ div {
 				display: block;
 			}

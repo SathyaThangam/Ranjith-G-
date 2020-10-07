@@ -3,11 +3,8 @@ import "./App.scss";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import Routes from "./Routes";
-import {SessionContextProvider} from "./context/SessionContext"
+import { SessionContextProvider } from "./context/SessionContext";
 function App() {
-
-
-
 	return (
 		<React.Fragment>
 			<Provider store={store}>
@@ -22,7 +19,5 @@ function App() {
 		</React.Fragment>
 	);
 }
-
-
 
 export default App;

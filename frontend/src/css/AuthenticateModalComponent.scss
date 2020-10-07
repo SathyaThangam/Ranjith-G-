@@ -1,7 +1,7 @@
 @import "variables.scss";
 
 .modal-container {
-	background-color: white;
+	background-color: var(--secondary-color);
 	position: absolute;
 	width: 50%;
 	height: 70vh;
@@ -64,7 +64,7 @@
 		}
 	}
 	.active {
-		color: $accent-color;
+		color: var(--accent-color);
 	}
 }
 
@@ -88,7 +88,7 @@
 		font-size: medium;
 		&:focus,
 		&:hover {
-			color: $accent-color;
+			color: var(--accent-color);
 		}
 	}
 

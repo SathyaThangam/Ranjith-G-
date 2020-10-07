@@ -4,7 +4,7 @@
 	padding: 5px 10px;
 	width: 100%;
 	display: flex;
-	background-color: $secondary-color;
+	background-color: var(--secondary-color);
 	color: white;
 	border: 1px solid #ddd;
 	cursor: pointer;
@@ -12,10 +12,10 @@
 	justify-content: space-between;
 	// flex-wrap: wrap;
 	&:hover {
-		color: $secondary-color;
+		color: var(--secondary-color);
 		background-color: white;
 		button {
-			background-color: $secondary-color;
+			background-color: var(--secondary-color);
 			color: white;
 		}
 	}
@@ -24,7 +24,7 @@
 		padding: 10px 15px;
 		text-align: center;
 		border: none;
-		color: $secondary-color;
+		color: var(--secondary-color);
 		background-color: white;
 		transition: transform 0.2s;
 		cursor: pointer;
@@ -61,7 +61,7 @@
     display: none;
     padding: 5px 10px;
 	width: 100%;
-	background-color: $secondary-color;
+	background-color: var(--secondary-color);
 	color: white;
 	border: 1px solid #ddd;
 	cursor: pointer;
@@ -78,7 +78,7 @@
 		padding: 10px 15px;
 		text-align: center;
 		border: none;
-		color: $secondary-color;
+		color: var(--secondary-color);
 		background-color: white;
 		transition: transform 0.2s;
 		cursor: pointer;
