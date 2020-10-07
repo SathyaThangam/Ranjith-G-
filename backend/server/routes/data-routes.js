@@ -3,6 +3,8 @@ const router = express.Router();
 const cookieparser = require("cookie-parser");
 
 const {getTravels,getBusDetails,getOrders} = require("../controllers/data-controllers");
+
+const { authenticateUser } = require("../helpers/helpers");
 //middlewares
 router.use(express.json());
 router.use(cookieparser());
@@ -11,8 +13,8 @@ router.use(cookieparser());
 router.get("/gettravels", getTravels);
 
 //get the bus details using id
-router.get("/getbusdetails", getBusDetails);
+router.get("/getbusdetails",authenticateUser, getBusDetails);
 
-router.get("/getorders", getOrders);
+router.get("/getorders",authenticateUser, getOrders);
 
 module.exports = router;

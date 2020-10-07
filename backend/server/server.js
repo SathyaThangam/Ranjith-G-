@@ -3,8 +3,6 @@ require("dotenv").config();
 const cors = require("cors");
 const cookieparser = require("cookie-parser");
 
-const { authenticateUser } = require("./helpers/helpers");
-
 const orderRoutes = require("./routes/order-routes");
 const authRoutes = require("./routes/auth-routes");
 const dataRoutes = require("./routes/data-routes");
@@ -23,11 +21,11 @@ app.use(cookieparser());
 app.use("/user", authRoutes);
 
 //data routes
-app.use("/data", authenticateUser, dataRoutes);
+app.use("/data", dataRoutes);
 
 //Payment Route
 // app.use("/payment", authenticateUser, paymentRoutes);
-app.use("/payment", authenticateUser, orderRoutes);
+app.use("/payment", orderRoutes);
 
 // To serve react file in the same port
 // const path = require("path");

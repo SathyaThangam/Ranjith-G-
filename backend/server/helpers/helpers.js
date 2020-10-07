@@ -26,7 +26,6 @@ exports.uid = (options = {}) => {
 
 //JWT helper functions
 exports.authenticateUser = (req, res, next) => {
-	console.log("request received",req.query);
 	var sessionID;
 	if (req.method === "POST") sessionID = req.body.sessionID;
 	else if (req.method === "GET") sessionID = req.query.sessionID;
