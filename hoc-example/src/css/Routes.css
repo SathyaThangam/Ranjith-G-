@@ -1,0 +1,11 @@
+.header {
+    margin: 10px;
+    padding: 20px;
+    border-bottom: 1px solid #DDD;
+}
+
+.link {
+    text-decoration:none;
+    color: #6623d3;
+    padding-right:10px;
+}
