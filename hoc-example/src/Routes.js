@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Switch, Route,NavLink } from "react-router-dom
 import React from 'react'
 import PokemonComponent from "./components/PokemonComponent";
 import JSONplaceholderComponent from "./components/JSONplaceholderComponent";
+// import PokemonComponent from "./norm-components/PokemonComponent";
+// import JSONplaceholderComponent from "./norm-components/JSONplaceholderComponent";
 import "./css/Routes.css";
 function Routes() {
     return (

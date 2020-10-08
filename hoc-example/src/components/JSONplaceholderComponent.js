@@ -1,17 +1,21 @@
-import React, { useEffect } from "react";
+import React, { Profiler, useEffect } from "react";
+import { onRenderCallBack } from "../helper";
 import withAPIfunctionality from "./withAPIFunctionality";
 function JSONplaceholderComponent(props) {
-
 	useEffect(() => {
-        props.loadData("https://jsonplaceholder.typicode.com/users");
-        console.log(props.response);
-	},[]);
+		props.loadData("https://jsonplaceholder.typicode.com/users");
+		console.log(props.response);
+	}, []);
 
 	return (
-		<div>
-			{props.response &&
-				props.response.map((user) => <h2 key={user.id}>{user.name}</h2>)}
-		</div>
+		<Profiler id="JSONplaceholderComponent" onRender={onRenderCallBack}>
+			<>
+				{props.response &&
+					props.response.map((user) => (
+						<h2 key={user.id}>{user.name}</h2>
+					))}
+			</>
+		</Profiler>
 	);
 }
 
