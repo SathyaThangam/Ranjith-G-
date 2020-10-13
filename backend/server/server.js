@@ -26,9 +26,11 @@ app.use("/payment", orderRoutes);
 
 // To serve react file in the same port
 const path = require("path");
-app.use(express.static("../../frontend/build"));
+const publicPath = path.join(__dirname, "../../frontend/build");
+app.use(express.static(publicPath));
+console.log();
 app.get("/*", function (req, res) {
-	res.sendFile(path.join("../../frontend/build", "index.html"));
+	res.sendFile(path.join(publicPath, "index.html"));
 });
 
 //Endpoint to check if connection has established
