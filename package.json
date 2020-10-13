@@ -2,7 +2,7 @@
 	"name": "react-bus-tickets",
 	"version": "1.0.0",
 	"description": "A bus ticket application",
-	"main": "backend/server/server.js",
+	"main": "frontend/public/index.html",
 	"engines": {
 		"node": "10.x",
 		"npm": "6.x"
