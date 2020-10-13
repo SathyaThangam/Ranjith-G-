@@ -12,7 +12,7 @@ export const validateEmail = (value) => {
 };
 
 export const validatePassword = (value) => {
-	let re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$/;
+	let re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,16}$/;
 	return re.test(value);
 };
 
@@ -57,7 +57,7 @@ const formatDate = (dateString, format = "DDD, DD-MM-YYYY") => {
 	}
 	return resultdate;
 };
-export {formatDate};
+export { formatDate };
 
 // format 24 hour to 12 hour format gets Date object returns string hh:mm am/pm
 const formatAMPM = (dateString) => {
@@ -72,7 +72,7 @@ const formatAMPM = (dateString) => {
 
 	return hours + ":" + minutes + " " + ampm;
 };
-export {formatAMPM};
+export { formatAMPM };
 
 export const resetAuthenticationState = () => {
 	return {
@@ -141,4 +141,4 @@ const round = (value, position = 5) => {
 	const x = position === 0 ? 1 : Math.pow(10, position);
 	return Math.round(value * x) / x;
 };
-export {round};
+export { round };

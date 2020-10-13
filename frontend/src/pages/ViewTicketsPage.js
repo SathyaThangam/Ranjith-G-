@@ -21,7 +21,6 @@ function ViewTicketsPage() {
 							<td>{order.route_id}</td>
 							<td>{order.payment_id}</td>
 							<td>{order.payment_status}</td>
-							<td>Hello</td>
 						</tr>
 					);
 				})}
