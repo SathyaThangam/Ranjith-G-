@@ -11,10 +11,7 @@ const app = express();
 
 //middlewares
 app.use(express.json());
-app.use(cors({
-    origin:"http://localhost:3000",
-    credentials:true
-}));
+app.use(cors());
 app.use(cookieparser());
 
 //Authentication Routes
@@ -28,11 +25,11 @@ app.use("/data", dataRoutes);
 app.use("/payment", orderRoutes);
 
 // To serve react file in the same port
-// const path = require("path");
-// app.use(express.static(path.join(__dirname, "build")));
-// app.get("/*", function (req, res) {
-// 	res.sendFile(path.join(__dirname, "build", "index.html"));
-// });
+const path = require("path");
+app.use(express.static("../../frontend/build"));
+app.get("/*", function (req, res) {
+	res.sendFile(path.join("../../frontend/build", "index.html"));
+});
 
 //Endpoint to check if connection has established
 
