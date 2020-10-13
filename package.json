@@ -1,0 +1,38 @@
+{
+	"name": "react-bus-tickets",
+	"version": "1.0.0",
+	"description": "A bus ticket application",
+	"main": "backend/server/server.js",
+	"engines": {
+		"node": "10.x",
+		"npm": "6.x"
+	},
+	"cacheDirectories": [
+		"node_modules",
+		"backend/node_modules",
+		"frontend/node_modules"
+	],
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "concurrently \"cd backend && node server/server.js\" \"cd ../frontend && npm start\"",
+		"heroku-postbuild": "(cd backend && npm install) && (cd ../frontend && npm install && npm run build)",
+		"build": ""
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/SathyaThangam/Ranjith-G-.git"
+	},
+	"keywords": [
+		"react-bus-tickets"
+	],
+	"author": "Ranjith",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/SathyaThangam/Ranjith-G-/issues"
+	},
+	"homepage": "https://github.com/SathyaThangam/Ranjith-G-#readme",
+	"dependencies": {
+		"concurrently": "^5.3.0",
+		"heroku": "^7.45.0"
+	}
+}
