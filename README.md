@@ -9,3 +9,5 @@
 -   **JWT** - For Authentication and Authorization
 -   **Sequelize ORM** - Database Migrations
 -   **SASS** - For CSS
+
+**CHECK OUT LIVE APPLICATION** - https://react-bus-tickets.herokuapp.com/

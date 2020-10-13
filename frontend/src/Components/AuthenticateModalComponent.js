@@ -13,7 +13,7 @@ import "./loginscene.svg";
 import SignupComponent from "./SignupComponent";
 import LoginComponent from "./LoginComponent";
 import { connect } from "react-redux";
-import {SessionContext} from  "../context/SessionContext"
+import { SessionContext } from "../context/SessionContext";
 class AuthenticateModalComponent extends Component {
 	constructor(props) {
 		super(props);
@@ -44,7 +44,7 @@ class AuthenticateModalComponent extends Component {
 	};
 
 	setLocationErrorMessage = (value) => {
-		if(value){
+		if (value) {
 			this.setState((prevState) => ({
 				inputError: true,
 				errorMessage: formatErrorMessage(
@@ -52,9 +52,8 @@ class AuthenticateModalComponent extends Component {
 					"Allow location permission to access"
 				),
 			}));
-	
 		}
-	}
+	};
 
 	//Signup
 	userSignup = () => {
@@ -124,14 +123,26 @@ class AuthenticateModalComponent extends Component {
 						"Incorrect Email"
 					),
 				}));
-			if (!validatePassword(signupPwd))
-				this.setState((prevState) => ({
-					inputError: true,
-					errorMessage: formatErrorMessage(
-						prevState.errorMessage,
-						"Incorrect Password"
-					),
-				}));
+			if (!validatePassword(signupPwd)) {
+				if (signupPwd.length < 8 || signupPwd.length > 16) {
+					this.setState((prevState) => ({
+						inputError: true,
+						errorMessage: formatErrorMessage(
+							prevState.errorMessage,
+							"Incorrect Password: Password should have 8 to 16 characters"
+						),
+					}));
+				} else {
+					this.setState((prevState) => ({
+						inputError: true,
+						errorMessage: formatErrorMessage(
+							prevState.errorMessage,
+							"Incorrect Password: Password should contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character"
+						),
+					}));
+				}
+			}
+
 			if (!validateConfirmPassword(signupPwd, signupCPwd))
 				this.setState((prevState) => ({
 					inputError: true,
@@ -302,9 +313,11 @@ class AuthenticateModalComponent extends Component {
 								/>
 							)}
 						</div>
-						{this.state.inputError ? ErrorAlert : ""}
-						{this.state.loginsuccess ? SuccessAlert : ""}
 					</div>
+				</div>
+				<div className="alert-container">
+					{this.state.inputError ? ErrorAlert : ""}
+					{this.state.loginsuccess ? SuccessAlert : ""}
 				</div>
 			</div>
 		);
@@ -318,7 +331,4 @@ const mapStateToProps = (state) => {
 	};
 };
 
-export default connect(
-	mapStateToProps,
-	null
-)(AuthenticateModalComponent);
+export default connect(mapStateToProps, null)(AuthenticateModalComponent);

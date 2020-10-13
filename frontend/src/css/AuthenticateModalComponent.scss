@@ -1,7 +1,7 @@
 @import "variables.scss";
 
 .modal-container {
-	background-color: var(--secondary-color);
+	background-color: white;
 	position: absolute;
 	width: 50%;
 	height: 70vh;
@@ -11,7 +11,14 @@
 	border-radius: 5px;
 	display: flex;
 	align-items: center;
-	justify-content: center;
+	justify-content: flex-start;
+	flex-direction: column;
+
+	 .alert-container{
+			z-index: 99;
+			position: relative;
+			left: -30px;
+		}
 }
 
 .modal-content {
