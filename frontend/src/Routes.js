@@ -1,12 +1,12 @@
 import React, { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import LazyLoadingBarComponent from "./Components/LazyLoadingBarComponent";
-import HeaderComponent from "./Components/HeaderComponent";
-import ProtectedRoute from "./Components/ProtectedRoute";
+import CircularLoaderComponent from "./components/CircularLoaderComponent";
+import HeaderComponent from "./components/HeaderComponent";
+import ProtectedRoute from "./components/ProtectedRoute";
 import Errorpage from "./pages/Errorpage";
 
 const AuthenticateModalComponent = lazy(() =>
-	import("./Components/AuthenticateModalComponent")
+	import("./components/AuthenticateModalComponent")
 );
 const BookingPage = lazy(() => import("./pages/BookingPage"));
 const HomePage = lazy(() => import("./pages/HomePage"));
@@ -15,7 +15,7 @@ function Routes() {
 	return (
 		<Router>
 			<HeaderComponent />
-			<Suspense fallback={<LazyLoadingBarComponent/>}>
+			<Suspense fallback={<CircularLoaderComponent/>}>
 				<Switch>
 					<Route path="/" exact component={HomePage} />
 					<ProtectedRoute

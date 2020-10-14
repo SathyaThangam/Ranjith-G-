@@ -8,11 +8,11 @@
 
     h1{
         font-weight: 400;
-        color: #3e3ef0;
+        color: var(--accent-color);
         text-decoration: none;
     }
 
     a{
-        color:#3e3ef0
+        color: var(--accent-color);
     }
 }

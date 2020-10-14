@@ -2,22 +2,24 @@
 
 .input-dropdown-container {
 	position: relative;
-	display: inline-block;
+	display: block;
 	margin: 2px;
-	width: 100%;
+	// width: 100%;
 	.dropdown-content {
 		display: none;
 		position: absolute;
-		left: 0;
-		right: 0;
-		width: 100%;
-		margin: 0 auto;
 		background-color: var(--background-color);
+		top: 2rem;
+		width: 100%;
 		z-index: 1;
 		cursor: pointer;
 
-		p {
+		ul {
+			padding: 0;
 			list-style: none;
+		}
+		p {
+			list-style-type: none;
 			padding: 5px;
 			margin: 5px;
 			&:hover,
@@ -26,29 +28,27 @@
 				color: white;
 			}
 		}
+		&.visible {
+			display: block;
+		}
 	}
+
 	input {
 		padding: 5px 20px;
 		margin-right: 2px;
 		outline: none;
 		padding-left: 4px;
-		font-size: $medium-font;
-		border: 1px solid #ddd;
+		font-size: 1.2rem;
+		border: 3px solid #ddd;
+		border-radius: 3px;
 
-		&:focus {
-			border: 1px solid var(--accent-color);
-			& ~ div {
-				display: block;
-			}
+		&:hover {
+			border: 3px solid var(--accent-color);
+			box-shadow: 0 0 10px var(--accent-color);
 		}
 
 		@media screen and (max-width: 358px) {
 			font-size: $small-font;
-		}
-	}
-	&:hover {
-		.dropdown-content {
-			display: block;
 		}
 	}
 }

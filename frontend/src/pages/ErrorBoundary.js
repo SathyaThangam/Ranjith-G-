@@ -12,13 +12,11 @@ class ErrorBoundary extends Component {
 	}
 
 	componentDidCatch(error, errorInfo) {
-		// You can also log the error to an error reporting service
-		logErrorToMyService(error, errorInfo);
+		//  log the error to an error reporting service
 	}
 
 	render() {
 		if (this.state.hasError) {
-			// You can render any custom fallback UI
 			return <ErrorPage message="Network Error" />;
 		}
 

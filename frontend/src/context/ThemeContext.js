@@ -3,11 +3,12 @@ import React, { useState, useEffect } from "react";
 //Used in: HeaderComponent,AuthenticateModalComponent
 const ThemeContext = React.createContext(false);
 function ThemeContextProvider(props) {
+	// 264653,2a9d8f,e9c46a,f4a261,e76f51
 	const initialTheme = {
-		"primary-color": "#b1ffd1",
-		"secondary-color": "#2660a4",
-		"accent-color": "#fa8334",
-		"color": "#000000",
+		"primary-color": "#264653",
+		"secondary-color": "#2a9d8f",
+		"accent-color": "#e9c46a",
+		color: "#000000",
 		"background-color": "#FFFFFF",
 	};
 	const [theme, setTheme] = useState(initialTheme);
