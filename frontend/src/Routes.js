@@ -15,7 +15,7 @@ function Routes() {
 	return (
 		<Router>
 			<HeaderComponent />
-			<Suspense fallback={<CircularLoaderComponent/>}>
+			<Suspense fallback={<CircularLoaderComponent />}>
 				<Switch>
 					<Route path="/" exact component={HomePage} />
 					<ProtectedRoute
