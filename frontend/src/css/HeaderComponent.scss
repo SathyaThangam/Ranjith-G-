@@ -6,7 +6,7 @@
 	height: 50px;
 	align-items: center;
 
-	@media screen and (max-width: 400px) {
+	@media screen and (max-width: 500px) {
 		display: block;
 		align-items: center;
 		height: fit-content;
@@ -62,7 +62,7 @@
 	border: none;
 	outline: 0;
 	cursor: pointer;
-	&:hover{
+	&:hover {
 		.dropdown-color-content {
 			display: block;
 		}
@@ -89,7 +89,7 @@
 			background-color: var(--accent-color);
 			color: white;
 		}
-		input[type="color"]{
+		input[type="color"] {
 			height: 20px;
 			width: 20px;
 			display: flex;
@@ -101,6 +101,4 @@
 			cursor: pointer;
 		}
 	}
-
-	
 }

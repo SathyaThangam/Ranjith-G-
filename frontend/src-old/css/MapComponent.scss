@@ -1,0 +1,26 @@
+$top-position : 40%;
+$left-position : 10%;
+
+.map-container {
+    position: absolute;
+    width: 50%;
+	height: 70vh;
+    top: $top-position;
+    left:$left-position;
+    transform: translate(-$left-position, -$top-position);
+	&:only-child {
+		width: 100%;
+		height: 100%;
+    }
+    
+    .marker{
+        color:red;
+        font-size: 40;
+    }
+
+    @media screen and (max-width:700px){
+        width: 80%;
+        $top-position: 50%;
+        $left-position: 50%;
+    }
+}

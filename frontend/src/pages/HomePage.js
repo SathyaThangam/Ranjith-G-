@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import AuthenticateModalComponent from "../Components/AuthenticateModalComponent";
-import DateComponent from "../Components/DateComponent";
-import InputDropdownComponent from "../Components/InputDropdownComponent";
-import SearchResultComponent from "../Components/SearchResultComponent";
+import AuthenticateModalComponent from "../components/AuthenticateModalComponent";
+import DateComponent from "../components/DateComponent";
+import InputDropdownComponent from "../components/InputDropdownComponent";
+import SearchResultComponent from "../components/SearchResultComponent";
 import Modal from "@material-ui/core/Modal";
 import "../css/Homepage.scss";
 import "/data_unavailable.svg";
@@ -14,11 +14,10 @@ class HomePage extends Component {
 		//Reference for search results
 		this.resultRef = React.createRef();
 		this.state = {
-			startDate: new Date(),
 			searchResults: <tr></tr>,
 			source: "",
 			destination: "",
-			travelDate: "",
+			travelDate: new Date(),
 			modalOpen: false,
 		};
 	}
@@ -93,31 +92,42 @@ class HomePage extends Component {
 	render() {
 		return (
 			<div>
-				<div className="search-container">
-					<div className="input-group">
-						<InputDropdownComponent
-							type="text"
-							placeholder="From.. "
-							handleInput={this.setSource}
-						/>
-						<InputDropdownComponent
-							type="text"
-							placeholder="To.. "
-							handleInput={this.setDestination}
-						/>
-						<DateComponent />
-						<div className="search-btn-container">
-							<button
-								className="search-btn"
-								onClick={this.resultHandler}
-							>
-								Search
-							</button>
+				<div className="home-container">
+					<div className="home-content-left">
+						Book your bus from the comfort of your Home..
+					</div>
+					<div className="home-content-right">
+						<div className="input-group">
+							<div className="input-group-heading">
+								Search Available Buses
+							</div>
+							<InputDropdownComponent
+								type="text"
+								placeholder="From.. "
+								handleInput={this.setSource}
+							/>
+							<InputDropdownComponent
+								type="text"
+								placeholder="To.. "
+								handleInput={this.setDestination}
+							/>
+							<DateComponent
+								date={this.state.travelDate}
+								handleInput={this.setTravelDate}
+							/>
+							<div className="search-btn-container">
+								<button
+									className="search-btn"
+									onClick={this.resultHandler}
+								>
+									Search
+								</button>
+							</div>
 						</div>
 					</div>
 				</div>
 				<div ref={this.resultRef} className="search-results-container">
-					<h1>Search Results</h1>
+					<h1 className="heading">Search Results</h1>
 					<table className="search-table">
 						<thead>
 							<tr className="search-result-title">

@@ -1,0 +1,28 @@
+:root {
+	--accent-color: #fa8334;
+	--primary-color: #b1ffd0;
+	--secondary-color: #2660a4;
+	--color: black;
+	--background-color: white;
+	color: black;
+}
+.dark {
+	--accent-color: #fa8334;
+	--primary-color: #312f2c;
+	--secondary-color: #7f95d1;
+	--color: white;
+	--background-color: rgb(77, 76, 76);
+	color: white;
+}
+
+.light {
+	--accent-color: #fa8334;
+	--primary-color: #b1ffd0;
+	--secondary-color: #2660a4;
+	--color: black;
+	--background-color: white;
+	color: black;
+}
+$small-font: 0.9em;
+$medium-font: 1.5em;
+$large-font: 2em;

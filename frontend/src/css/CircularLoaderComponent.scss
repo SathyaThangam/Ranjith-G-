@@ -1,0 +1,38 @@
+$loader-border: 5px;
+$loader-size: 30px;
+.loader {
+	//design
+	border: $loader-border solid #f3f3f3; /* Light grey */
+	border-top: $loader-border solid var(--accent-color); /* Blue */
+	border-radius: 50%;
+	width: $loader-size;
+	height: $loader-size;
+	animation: spin 1s linear infinite;
+	-webkit-animation: spin 1s linear infinite; /* Safari */
+
+	//position
+	position: absolute;
+	z-index: 99;
+	top: 30%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+	0% {
+		-webkit-transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+	}
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}

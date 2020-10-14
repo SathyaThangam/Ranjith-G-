@@ -1,17 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import { enGB } from "date-fns/locale";
 import { DatePicker } from "react-nice-dates";
 import "react-nice-dates/src/style.scss";
-import "../css/InputComponent.scss";
+import "../css/InputDropDownComponent.scss";
 
-function DateComponent() {
-	const [date, setDate] = useState();
+function DateComponent(props) {
 	return (
-		<div className="input-container">
+		<div className="input-dropdown-container">
 			<DatePicker
-				date={date}
-				onDateChange={setDate}
-				minimumDate={new Date()}
+				date={props.date}
+				onDateChange={props.handleInput}
+				minimumDate={props.date}
 				locale={enGB}
 			>
 				{({ inputProps, focused }) => (
