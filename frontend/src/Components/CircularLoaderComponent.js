@@ -1,6 +1,6 @@
 import React from "react";
 import "../css/CircularLoaderComponent.scss";
-function CircularLoaderComponent() {
+function CircularLoaderComponent(props) {
 	return <div className="loader"></div>;
 }
 
