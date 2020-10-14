@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import AuthenticateModalComponent from "../components/AuthenticateModalComponent";
-import DateComponent from "../components/DateComponent";
-import InputDropdownComponent from "../components/InputDropdownComponent";
-import SearchResultComponent from "../components/SearchResultComponent";
+import AuthenticateModalComponent from "../Components/AuthenticateModalComponent";
+import DateComponent from "../Components/DateComponent";
+import InputDropdownComponent from "../Components/InputDropdownComponent";
+import SearchResultComponent from "../Components/SearchResultComponent";
 import Modal from "@material-ui/core/Modal";
 import "../css/Homepage.scss";
 import "/data_unavailable.svg";

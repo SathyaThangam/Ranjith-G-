@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import uid from "uid";
 import Cookie from "js-cookie";
 import "../css/BookingPage.scss";
-import TicketComponent from "../components/TicketComponent";
+import TicketComponent from "../Components/TicketComponent";
 import { getTravelTimeObject } from "../helpers/helper";
 import { postRequest,getRequest } from "../helpers/request-helper";
 import { addTicket, deleteTicket } from "../redux";
