@@ -1,6 +1,7 @@
 import React, { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import CircularLoaderComponent from "./components/CircularLoaderComponent";
+// import CircularLoaderComponent from "./components/CircularLoaderComponent";
+import "./css/CircularLoaderComponent.scss";
 import HeaderComponent from "./components/HeaderComponent";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Errorpage from "./pages/Errorpage";
@@ -8,6 +9,8 @@ import Errorpage from "./pages/Errorpage";
 const AuthenticateModalComponent = lazy(() =>
 	import("./components/AuthenticateModalComponent")
 );
+
+const CircularLoaderComponent = props => <div className="loader"></div>;
 const BookingPage = lazy(() => import("./pages/BookingPage"));
 const HomePage = lazy(() => import("./pages/HomePage"));
 const ViewTicketsPage = lazy(() => import("./pages/ViewTicketsPage"));
