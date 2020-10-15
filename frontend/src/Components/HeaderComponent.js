@@ -15,6 +15,7 @@ class HeaderComponent extends Component {
 
 		this.state = {
 			modalOpen: false,
+			themePickerVisibilty: false,
 		};
 	}
 
@@ -80,9 +81,37 @@ class HeaderComponent extends Component {
 							>
 								View Tickets
 							</NavLink>
-							<span className="toggle-btn">
-								Change theme
-								<div className="dropdown-color-content">
+							<div>
+								<span
+									className="toggle-btn"
+									onClick={() => {
+										this.setState((prevState) => ({
+											themePickerVisibilty: !prevState.themePickerVisibilty,
+										}));
+									}}
+								>
+									Change theme
+								</span>
+
+								<div
+									className={
+										this.state.themePickerVisibilty
+											? "dropdown-color-content visible"
+											: "dropdown-color-content"
+									}
+								>
+									<span className="close-container">
+										<button
+											className="close"
+											onClick={() =>
+												this.setState({
+													themePickerVisibilty: false,
+												})
+											}
+										>
+											close
+										</button>
+									</span>
 									<p>
 										Primary color{" "}
 										<input
@@ -93,7 +122,8 @@ class HeaderComponent extends Component {
 											onChange={(e) => {
 												setTheme({
 													...theme,
-													"primary-color":e.target.value
+													"primary-color":
+														e.target.value,
 												});
 											}}
 										></input>
@@ -139,8 +169,7 @@ class HeaderComponent extends Component {
 											onChange={(e) => {
 												setTheme({
 													...theme,
-													"color":
-														e.target.value,
+													color: e.target.value,
 												});
 											}}
 										></input>
@@ -161,7 +190,7 @@ class HeaderComponent extends Component {
 										></input>
 									</p>
 								</div>
-							</span>
+							</div>
 							{this.context.session
 								? this.logOutButton
 								: this.loginButton}
