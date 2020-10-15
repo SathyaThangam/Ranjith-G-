@@ -2,7 +2,7 @@ const ticketData = require("../data/ticketData.json");
 exports.getTravels = (req, res) => {
 	const response = [];
 	ticketData.forEach((item, i) => {
-		if (item.source.toLowerCase() === req.query.source.toLowerCase()) {
+		if (req && req.query && req.query.source && item.source.toLowerCase() === req.query.source.toLowerCase()) {
 			response.push(item);
 		}
 	});

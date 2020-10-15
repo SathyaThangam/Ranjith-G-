@@ -5,12 +5,13 @@ import "react-nice-dates/src/style.scss";
 import "../css/InputDropDownComponent.scss";
 
 function DateComponent(props) {
+	const minimumDate = new Date();
 	return (
 		<div className="input-dropdown-container">
 			<DatePicker
 				date={props.date}
 				onDateChange={props.handleInput}
-				minimumDate={props.date}
+				minimumDate={minimumDate}
 				locale={enGB}
 			>
 				{({ inputProps, focused }) => (

@@ -1,13 +1,16 @@
 import React, { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import CircularLoaderComponent from "./components/CircularLoaderComponent";
-import HeaderComponent from "./components/HeaderComponent";
-import ProtectedRoute from "./components/ProtectedRoute";
+import "./css/CircularLoaderComponent.scss";
+import HeaderComponent from "./Components/HeaderComponent";
+import ProtectedRoute from "./Components/ProtectedRoute";
 import Errorpage from "./pages/Errorpage";
 
 const AuthenticateModalComponent = lazy(() =>
 	import("./components/AuthenticateModalComponent")
 );
+
+// const CircularLoaderComponent = props => <div className="loader"></div>;
 const BookingPage = lazy(() => import("./pages/BookingPage"));
 const HomePage = lazy(() => import("./pages/HomePage"));
 const ViewTicketsPage = lazy(() => import("./pages/ViewTicketsPage"));
@@ -20,7 +23,6 @@ function Routes() {
 					<Route path="/" exact component={HomePage} />
 					<ProtectedRoute
 						path="/viewtickets"
-						exact
 						component={ViewTicketsPage}
 						redirect={"/login"}
 					/>
@@ -30,7 +32,11 @@ function Routes() {
 							<AuthenticateModalComponent {...props} />
 						)}
 					/>
-					<Route path="/booking/:id" component={BookingPage} />
+					<ProtectedRoute
+						path="/booking/:id"
+						component={BookingPage}
+						redirect={"/login"}
+					/>
 					{/* 404 Error page Should be last route of switch */}
 					<Route component={Errorpage} />
 				</Switch>

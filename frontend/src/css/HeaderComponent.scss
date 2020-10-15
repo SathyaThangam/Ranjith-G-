@@ -62,18 +62,13 @@
 	border: none;
 	outline: 0;
 	cursor: pointer;
-	&:hover {
-		.dropdown-color-content {
-			display: block;
-		}
-	}
 }
 
 .dropdown-color-content {
 	display: none;
 	position: absolute;
 	width: fit-content;
-	top: 20px;
+	top: 54px;
 	background-color: var(--background-color);
 	z-index: 3;
 	cursor: default;
@@ -99,6 +94,26 @@
 			border: 0;
 			background-color: transparent;
 			cursor: pointer;
+		}
+	}
+	&.visible {
+		display: block;
+	}
+	& .close-container{
+		display: flex;
+		padding: 2px;
+		justify-content: flex-end;
+		margin: 0;
+	}
+	& .close {
+		padding: 5px 10px;
+		cursor: pointer;
+		font-size: 1em;
+		background: none;
+		border: 0;
+		color: rgb(92, 92, 92);
+		&:hover {
+			color: red;
 		}
 	}
 }

@@ -6,7 +6,6 @@ import SearchResultComponent from "../components/SearchResultComponent";
 import Modal from "@material-ui/core/Modal";
 import "../css/Homepage.scss";
 import "/data_unavailable.svg";
-import Cookie from "js-cookie";
 import { getRequest } from "../helpers/request-helper";
 class HomePage extends Component {
 	constructor(props) {
@@ -41,52 +40,55 @@ class HomePage extends Component {
 
 	resultHandler = () => {
 		const { source, destination } = this.state;
-		const sessionID = Cookie.get("sessionID");
-		const travelData = { source, destination, sessionID };
+		
+		if(source !== "" && destination !== ""){
+			const travelData = { source, destination };
 
-		// Fetch the bus data
-		getRequest("/data/gettravels", travelData)
-			.then((response) => {
-				if (response.status === 200) {
-					const data = response.data;
-					if (data !== null && data.length !== 0) {
-						const searchResults = data.map((bus) => (
-							<SearchResultComponent
-								key={bus.id}
-								id={bus.id}
-								agency={bus.agency}
-								name={bus.name}
-								seats={bus.seats}
-								source={bus.source}
-								destination={bus.destination}
-								ticketprice={bus.ticketprice}
-								departure={bus.sourceTime}
-								arrival={bus.destinationTime}
-							/>
-						));
+			// Fetch the bus data
+			getRequest("/data/gettravels", travelData)
+				.then((response) => {
+					if (response.status === 200) {
+						const data = response.data;
+						if (data && data.length !== 0) {
+							const searchResults = data.map((bus) => (
+								<SearchResultComponent
+									key={bus.id}
+									id={bus.id}
+									agency={bus.agency}
+									name={bus.name}
+									seats={bus.seats}
+									source={bus.source}
+									destination={bus.destination}
+									ticketprice={bus.ticketprice}
+									departure={bus.sourceTime}
+									arrival={bus.destinationTime}
+								/>
+							));
+							this.setState({ searchResults });
+						}
+					}
+				})
+				.catch((error) => {
+					console.log(error);
+					console.log("hello",error.response,error.response.status);
+					if (error.response) {
+						var searchResults = <h1>Error</h1>;
+						if (error.response.status === 404) {
+							searchResults = (
+								<img
+									src="data_unavailable.svg"
+									alt="data unavailable"
+								/>
+							);
+						}
 						this.setState({ searchResults });
 					}
-				}
-			})
-			.catch((error) => {
-				console.log(error);
-				if (error.response) {
-					var searchResults = <h1>Error</h1>;
-					if (error.response.status === 404) {
-						searchResults = (
-							<img
-								src="data_unavailable.svg"
-								alt="data unavailable"
-							/>
-						);
-					}
-					this.setState({ searchResults });
-				}
+				});
+			//scroll to results
+			this.resultRef.current.scrollIntoView({
+				behavior: "smooth",
 			});
-		//scroll to results
-		this.resultRef.current.scrollIntoView({
-			behavior: "smooth",
-		});
+		}
 	};
 
 	render() {
