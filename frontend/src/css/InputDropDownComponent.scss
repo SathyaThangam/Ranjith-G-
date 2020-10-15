@@ -32,6 +32,7 @@
 			display: block;
 		}
 	}
+	
 
 	input {
 		padding: 5px 20px;
@@ -50,5 +51,11 @@
 		@media screen and (max-width: 358px) {
 			font-size: $small-font;
 		}
+
+		&.error {
+			border: 3px solid var(--alert-color);
+			box-shadow: 0 0 10px var(--alert-color);
+		}
 	}
+
 }

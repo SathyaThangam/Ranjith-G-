@@ -34,6 +34,7 @@ function InputDropdownComponent(props) {
 	return (
 		<div className="input-dropdown-container">
 			<input
+				className={props.error?"error":""}
 				type={props.type}
 				placeholder={props.placeholder}
 				value={inputValue}
@@ -42,7 +43,9 @@ function InputDropdownComponent(props) {
 
 			<div
 				className={
-					dropDownVisibility ? "dropdown-content visible" : "dropdown-content"
+					dropDownVisibility
+						? "dropdown-content visible"
+						: "dropdown-content"
 				}
 			>
 				{dropdownContent}
