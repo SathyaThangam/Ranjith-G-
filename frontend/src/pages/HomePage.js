@@ -18,16 +18,18 @@ class HomePage extends Component {
 			destination: "",
 			travelDate: new Date(),
 			modalOpen: false,
+			emptySource: false,
+			emptyDestination: false,
 		};
 	}
 
 	// state Controllers
 	setSource = (value) => {
-		this.setState({ source: value });
+		this.setState({ source: value, emptySource: false });
 	};
 
 	setDestination = (value) => {
-		this.setState({ destination: value });
+		this.setState({ destination: value, emptyDestination: false });
 	};
 
 	setTravelDate = (value) => {
@@ -40,8 +42,8 @@ class HomePage extends Component {
 
 	resultHandler = () => {
 		const { source, destination } = this.state;
-		
-		if(source !== "" && destination !== ""){
+
+		if (source !== "" && destination !== "") {
 			const travelData = { source, destination };
 
 			// Fetch the bus data
@@ -70,7 +72,7 @@ class HomePage extends Component {
 				})
 				.catch((error) => {
 					console.log(error);
-					console.log("hello",error.response,error.response.status);
+					// console.log("hello", error.response, error.response.status);
 					if (error.response) {
 						var searchResults = <h1>Error</h1>;
 						if (error.response.status === 404) {
@@ -87,6 +89,11 @@ class HomePage extends Component {
 			//scroll to results
 			this.resultRef.current.scrollIntoView({
 				behavior: "smooth",
+			});
+		} else {
+			this.setState({
+				emptySource: source === "",
+				emptyDestination: destination === "",
 			});
 		}
 	};
@@ -107,11 +114,13 @@ class HomePage extends Component {
 								type="text"
 								placeholder="From.. "
 								handleInput={this.setSource}
+								error={this.state.emptySource}
 							/>
 							<InputDropdownComponent
 								type="text"
 								placeholder="To.. "
 								handleInput={this.setDestination}
+								error={this.state.emptyDestination}
 							/>
 							<DateComponent
 								date={this.state.travelDate}

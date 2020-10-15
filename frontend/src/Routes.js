@@ -1,6 +1,6 @@
 import React, { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import CircularLoaderComponent from "./components/CircularLoaderComponent";
+import CircularLoaderComponent from "./Components/CircularLoaderComponent";
 import "./css/CircularLoaderComponent.scss";
 import HeaderComponent from "./Components/HeaderComponent";
 import ProtectedRoute from "./Components/ProtectedRoute";
