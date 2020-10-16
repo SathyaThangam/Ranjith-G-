@@ -3,6 +3,7 @@ import AuthenticateModalComponent from "../Components/AuthenticateModalComponent
 import DateComponent from "../Components/DateComponent";
 import InputDropdownComponent from "../Components/InputDropdownComponent";
 import SearchResultComponent from "../Components/SearchResultComponent";
+import AlertComponent from "../Components/AlertComponent";
 import Modal from "@material-ui/core/Modal";
 import "../css/Homepage.scss";
 import "/data_unavailable.svg";
@@ -72,7 +73,6 @@ class HomePage extends Component {
 				})
 				.catch((error) => {
 					console.log(error);
-					// console.log("hello", error.response, error.response.status);
 					if (error.response) {
 						var searchResults = <h1>Error</h1>;
 						if (error.response.status === 404) {
@@ -161,6 +161,16 @@ class HomePage extends Component {
 						handleSession={this.props.handleSession}
 					/>
 				</Modal>
+				{this.state.emptyDestination ? (
+					<AlertComponent>Please select a destination</AlertComponent>
+				) : (
+					""
+				)}
+				{this.state.emptySource ? (
+					<AlertComponent>Please select a source</AlertComponent>
+				) : (
+					""
+				)}
 			</div>
 		);
 	}

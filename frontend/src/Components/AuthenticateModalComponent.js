@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import ErrorIcon from "@material-ui/icons/Error";
 import { postRequest } from "../helpers/request-helper";
 import {
 	validateEmail,
@@ -14,6 +13,7 @@ import SignupComponent from "./SignupComponent";
 import LoginComponent from "./LoginComponent";
 import { connect } from "react-redux";
 import { SessionContext } from "../context/SessionContext";
+import AlertComponent from "./AlertComponent";
 class AuthenticateModalComponent extends Component {
 	constructor(props) {
 		super(props);
@@ -39,32 +39,45 @@ class AuthenticateModalComponent extends Component {
 		}));
 	};
 
+	//set coordinates
 	setLocationState = (value) => {
 		this.setState({ locationState: value });
 	};
 
-	setLocationErrorMessage = (value) => {
-		if (value) {
-			this.setState((prevState) => ({
-				inputError: true,
-				errorMessage: formatErrorMessage(
-					prevState.errorMessage,
-					"Allow location permission to access"
-				),
-			}));
-		}
+	//set and display error message
+	setErrorMessage = (message) => {
+		this.setState((prevState) => ({
+			inputError: true,
+			errorMessage: formatErrorMessage(prevState.errorMessage, message),
+		}));
 	};
 
-	//Signup
-	userSignup = () => {
-		const { signupEmail, signupPwd, signupCPwd } = this.state;
+	//set and display success message
+	setSuccessMessage = (message) => {
+		this.setState((prevState) => ({
+			loginsuccess: true,
+			successMessage: formatErrorMessage(
+				prevState.successMessage,
+				message
+			),
+		}));
+	};
 
+	//reset and clear messages
+	resetMessages = () => {
 		this.setState({
 			inputError: false,
 			errorMessage: "",
 			loginsuccess: false,
 			successMessage: "",
 		});
+	};
+
+	//Signup
+	userSignup = () => {
+		const { signupEmail, signupPwd, signupCPwd } = this.state;
+
+		this.resetMessages();
 
 		if (
 			validateEmail(signupEmail) &&
@@ -84,30 +97,23 @@ class AuthenticateModalComponent extends Component {
 				.then((response) => {
 					//get response body
 					const { message } = response.data;
-					if (message !== undefined) {
+					if (message) {
 						if (message === "success") {
-							//TODO go to booking page
 							this.context.setSession(true);
-							console.log("this.context", this.context);
 							this.props.handleModalClose();
 							if (this.props.location.pathname === "/login")
 								this.props.history.goBack();
-						} else if (message === "duplication") {
+						} else {
 							this.setState({
 								signupEmail: "",
 								signupPwd: "",
 								signupCPwd: "",
-								inputError: true,
-								errorMessage: "Account already exists",
 							});
-						} else if (message === "Invalid") {
-							this.setState({
-								signupEmail: "",
-								signupPwd: "",
-								signupCPwd: "",
-								inputError: true,
-								errorMessage: "Invalid Email/Password",
-							});
+							if (message === "duplication") {
+								this.setErrorMessage("Account already exists");
+							} else if (message === "Invalid") {
+								this.setErrorMessage("Invalid Email/Password");
+							}
 						}
 					}
 				})
@@ -116,210 +122,100 @@ class AuthenticateModalComponent extends Component {
 		//Validation Error
 		else {
 			if (!validateEmail(signupEmail))
-				this.setState((prevState) => ({
-					inputError: true,
-					errorMessage: formatErrorMessage(
-						prevState.errorMessage,
-						"Incorrect Email"
-					),
-				}));
+				this.setErrorMessage("Incorrect Email");
+
 			if (!validatePassword(signupPwd)) {
 				if (signupPwd.length < 8 || signupPwd.length > 16) {
-					this.setState((prevState) => ({
-						inputError: true,
-						errorMessage: formatErrorMessage(
-							prevState.errorMessage,
-							"Incorrect Password: Password should have 8 to 16 characters"
-						),
-					}));
+					this.setErrorMessage(
+						"Incorrect Password: Password should have 8 to 16 characters"
+					);
 				} else {
-					this.setState((prevState) => ({
-						inputError: true,
-						errorMessage: formatErrorMessage(
-							prevState.errorMessage,
-							"Incorrect Password: Password should contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character"
-						),
-					}));
+					this.setErrorMessage(
+						"Incorrect Password: Password should contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character"
+					);
 				}
 			}
 
 			if (!validateConfirmPassword(signupPwd, signupCPwd))
-				this.setState((prevState) => ({
-					inputError: true,
-					errorMessage: formatErrorMessage(
-						prevState.errorMessage,
-						"Passwords Doesn't match"
-					),
-				}));
-		}
-	};
+				this.setErrorMessage("Passwords Doesn't match");
 
-	//Login
-	userLogin = () => {
-		const { loginEmail, loginPwd } = this.state;
-
-		this.setState({
-			inputError: false,
-			errorMessage: "",
-			loginsuccess: false,
-			successMessage: "",
-		});
-
-		//Validation
-		if (validateEmail(loginEmail) && validatePassword(loginPwd)) {
-			const userData = {
-				email: loginEmail,
-				password: loginPwd,
-			};
-			postRequest("/user/login", userData)
-				.then((response) => {
-					const { message } = response.data;
-					if (message !== undefined) {
-						if (message === true) {
-							this.setState({
-								loginEmail: "",
-								loginPwd: "",
-								inputError: false,
-								errorMessage: "",
-								successMessage: "Login Success",
-								loginsuccess: true,
-							});
-
-							this.context.setSession(true);
-							console.log("this.context", this.context);
-							console.log(this.context);
-							if (this.props.location !== undefined) {
-								if (this.props.location.pathname === "/login")
-									this.props.history.goBack();
-							} else this.props.handleModalClose();
-						}
-						if (message === false) {
-							this.setState({
-								loginEmail: "",
-								loginPwd: "",
-								inputError: true,
-								errorMessage: "Incorrect Email/Password",
-							});
-						}
-						if (message === "Unavailable") {
-							this.toggleTab();
-							this.setState({
-								inputError: true,
-								errorMessage: "No account available",
-							});
-						}
-						if (message === "Invalid") {
-							this.setState({
-								loginEmail: "",
-								loginPwd: "",
-								inputError: true,
-								errorMessage: "Invalid Email/Password",
-							});
-						}
-					}
-				})
-				.catch((err) => console.error(err));
-		} else {
-			if (!validateEmail(loginEmail))
-				this.setState((prevState) => ({
-					inputError: true,
-					errorMessage: formatErrorMessage(
-						prevState.errorMessage,
-						"Incorrect Email"
-					),
-				}));
-			if (!validatePassword(loginPwd))
-				this.setState((prevState) => ({
-					inputError: true,
-					errorMessage: formatErrorMessage(
-						prevState.errorMessage,
-						"Incorrect Password"
-					),
-				}));
+			if (!this.state.locationState) {
+				this.setErrorMessage("Please select your location");
+			}
 		}
 	};
 
 	render() {
 		const ErrorAlert = (
-			<div className="alert">
-				<ErrorIcon />
+			<AlertComponent>
 				{this.state.errorMessage}
-			</div>
+			</AlertComponent>
 		);
 
 		const SuccessAlert = (
-			<div className="alert success">{this.state.successMessage}</div>
+			<AlertComponent className="success">{this.state.successMessage}</AlertComponent>
 		);
 
 		return (
-			<div className="modal-container">
-				<div className="modal-content">
-					<div className="modal-content-left">
-						<img src="loginscene.svg" alt="login scene" />
-					</div>
-					<div className="modal-content-right">
-						<div className="tab-title-container">
-							<div className="tab-title">
-								<button onClick={this.toggleTab}>
-									Login/Signup
-								</button>
+			<>
+				<div className="modal-container">
+					<div className="modal-content">
+						<div className="modal-content-left">
+							<img src="loginscene.svg" alt="login scene" />
+						</div>
+						<div className="modal-content-right">
+							<div className="tab-title-container">
+								<div className="tab-title">
+									<button onClick={this.toggleTab}>
+										Login/Signup
+									</button>
+								</div>
+							</div>
+							<div className="tab-container">
+								{this.state.loginModal ? (
+									<LoginComponent
+										location={this.props.location}
+										history = {this.props.history}
+										handleModalClose={this.props.handleModalClose}
+									/>
+								) : (
+									<SignupComponent
+										signupEmail={this.state.signupEmail}
+										onSignupEmailChange={(event) =>
+											this.setState({
+												signupEmail: event.target.value,
+											})
+										}
+										signupPwd={this.state.signupPwd}
+										onSignupPwdChange={(event) =>
+											this.setState({
+												signupPwd: event.target.value,
+											})
+										}
+										signupCPwd={this.state.signupCPwd}
+										onSignupCPwdChange={(event) =>
+											this.setState({
+												signupCPwd: event.target.value,
+											})
+										}
+										userSignup={this.userSignup}
+										toggleTab={this.toggleTab}
+										locationState={this.state.locationState}
+										setLocationState={this.setLocationState}
+										setLocationErrorMessage={() =>
+											this.setErrorMessage(
+												"Allow location permission to access"
+											)
+										}
+									/>
+								)}
 							</div>
 						</div>
-						<div className="tab-container">
-							{this.state.loginModal ? (
-								<LoginComponent
-									loginEmail={this.state.loginEmail}
-									onLoginEmailChange={(event) =>
-										this.setState({
-											loginEmail: event.target.value,
-										})
-									}
-									loginPwd={this.state.loginPwd}
-									onLoginPwdChange={(event) =>
-										this.setState({
-											loginPwd: event.target.value,
-										})
-									}
-									userLogin={this.userLogin}
-									toggleTab={this.toggleTab}
-								/>
-							) : (
-								<SignupComponent
-									signupEmail={this.state.signupEmail}
-									onSignupEmailChange={(event) =>
-										this.setState({
-											signupEmail: event.target.value,
-										})
-									}
-									signupPwd={this.state.signupPwd}
-									onSignupPwdChange={(event) =>
-										this.setState({
-											signupPwd: event.target.value,
-										})
-									}
-									signupCPwd={this.state.signupCPwd}
-									onSignupCPwdChange={(event) =>
-										this.setState({
-											signupCPwd: event.target.value,
-										})
-									}
-									userSignup={this.userSignup}
-									toggleTab={this.toggleTab}
-									locationState={this.state.locationState}
-									setLocationState={this.setLocationState}
-									setLocationErrorMessage={
-										this.setLocationErrorMessage
-									}
-								/>
-							)}
-						</div>
 					</div>
 				</div>
-				<div className="alert-container">
-					{this.state.inputError ? ErrorAlert : ""}
-					{this.state.loginsuccess ? SuccessAlert : ""}
-				</div>
-			</div>
+				{this.state.inputError ? ErrorAlert : ""}
+				{this.state.loginsuccess ? SuccessAlert : ""}
+			</>
 		);
 	}
 }
