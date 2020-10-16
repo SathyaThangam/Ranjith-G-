@@ -129,14 +129,28 @@ export const getGeolocation = async () => {
 			console.log(data);
 			return data;
 		} catch (err) {
-			return new Error(err);
+			throw new Error(err);
 		}
 	} else {
 		console.log("Not Available");
 		return null;
 	}
 };
+const React = require("react");
+const AlertComponent = require("../Components/AlertComponent");
+export const formatAlert = (prev, newMessage,newSeverity="") => (
+	<>
+		{prev}
+		<AlertComponent className={newSeverity}>{newMessage}</AlertComponent>
+	</>
+);
 
+// export const formatAlert = (prev, newMessage, newSeverity = "") => (
+// 	<>
+// 		{prev}
+// 		<AlertComponent className={newSeverity}>{newMessage}</AlertComponent>
+// 	</>
+// );
 const round = (value, position = 5) => {
 	const x = position === 0 ? 1 : Math.pow(10, position);
 	return Math.round(value * x) / x;
