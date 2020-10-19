@@ -1,10 +1,11 @@
-:root,.light {
+:root,
+.light {
 	--accent-color: #e9c46a;
 	--primary-color: #264653;
 	--secondary-color: #2a9d8f;
 	--color: black;
 	--background-color: white;
-	--alert-color:	#cc3300;
+	--alert-color: #cc3300;
 	color: black;
 }
 .dark {
@@ -27,4 +28,3 @@
 $small-font: 0.9em;
 $medium-font: 1.5em;
 $large-font: 2em;
-

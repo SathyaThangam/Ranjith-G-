@@ -20,7 +20,6 @@ function LoginComponent(props) {
 			setLoginPwd("");
 		};
 	}, []);
-
 	const userLogin = () => {
 		//Validation
 		if (validateEmail(loginEmail) && validatePassword(loginPwd)) {
@@ -34,7 +33,6 @@ function LoginComponent(props) {
 					console.log(message);
 					if (message !== null && message !== undefined) {
 						//TODO add disable
-
 						if (message === true) {
 							setAlert(
 								<AlertComponent className="success">
@@ -51,7 +49,6 @@ function LoginComponent(props) {
 							else props.handleModalClose();
 						}
 						if (message === false) {
-							console.log("object");
 							setAlert((prev) =>
 								formatAlert(
 									prev,
@@ -70,7 +67,6 @@ function LoginComponent(props) {
 									</AlertComponent>
 								)
 							);
-							
 						}
 						if (message === "Invalid") {
 							setAlert((prev) =>
