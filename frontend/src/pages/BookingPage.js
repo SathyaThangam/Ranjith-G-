@@ -3,42 +3,51 @@ import uid from "uid";
 import Cookie from "js-cookie";
 import "../css/BookingPage.scss";
 import TicketComponent from "../Components/TicketComponent";
-import { getTravelTimeObject } from "../helpers/helper";
-import { postRequest,getRequest } from "../helpers/request-helper";
+import AlertComponent from "../Components/AlertComponent";
+import { getTravelTimeObject, formatAlert } from "../helpers/helper";
+import { postRequest, getRequest } from "../helpers/request-helper";
 import { addTicket, deleteTicket } from "../redux";
 import { connect } from "react-redux";
+import { validateEmail, isValidPhoneNo } from "../helpers/helper";
 class BookingPage extends Component {
 	constructor(props) {
 		super(props);
-		console.log(props);
 		this.state = {
 			routeData: {},
 			bookedSeats: [],
+			preBookedSeats: [],
 			tickets: [],
 			sourceTimeformat: "",
 			sourceDateformat: "",
 			destTimeformat: "",
 			destDateformat: "",
 			contactEmail: "",
+			contactEmailError: false,
 			contactPhoneNo: "",
+			contactPhoneNoError: false,
 			totalprice: 0,
+			alert: <></>,
 		};
 	}
 
 	// Generates bus seat components
 	busSeatHandler = () => {
-		const { routeData, bookedSeats } = this.state;
+		const { routeData, bookedSeats, preBookedSeats } = this.state;
 		const seats = [];
 		var classList = "bus-seat";
 		for (let i = 1; i <= routeData.seats; i++) {
-			if (bookedSeats.includes(i.toString()))
+			classList = "bus-seat";
+			let isPreBooked = preBookedSeats.includes(i.toString());
+			if (!isPreBooked && bookedSeats.includes(i.toString())) {
 				classList = "bus-seat active";
-			else classList = "bus-seat";
+			}
+
 			seats.push(
 				<button
 					className={classList}
 					key={uid(20)}
 					value={i}
+					disabled={isPreBooked}
 					onClick={(e) => this.seatHandler(e)}
 				></button>
 			);
@@ -75,7 +84,7 @@ class BookingPage extends Component {
 
 	//Payment Gateway
 	paymentHandler = async (bookingDetails) => {
-		const API_ENDPOINT = "/payment/";
+		const PAYMENT_API_ENDPOINT = "/payment/";
 		const sessionID = Cookie.get("sessionID");
 		const itemData = {
 			bookingDetails,
@@ -83,7 +92,7 @@ class BookingPage extends Component {
 			sessionID,
 		};
 		console.log("Payment handler", itemData);
-		const orderUrl = `${API_ENDPOINT}order`;
+		const orderUrl = `${PAYMENT_API_ENDPOINT}order`;
 		try {
 			const response = await postRequest(orderUrl, itemData);
 			const { data } = response;
@@ -96,16 +105,31 @@ class BookingPage extends Component {
 				handler: (response) => {
 					try {
 						const paymentId = response.razorpay_payment_id;
-						const url = `${API_ENDPOINT}capture/${paymentId}`;
+						const url = `${PAYMENT_API_ENDPOINT}capture/${paymentId}`;
 						postRequest(url, itemData)
 							.then((res) => {
-								console.log(res);
 								const data = res.data;
-								console.log(data);
 								if (data && data.status === "captured") {
+									this.setState((prev) => ({
+										alert: formatAlert(
+											prev,
+											<AlertComponent className="success">
+												Payment Success
+											</AlertComponent>
+										),
+									}));
 									this.props.history.replace("/viewtickets");
 								} else {
 									console.log("error in captured");
+									this.setState((prev) => ({
+										alert: formatAlert(
+											prev,
+											<AlertComponent>
+												Payment Failure.. Please try
+												again later
+											</AlertComponent>
+										),
+									}));
 								}
 							})
 							.catch((err) => console.log(err));
@@ -127,7 +151,7 @@ class BookingPage extends Component {
 
 	bookingHandler = () => {
 		var bookingDetails = {};
-		const { contactEmail, contactPhoneNo,routeData } = this.state;
+		const { contactEmail, contactPhoneNo, routeData } = this.state;
 		const ticketData = [...this.props.ticketData];
 		console.log("ticketData", ticketData);
 		if (
@@ -135,57 +159,55 @@ class BookingPage extends Component {
 			!this.isEmpty(contactPhoneNo) &&
 			ticketData.length !== 0
 		) {
-			bookingDetails = { contactEmail, contactPhoneNo, ticketData,routeData };
+			bookingDetails = {
+				contactEmail,
+				contactPhoneNo,
+				ticketData,
+				routeData,
+			};
 			this.paymentHandler(bookingDetails);
 		} else {
-			console.log("check again");
+			console.log("err");
+			this.setState(prev => ({alert:formatAlert(prev,<AlertComponent>Empty email/phone number</AlertComponent>)}));
 		}
 	};
 
 	// Load data from server if the props is missing
-	loadBookingData = () => {
-		if (this.props.location.routeData === undefined) {
-			const busID = this.props.match.params.id;
-			var routeData = "";
-			const sessionID = Cookie.get("sessionID");
-			getRequest("/data/getbusdetails", {
-				busid: busID,
-				sessionID,
+	loadBookingData = async () => {
+		const busid = this.props.computedMatch.params.id;
+		var routeData = "";
+		const sessionID = Cookie.get("sessionID");
+		getRequest("/data/getbusdetails", {
+			busid,
+			sessionID,
+		})
+			.then((res) => {
+				if (res !== undefined) {
+					console.log("Props from server", res);
+					routeData = res.data.travelData;
+					this.setState({
+						routeData: routeData,
+						preBookedSeats: res.data.bookedSeats,
+						...getTravelTimeObject(
+							routeData.sourceTime,
+							routeData.destinationTime
+						),
+					});
+				}
 			})
-				.then((res) => {
-					if (res !== undefined) {
-						console.log("Props from server", res);
-						routeData = res.data.travelData;
-						this.setState({
-							routeData: routeData,
-							...getTravelTimeObject(
-								routeData.sourceTime,
-								routeData.destinationTime
-							),
-						});
-					}
-				})
-				.catch((err) => console.log(err));
-		} else {
-			console.log("Props", this.props.location.routeData);
-			routeData = this.props.location.routeData;
-			this.setState({
-				routeData: routeData,
-				...getTravelTimeObject(routeData.departure, routeData.arrival),
-			});
-		}
+			.catch((err) => console.log(err));
 	};
 
 	componentDidMount() {
 		this.loadBookingData();
 		const script = document.createElement("script");
 		script.src = "https://checkout.razorpay.com/v1/checkout.js";
-		script.defer=true;
+		script.defer = true;
 		document.body.appendChild(script);
 	}
 
 	render() {
-		const { routeData } = this.state;
+		const { routeData, preBookedSeats } = this.state;
 		return (
 			<div className="booking-container">
 				<div className="travel-details-container">
@@ -206,7 +228,9 @@ class BookingPage extends Component {
 									</p>
 								</div>
 								<div className="content-center">
-									{`Seats Available: ${routeData.seats}`}
+									{`Seats Available: ${
+										routeData.seats - preBookedSeats.length
+									}`}
 									<br />
 									{`Price Rs. ${routeData.ticketprice}`}
 								</div>
@@ -248,25 +272,44 @@ class BookingPage extends Component {
 									<h3>Contact details</h3>
 									<input
 										type="text"
+										className={
+											this.state.contactEmailError
+												? "error"
+												: ""
+										}
 										placeholder="Email Id"
-										onChange={(e) =>
+										text={this.state.contactEmail}
+										onChange={(e) => {
 											this.setState({
 												contactEmail: e.target.value,
-											})
-										}
+												contactEmailError: !validateEmail(
+													e.target.value
+												),
+											});
+										}}
 									/>
 									<input
 										type="text"
 										placeholder="Mobile Number"
+										className={
+											this.state.contactPhoneNoError
+												? "error"
+												: ""
+										}
+										text={this.state.contactPhoneNo}
 										onChange={(e) =>
 											this.setState({
 												contactPhoneNo: e.target.value,
+												contactPhoneNoError: !isValidPhoneNo(
+													e.target.value
+												),
 											})
 										}
 									/>
 								</div>
 							</div>
 							{this.state.tickets}
+							{this.state.alert}
 						</div>
 					</div>
 				</div>

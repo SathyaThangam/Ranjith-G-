@@ -35,9 +35,11 @@ exports.createNewOrder = async (newOrder) => {
 };
 
 exports.getRouteIDByLocation = async (source, destination) => {
+	const whereConstraints =
+		destination == null ? { source } : { source, destination };
 	try {
 		const data = await Routes.findOne({
-			where: { source: source, destination: destination },
+			where: whereConstraints,
 			attributes: ["route_id"],
 		});
 		if (data !== null && data.dataValues) {
@@ -46,6 +48,30 @@ exports.getRouteIDByLocation = async (source, destination) => {
 	} catch (err) {
 		console.log(err);
 		throw new Error("Database connection Error");
+	}
+};
+
+exports.getSeatsByRouteID = async (route_id) => {
+	console.log(route_id);
+	try {
+		const passengerData = await Orders.findAll({
+			where: {
+				route_id,
+			},
+			attributes: ["passenger_details"],
+		});
+		if (passengerData) {
+			const bookedSeats = [];
+			passengerData.forEach((order) => {
+				order.passenger_details.forEach((passenger) =>
+					bookedSeats.push(passenger.seat)
+				);
+			});
+			return bookedSeats;
+		}
+	} catch (error) {
+		console.log(error);
+		return error;
 	}
 };
 

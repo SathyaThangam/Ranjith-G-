@@ -1,82 +1,71 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import "../css/TicketComponent.scss";
 import { updateTicket } from "../redux";
-import { connect } from "react-redux";
-class TicketComponent extends Component {
-	
-	constructor(props) {
-		super(props);
+import { useDispatch, useSelector } from "react-redux";
+import { isValidName } from "../helpers/helper";
+function TicketComponent(props) {
+	const [name, setName] = useState("");
+	const [age, setAge] = useState("");
+	const [gender, setGender] = useState("Male");
 
-		this.state = {
-			gender: "",
-			name: "",
-			age: "",
+	const [nameError, setNameError] = useState(false);
+
+	const selectorFn = (state) => {
+		const tickets = state.ticketStore.ticketData;
+		const index = tickets
+			.map((item) => item.seat)
+			.indexOf(props.seatNumber);
+		return tickets[index];
+	};
+
+	const ticketData = useSelector(selectorFn);
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		const ticket = {
+			seat: props.seatNumber,
+			name,
+			age,
+			gender,
 		};
-	}
+		dispatch(updateTicket(ticket));
+	}, [props.seatNumber, gender, name, age]);
 
-	handleGenderInput = (value) => {
-		this.setState({ gender: value });
+	const nameController = (inputEvent) => {
+		setNameError(!isValidName(inputEvent.target.value));
+		setName(inputEvent.target.value);
 	};
 
-	handleNameInput = (value) => {
-		this.setState({ name: value });
-	};
-
-	handleAgeInput = (value) => {
-		this.setState({ age: value });
-	};
-
-	componentDidUpdate(prevProps,prevState) {
-		if(prevState !== this.state)
-			this.props.updateTicket({
-				seat: this.props.seatNumber,
-				...this.state,
-			});
-	}
-
-	render() {
-		return (
-			<div className="ticket-container">
-				<div>Seat No. {this.props.seatNumber}</div>
-				<div>
-					<input
-						type="text"
-						placeholder="Traveller Name"
-						value={this.props.ticketData.name}
-						onChange={(e) => this.handleNameInput(e.target.value)}
-					/>
-					<input
-						type="number"
-						placeholder="Age"
-						value={this.props.ticketData.age}
-						onChange={(e) => this.handleAgeInput(e.target.value)}
-					/>
-					<input
-						type="text"
-						placeholder="Gender"
-						value={this.props.ticketData.gender}
-						onChange={(e) => this.handleGenderInput(e.target.value)}
-					/>
-				</div>
+	return (
+		<div className="ticket-container">
+			<div>Seat No. {props.seatNumber}</div>
+			<div className="ticket-input-container">
+				<input
+					type="text"
+					className={nameError ? "error" : ""}
+					placeholder="Traveller Name"
+					value={ticketData.name}
+					onChange={nameController}
+				/>
+				<input
+					type="number"
+					placeholder="Age"
+					value={ticketData.age}
+					onChange={(e) => setAge(e.target.value)}
+				/>
+				<select
+					type="text"
+					placeholder="Gender"
+					value={ticketData.gender}
+					onChange={(e) => setGender(e.target.value)}
+				>
+					<option>Male</option>
+					<option>Female</option>
+					<option>Rather not say</option>
+				</select>
 			</div>
-		);
-	}
+		</div>
+	);
 }
 
-const mapStateToProps = (state,ownProps) => {
-	const tickets = state.ticketStore.ticketData;
-	 const index = tickets
-			.map((item) => item.seat)
-			.indexOf(ownProps.seatNumber);
-	return {
-		ticketData: tickets[index],
-	};
-};
-
-const mapDispatchToProps = (dispatch) => {
-	return {
-		updateTicket:(ticket) => dispatch(updateTicket(ticket))
-	};
-};
-
-export default connect(mapStateToProps,mapDispatchToProps)(TicketComponent);
+export default TicketComponent;

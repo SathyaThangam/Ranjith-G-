@@ -6,20 +6,24 @@ export const getMatchingCities = (city) => {
 	);
 };
 //validation
-export const validateEmail = (value) => {
+export const validateEmail = (email) => {
 	const re = /^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/;
-	return re.test(value);
+	return re.test(email);
 };
 
-export const validatePassword = (value) => {
+export const validatePassword = (password) => {
 	let re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,16}$/;
-	return re.test(value);
+	return re.test(password);
 };
 
 export const validateConfirmPassword = (password, confirmPassword) => {
 	if (confirmPassword === "") return false;
 	else return password === confirmPassword;
 };
+
+export const isValidName = (name) => (/^[A-Za-z]+$/).test(name);
+
+export const isValidPhoneNo = (number) => (/^[0-9]{10}$/).test(number);
 
 //Format error message while Login/Signup
 export const formatErrorMessage = (prevMessage, newMessage) => {
@@ -73,6 +77,14 @@ const formatAMPM = (dateString) => {
 	return hours + ":" + minutes + " " + ampm;
 };
 export { formatAMPM };
+
+const React = require("react");
+export const formatAlert = (prev, newMessage) => (
+	<>
+		{prev}
+		{newMessage}
+	</>
+);
 
 export const resetAuthenticationState = () => {
 	return {
@@ -136,21 +148,7 @@ export const getGeolocation = async () => {
 		return null;
 	}
 };
-const React = require("react");
-const AlertComponent = require("../Components/AlertComponent");
-export const formatAlert = (prev, newMessage,newSeverity="") => (
-	<>
-		{prev}
-		<AlertComponent className={newSeverity}>{newMessage}</AlertComponent>
-	</>
-);
 
-// export const formatAlert = (prev, newMessage, newSeverity = "") => (
-// 	<>
-// 		{prev}
-// 		<AlertComponent className={newSeverity}>{newMessage}</AlertComponent>
-// 	</>
-// );
 const round = (value, position = 5) => {
 	const x = position === 0 ? 1 : Math.pow(10, position);
 	return Math.round(value * x) / x;
