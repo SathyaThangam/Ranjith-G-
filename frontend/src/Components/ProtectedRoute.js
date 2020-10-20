@@ -6,7 +6,6 @@ function ProtectedRoute(props) {
 	const Component = props.component;
 
 	if (isAuthenticated()) {
-		console.log(props);
 		return <Component {...props} />;
 	} else {
 		return <Redirect to={{ pathname: props.redirect }} />;
