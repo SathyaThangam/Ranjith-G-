@@ -21,9 +21,9 @@ export const validateConfirmPassword = (password, confirmPassword) => {
 	else return password === confirmPassword;
 };
 
-export const isValidName = (name) => (/^[A-Za-z]+$/).test(name);
+export const isValidName = (name) => /^[A-Za-z]+$/.test(name);
 
-export const isValidPhoneNo = (number) => (/^[0-9]{10}$/).test(number);
+export const isValidPhoneNo = (number) => /^[0-9]{10}$/.test(number);
 
 //Format error message while Login/Signup
 export const formatErrorMessage = (prevMessage, newMessage) => {
@@ -88,8 +88,6 @@ export const formatAlert = (prev, newMessage) => (
 
 export const resetAuthenticationState = () => {
 	return {
-		loginEmail: "",
-		loginPwd: "",
 		signupEmail: "",
 		signupPwd: "",
 		signupCPwd: "",

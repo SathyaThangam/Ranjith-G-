@@ -25,7 +25,7 @@ export const fetchTicketHistory = () => {
 		dispatch(fetchTicketRequest());
 			getRequest("/data/getorders")
 				.then((response) => {
-					console.log(response);
+					console.log(response.data);
 					const ticketData = response.data;
 					dispatch(fetchTicketSuccess(ticketData));
 					// if(ticketData.isArray())

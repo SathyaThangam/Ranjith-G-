@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTicketHistory } from "../redux";
+import "../css/ViewTicketsPage.scss";
 function ViewTicketsPage() {
 	const ticketHistory = useSelector((state) => state.historyStore.data);
 
@@ -13,7 +14,7 @@ function ViewTicketsPage() {
 
 	return (
 		<div>
-			<table>
+			<table className="table-content">
 				{ticketHistory.map((order) => {
 					return (
 						<tr>

@@ -45,7 +45,6 @@ exports.getBusDetails = async (req, res) => {
 };
 
 exports.getOrders = async (req, res) => {
-	console.log("request received");
 	const { getOrderByUser } = require("../helpers/DB-helper");
 	const response = await getOrderByUser(req.user_id);
 	if (response) {
