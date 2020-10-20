@@ -26,7 +26,10 @@ class BookingPage extends Component {
 			contactPhoneNo: "",
 			contactPhoneNoError: false,
 			totalprice: 0,
-			alert: <></>,
+			alert: (
+				<>
+				</>
+			),
 		};
 	}
 
@@ -112,7 +115,7 @@ class BookingPage extends Component {
 								if (data && data.status === "captured") {
 									this.setState((prev) => ({
 										alert: formatAlert(
-											prev,
+											prev.alert,
 											<AlertComponent className="success">
 												Payment Success
 											</AlertComponent>
@@ -123,7 +126,7 @@ class BookingPage extends Component {
 									console.log("error in captured");
 									this.setState((prev) => ({
 										alert: formatAlert(
-											prev,
+											prev.alert,
 											<AlertComponent>
 												Payment Failure.. Please try
 												again later
@@ -168,7 +171,12 @@ class BookingPage extends Component {
 			this.paymentHandler(bookingDetails);
 		} else {
 			console.log("err");
-			this.setState(prev => ({alert:formatAlert(prev,<AlertComponent>Empty email/phone number</AlertComponent>)}));
+			this.setState((prev) => ({
+				alert: formatAlert(
+					prev.alert,
+					<AlertComponent>Empty email/phone number</AlertComponent>
+				),
+			}));
 		}
 	};
 
