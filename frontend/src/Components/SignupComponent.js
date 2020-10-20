@@ -1,26 +1,174 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import InputComponent from "./InputComponent";
 import OutlinedButtonComponent from "./OutlinedButtonComponent";
 import Modal from "@material-ui/core/Modal";
 import MapComponent from "./MapComponent";
-import { getGeolocation } from "../helpers/helper";
-import { connect } from "react-redux";
+import {
+	getGeolocation,
+	formatAlert,
+	validateEmail,
+	validatePassword,
+	validateConfirmPassword,
+} from "../helpers/helper";
+import { postRequest } from "../helpers/request-helper";
+import { useSelector, useDispatch } from "react-redux";
 import { setCoordinates } from "../redux";
+import AlertComponent from "./AlertComponent";
+import { SessionContext } from "../context/SessionContext";
 function SignupComponent(props) {
 	const [center, setCenter] = useState({ lat: 28.6448, lng: 77.216721 });
+	const [signupEmail, setSignupEmail] = useState("");
+	const [signupPwd, setSignupPwd] = useState("");
+	const [signupCPwd, setSignupCPwd] = useState("");
+	const [locationModal, setLocationModal] = useState(false);
+	const [locationState, setLocationState] = useState(false); //check if user selected their location
+	const [alert, setAlert] = useState(<></>);
+
+	//redux
+	const coords = useSelector((state) => state.coordsStore);
+	const dispatch = useDispatch();
+
+	//context
+	const session = useContext(SessionContext);
+
 	useEffect(() => {
 		getGeolocation()
 			.then((location) => {
-				if (location !== null && location !== undefined)
+				if (location !== null && location !== undefined) {
 					setCenter(location);
-				props.setCoords(location);
+					dispatch(setCoordinates(location));
+				}
 			}) //print error to see the location access error
-			.catch((err) => props.setLocationErrorMessage(true));
+			.catch((err) =>
+				setAlert((prev) =>
+					formatAlert(
+						prev,
+						<AlertComponent>
+							Allow location permission to access
+						</AlertComponent>
+					)
+				)
+			);
 	});
 
-	const [locationModal, setLocationModal] = useState(false);
 	// const [coords, setCoords] = useState({ lat: 0.0, lng: 0.0 });
-	// const [locationState, setLocationState] = useState(false)
+
+	//Signup
+	const userSignup = () => {
+		setAlert(<></>);
+
+		if (
+			validateEmail(signupEmail) &&
+			validatePassword(signupPwd) &&
+			validateConfirmPassword(signupPwd, signupCPwd) &&
+			locationState
+		) {
+			//Data for server
+			const userData = {
+				email: signupEmail,
+				password: signupPwd,
+				location: coords,
+			};
+
+			//Connect to server
+			postRequest("/user/signup", userData)
+				.then((response) => {
+					//get response body
+					const { message } = response.data;
+					if (message) {
+						if (message === "success") {
+							session.setSession(true);
+							setAlert(
+								<AlertComponent className="success">
+									Account created!
+								</AlertComponent>
+							);
+							props.handleModalClose();
+							if (props.location.pathname === "/login")
+								props.history.goBack();
+						} else {
+							setSignupEmail("");
+							setSignupPwd("");
+							setSignupCPwd("");
+							if (message === "duplication") {
+								setAlert((prev) =>
+									formatAlert(
+										prev,
+										<AlertComponent>
+											Account already exists
+										</AlertComponent>
+									)
+								);
+							} else if (message === "Invalid") {
+								setAlert((prev) =>
+									formatAlert(
+										prev,
+										<AlertComponent>
+											Invalid Email/Password
+										</AlertComponent>
+									)
+								);
+							}
+						}
+					}
+				})
+				.catch((err) => console.error(err));
+		}
+		//Validation Error
+		else {
+			if (!validateEmail(signupEmail))
+				setAlert((prev) =>
+					formatAlert(
+						prev,
+						<AlertComponent>Incorrect Email</AlertComponent>
+					)
+				);
+			if (!validatePassword(signupPwd)) {
+				if (signupPwd.length < 8 || signupPwd.length > 16) {
+					setAlert((prev) =>
+						formatAlert(
+							prev,
+							<AlertComponent>
+								Incorrect Password: Password should have 8 to 16
+								characters
+							</AlertComponent>
+						)
+					);
+				} else {
+					setAlert((prev) =>
+						formatAlert(
+							prev,
+							<AlertComponent>
+								Incorrect Password: Password should contain at
+								least one lowercase letter, one uppercase
+								letter, one numeric digit, and one special
+								character
+							</AlertComponent>
+						)
+					);
+				}
+			}
+
+			if (!validateConfirmPassword(signupPwd, signupCPwd))
+				setAlert((prev) =>
+					formatAlert(
+						prev,
+						<AlertComponent>Passwords Doesn't match</AlertComponent>
+					)
+				);
+
+			if (!locationState) {
+				setAlert((prev) =>
+					formatAlert(
+						prev,
+						<AlertComponent>
+							Please select your location
+						</AlertComponent>
+					)
+				);
+			}
+		}
+	};
 
 	return (
 		<div className="tab-content">
@@ -28,40 +176,40 @@ function SignupComponent(props) {
 				label="Email address"
 				placeholder="Email-id"
 				type="email"
-				value={props.signupEmail}
-				onChange={props.onSignupEmailChange}
+				value={signupEmail}
+				onChange={(e) => setSignupEmail(e.target.value)}
 			/>
 			<InputComponent
 				label="Password"
 				placeholder="Password"
 				type="password"
-				value={props.signupPwd}
-				onChange={props.onSignupPwdChange}
+				value={signupPwd}
+				onChange={(e) => setSignupPwd(e.target.value)}
 			/>
 			<InputComponent
 				label="Confirm Password"
 				placeholder="Confirm Password"
 				type="password"
-				value={props.signupCPwd}
-				onChange={props.onSignupCPwdChange}
+				value={signupCPwd}
+				onChange={(e) => setSignupCPwd(e.target.value)}
 			/>
 			<InputComponent
-				className={props.locationState ? "success" : ""}
+				className={locationState ? "success" : ""}
 				placeholder="Location"
 				type="button"
-				value={`latitude:${props.coords.lat} longitude:${props.coords.lng}`}
+				value={`latitude:${coords.lat} longitude:${coords.lng}`}
 				onClick={() => setLocationModal(true)}
 			/>
 			<OutlinedButtonComponent
 				className=" "
 				innerHTML="Signup for a new Journey ▶"
-				onClick={props.userSignup}
+				onClick={userSignup}
 			/>
 
 			<Modal open={locationModal} onClose={() => setLocationModal(false)}>
 				<MapComponent
 					center={center}
-					setLocationState={props.setLocationState}
+					setLocationState={setLocationState}
 					zoom={8}
 				/>
 			</Modal>
@@ -70,20 +218,9 @@ function SignupComponent(props) {
 					Know your way? Log in..
 				</button>
 			</div>
+			{alert}
 		</div>
 	);
 }
 
-const mapStateToProps = (state) => {
-	return {
-		coords: state.coordsStore,
-	};
-};
-
-const mapDispatchToProps = (dispatch) => {
-	return {
-		setCoords: (newCoords) => dispatch(setCoordinates(newCoords)),
-	};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(SignupComponent);
+export default SignupComponent;
