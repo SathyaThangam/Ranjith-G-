@@ -1,14 +1,17 @@
-import React, { Component } from "react";
+import React, { Component,Suspense,lazy } from "react";
 import { NavLink } from "react-router-dom";
 import OutlinedButtonComponent from "./OutlinedButtonComponent";
 import "../css/HeaderComponent.scss";
 import Modal from "@material-ui/core/Modal";
-import AuthenticateModalComponent from "./AuthenticateModalComponent";
+import CircularLoaderComponent from "./CircularLoaderComponent";
 import Cookie from "js-cookie";
 import { isAuthenticated } from "../helpers/helper";
 import { postRequest } from "../helpers/request-helper";
 import { SessionContext } from "../context/SessionContext";
 import { ThemeContext } from "../context/ThemeContext";
+const AuthenticateModalComponent = lazy(() =>
+	import("./AuthenticateModalComponent")
+);
 class HeaderComponent extends Component {
 	constructor(props) {
 		super(props);
@@ -198,9 +201,11 @@ class HeaderComponent extends Component {
 								open={this.state.modalOpen}
 								onClose={this.modalClose}
 							>
-								<AuthenticateModalComponent
-									handleModalClose={this.modalClose}
-								/>
+								<Suspense fallback={<CircularLoaderComponent/>}>
+									<AuthenticateModalComponent
+										handleModalClose={this.modalClose}
+									/>
+								</Suspense>
 							</Modal>
 						</div>
 					</div>

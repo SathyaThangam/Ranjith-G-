@@ -31,10 +31,11 @@ function ThemeContextProvider(props) {
 			}
 		}
 		return () => {
-			document.documentElement.style.setProperty(
-				"--primary-color",
-				`#b1ffd0`
-			);
+			for (const key in theme) {
+				if (theme.hasOwnProperty(key)) {
+					document.documentElement.style.removeProperty(`--${key}`);
+				}
+			}
 		};
 	}, [theme]);
 

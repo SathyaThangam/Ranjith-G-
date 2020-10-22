@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import AuthenticateModalComponent from "../Components/AuthenticateModalComponent";
+import React, { Component, Suspense, lazy } from "react";
+import CircularLoaderComponent from "../Components/CircularLoaderComponent";
 import DateComponent from "../Components/DateComponent";
 import InputDropdownComponent from "../Components/InputDropdownComponent";
 import SearchResultComponent from "../Components/SearchResultComponent";
@@ -8,6 +8,10 @@ import Modal from "@material-ui/core/Modal";
 import "../css/Homepage.scss";
 import "/data_unavailable.svg";
 import { getRequest } from "../helpers/request-helper";
+// import AuthenticateModalComponent from "../Components/AuthenticateModalComponent";
+const AuthenticateModalComponent = lazy(() =>
+	import("../Components/AuthenticateModalComponent")
+);
 class HomePage extends Component {
 	constructor(props) {
 		super(props);
@@ -156,10 +160,12 @@ class HomePage extends Component {
 					</table>
 				</div>
 				<Modal open={this.state.modalOpen} onClose={this.modalClose}>
-					<AuthenticateModalComponent
-						handleModalClose={this.modalClose}
-						handleSession={this.props.handleSession}
-					/>
+					<Suspense fallback={<CircularLoaderComponent />}>
+						<AuthenticateModalComponent
+							handleModalClose={this.modalClose}
+							handleSession={this.props.handleSession}
+						/>
+					</Suspense>
 				</Modal>
 				{this.state.emptyDestination ? (
 					<AlertComponent>Please select a destination</AlertComponent>

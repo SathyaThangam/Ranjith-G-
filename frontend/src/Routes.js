@@ -10,7 +10,6 @@ const AuthenticateModalComponent = lazy(() =>
 	import("./Components/AuthenticateModalComponent")
 );
 
-// const CircularLoaderComponent = props => <div className="loader"></div>;
 const BookingPage = lazy(() => import("./pages/BookingPage"));
 const HomePage = lazy(() => import("./pages/HomePage"));
 const ViewTicketsPage = lazy(() => import("./pages/ViewTicketsPage"));
