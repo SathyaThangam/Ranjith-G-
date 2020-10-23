@@ -21,6 +21,30 @@
 			display: flex;
 			flex-direction: row;
 			align-items: center;
+
+			& > .sidebar-btn {
+				display: none;
+			}
+
+			@media screen and (max-width: 360px) {
+				& > .nav-container {
+					display: none;
+				}
+				& > .sidebar-btn {
+					display: block;
+					& > img {
+						filter: invert(100);
+						cursor: pointer;
+					}
+				}
+				& > .header-logo {
+					display: flex;
+					margin: 0 auto;
+				}
+				height: 64px;
+				width: 100%;
+				padding: 5px 30px;
+			}
 		}
 
 		& > .header-right {
@@ -28,6 +52,9 @@
 			display: flex;
 			flex-direction: row;
 			align-items: center;
+			@media screen and (max-width: 360px) {
+				display: none;
+			}
 		}
 	}
 }
@@ -70,6 +97,7 @@
 	position: absolute;
 	top: 40px;
 	color: black;
+	background-color: white;
 	width: 190px;
 	box-shadow: 0 1px 5px #000;
 	& .dropdown-content {
@@ -116,5 +144,45 @@
 
 	&.show {
 		display: block;
+	}
+}
+
+.sidebar-container {
+	display: none;
+	width: 100%;
+	@media screen and (max-width: 360px) {
+		display: none;
+		position: absolute;
+		left: 0;
+		height: 100%;
+		color: black;
+		z-index: 99;
+		& > ul {
+			list-style: none;
+			width: 80%;
+			height: 100%;
+			padding: 0;
+			margin: 0;
+			text-align: left;
+			background-color: white;
+			opacity: 1;
+		}
+		& .sidebar-content {
+			padding: .5rem 1rem;
+			font-weight: 400;
+			color: #4a4a4a;
+			font-size: 0.86em;
+			text-decoration: none;
+			cursor: pointer;
+		}
+		&>.dark-container{
+			height: 100%;
+			width: 50%;
+			background-color: black;
+			opacity: 0.6;
+		}
+		&.show{
+			display: flex;	
+		}
 	}
 }

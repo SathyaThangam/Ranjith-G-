@@ -1,13 +1,57 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import "../scss/HeaderComponent.scss";
+import burgerIcon from "../img/burger.svg";
 function HeaderComponent() {
 	const [showBookingDropdown, setShowBookingDropdown] = useState(false);
 	const [showLoginDropdown, setShowLoginDropdown] = useState(false);
+	const [showSideBar, setShowSideBar] = useState(false);
+	const bookingRef = useRef(null);
+	const loginRef = useRef(null);
+
+	useEffect(() => {
+		const clickOutside = (event) => {
+			if (
+				showLoginDropdown &&
+				loginRef.current &&
+				!loginRef.current.contains(event.target)
+			) {
+				setShowLoginDropdown(false);
+			}
+		};
+
+		window.addEventListener("mousedown", clickOutside);
+		return () => {
+			window.removeEventListener("mousedown", clickOutside);
+		};
+	}, [showLoginDropdown, loginRef]);
+	useEffect(() => {
+		const clickOutside = (event) => {
+			if (
+				showBookingDropdown &&
+				bookingRef.current &&
+				!bookingRef.current.contains(event.target)
+			) {
+				setShowBookingDropdown(false);
+			}
+		};
+
+		window.addEventListener("mousedown", clickOutside);
+		return () => {
+			window.removeEventListener("mousedown", clickOutside);
+		};
+	}, [showBookingDropdown, bookingRef]);
 	return (
 		<div className="header-container">
 			<div className="header-content">
 				<div className="header-left">
+					<div className="sidebar-btn">
+						<img
+							src={burgerIcon}
+							alt="sidebar button"
+							onClick={() => setShowSideBar((prev) => !prev)}
+						/>
+					</div>
 					<div className="header-logo">
 						<NavLink to="/" exact>
 							getBus
@@ -53,12 +97,10 @@ function HeaderComponent() {
 						</li>
 						<li
 							className="nav-content"
-							onClick={() =>
-								{
-									setShowBookingDropdown((prev) => !prev);
-									setShowLoginDropdown(false);
-								}
-							}
+							onClick={() => {
+								setShowBookingDropdown((prev) => !prev);
+								setShowLoginDropdown(false);
+							}}
 						>
 							Manage Booking
 							<div
@@ -69,7 +111,10 @@ function HeaderComponent() {
 								}
 							>
 								<div className="top-arrow"></div>
-								<div className="dropdown-content">
+								<div
+									className="dropdown-content"
+									ref={bookingRef}
+								>
 									<ul>
 										<li className="list-header">
 											Bus Tickets
@@ -84,12 +129,10 @@ function HeaderComponent() {
 						</li>
 						<li
 							className="nav-content"
-							onClick={() =>
-								{
-									setShowLoginDropdown((prev) => !prev);
-									setShowBookingDropdown(false);
-								}
-							}
+							onClick={() => {
+								setShowLoginDropdown((prev) => !prev);
+								setShowBookingDropdown(false);
+							}}
 						>
 							profile
 							<div
@@ -100,7 +143,10 @@ function HeaderComponent() {
 								}
 							>
 								<div className="top-arrow"></div>
-								<div className="dropdown-content">
+								<div
+									className="dropdown-content"
+									ref={loginRef}
+								>
 									<ul>
 										<li>Sign In/Sign up</li>
 									</ul>
@@ -109,6 +155,23 @@ function HeaderComponent() {
 						</li>
 					</ul>
 				</div>
+			</div>
+			<div
+				className={
+					showSideBar ? "sidebar-container show" : "sidebar-container"
+				}
+			>
+				<ul>
+					<li className="sidebar-content">Login/Signup</li>
+					<li className="sidebar-content">Search Buses</li>
+					<li className="sidebar-content">Offers</li>
+					<li className="sidebar-content">Refer & Earn</li>
+					<li className="sidebar-content">Customer Care</li>
+					<li className="sidebar-content">Get Ticket Details</li>
+					<li className="sidebar-content">Terms and Condition</li>
+					<li className="sidebar-content">Cancel Ticket</li>
+				</ul>
+				<div className="dark-container"></div>
 			</div>
 		</div>
 	);

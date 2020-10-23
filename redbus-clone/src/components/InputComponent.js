@@ -1,14 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
 import "../scss/InputComponent.scss";
-function InputComponent({ label }) {
-	const [inputValue, setInputValue] = useState("");
-
+function InputComponent({ label,type,value,setValue,iconImg }) {
+	const icon =
+		iconImg !== undefined ? (
+			<span className="icon-container">
+				<img src={iconImg} alt="icon" />
+			</span>
+		) : (
+			""
+		);
 	return (
 		<div className="input-container">
+			{icon}
 			<input
-				type="text"
-				value={inputValue}
-				onChange={(e) => setInputValue(e.target.value)}
+				type={type}
+				value={value}
+				onChange={(e) => setValue(e.target.value)}
 			/>
 			<label>{label}</label>
 		</div>
