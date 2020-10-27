@@ -78,6 +78,10 @@
 			font-stretch: normal;
 			text-transform: none;
 			cursor: pointer;
+			text-decoration: none;
+			display: flex;
+			align-items: center;
+			justify-content: center;
 			&:hover {
 				background-color: #e9555d !important;
 			}
@@ -146,6 +150,6 @@
 		flex-direction: row;
 		align-items: center;
 		justify-content: center;
-		overflow: scroll;
+		overflow-x: scroll;
 	}
 }

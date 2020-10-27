@@ -1,0 +1,81 @@
+@import "variables.scss";
+.filter-container {
+	position: absolute;
+	float: left;
+	width: 20%;
+	text-align: left;
+	margin-top: 10px;
+	padding: 0 26px 0 16px;
+	& > .fitler-container-title {
+		padding-bottom: 20px;
+		border-bottom: 1px solid #ddd;
+		font-size: 14px;
+		font-weight: 700;
+		font-family: Montserrat;
+		cursor: pointer;
+	}
+
+	.filter-title {
+		margin: 24px 0px 16px;
+		font-size: 14px;
+		font-weight: 700;
+	}
+
+	& ul {
+		list-style: none;
+		padding: 0;
+
+		input[type="checkbox"] {
+			width: 16px;
+			height: 16px;
+			color: var(--red-color);
+
+			&:checked {
+				content: "\2713";
+				color: var(--red-color);
+			}
+		}
+		& > li {
+			padding: 10px 0px;
+			display: flex;
+			align-items: center;
+			& > label {
+				padding-left: 10px;
+			}
+		}
+    }
+    
+    .amenity-label {
+        font-size: 14px;
+        &>li {
+            padding: 5px;
+            margin: 5px;
+            cursor: pointer;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            width: fit-content;
+        }
+    }
+
+	.filter-search {
+        padding: 1px 2px;
+        padding-left: 15px;
+        font-size: 14px;
+		height: 30px;
+		margin-left: -10px;
+		border: 1px solid #ddd;
+		border-radius: 3px;
+	}
+
+	& > .filter-criteria {
+		border-bottom: 1px solid #ddd;
+		padding: 12px 0px;
+		font-size: 14px;
+		font-family: Montserrat;
+		cursor: pointer;
+
+		&.selected {
+			color: #da4e52;
+		}
+	}
+}

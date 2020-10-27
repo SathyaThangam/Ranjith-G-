@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.scss";
 import Routes from "./Routes";
-
+import {withDataContext} from './context/DataContext'
 function App() {
 	return (
 		<div className="App">
@@ -10,4 +10,4 @@ function App() {
 	);
 }
 
-export default App;
+export default withDataContext(App);

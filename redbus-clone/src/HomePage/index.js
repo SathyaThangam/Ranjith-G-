@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "../scss/HomePage.scss";
 import InputComponent from "../components/InputComponent";
 import doubleArrow from "../img/double-arrow.svg";
@@ -7,21 +7,23 @@ import offerImg1 from "../img/offer-img01.png";
 import offerImg2 from "../img/offer-img02.png";
 import safetyImg from "../img/safetyplus.svg";
 import cityIcon from "../img/city-solid.svg";
+import { DataContext } from "../context/DataContext";
+import { Link } from "react-router-dom";
 function HomePage() {
 	const [source, setSource] = useState("");
 	const [destination, setDestination] = useState("");
-	const [date, setDate] = useState(() => {
+	const { setQueryData } = useContext(DataContext);
+	const [date] = useState(() => {
 		var today = new Date();
 		var dd = String(today.getDate()).padStart(2, "0");
 		var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
 		var yyyy = today.getFullYear();
 
 		return dd + "/" + mm + "/" + yyyy;
-		
 	});
 
 	const searchBuses = () => {
-		console.log(source,destination,date);
+		setQueryData({ source, destination, date });
 	};
 
 	return (
@@ -53,9 +55,13 @@ function HomePage() {
 						setValue={setDestination}
 						iconImg={cityIcon}
 					/>
-					<button className="search-btn" onClick={searchBuses}>
+					<Link
+						className="search-btn"
+						to="/tickets"
+						onClick={searchBuses}
+					>
 						Search Buses
-					</button>
+					</Link>
 				</div>
 			</div>
 			<div className="safety-banner">
