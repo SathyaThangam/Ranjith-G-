@@ -1,14 +1,14 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { DataContext } from "../context/DataContext";
 import TitleComponent from "./TitleComponent";
 import FilterComponent from "./FilterComponent";
 import rushHourCard from "../img/rushhour_card.svg";
 import safetyPlusCard from "../img/safetyplus_card.svg";
 import "../scss/TicketPage.scss";
-import closeIcon from "../img/close-icon.svg";
 import BusComponent from "./BusComponent";
 function DesktopPage() {
 	const { queryData } = useContext(DataContext);
+	const [showFilter, setShowFilter] = useState(false);
 	return (
 		<div>
 			<TitleComponent
@@ -17,7 +17,7 @@ function DesktopPage() {
 				date={queryData.date}
 			/>
 			<div className="ticket-container">
-				<FilterComponent />
+				<FilterComponent show={showFilter} />
 				<div className="main-content">
 					<div className="offers-container">
 						<div className="offer-card">
@@ -30,15 +30,11 @@ function DesktopPage() {
 							<img src={safetyPlusCard} alt="get safety offers" />
 						</div>
 					</div>
-					<div className="set-filters">
-						<span>
-							Live Tracking
-							<img
-								src={closeIcon}
-								alt="close"
-								className="close"
-							/>
-						</span>
+					<div
+						className="set-filters"
+						onClick={() => setShowFilter((prev) => !prev)}
+					>
+						<span>FILTERS</span>
 					</div>
 					<div className="announcement">
 						All bus ratings include safety as a major factor

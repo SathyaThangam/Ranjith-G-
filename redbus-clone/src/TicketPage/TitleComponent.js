@@ -7,14 +7,26 @@ import { formatDate, formatDay } from "./helpers";
 function TitleComponent({ source, destination, date }) {
 	return (
 		<div className="title-container">
-			<div className="location-container">{"source"}</div>
+			<div>
+				{source !== "" && source !== undefined ? source : "source"}
+			</div>
 			<img className="arrow-icon" src={arrowRight} alt="to" />
-			<div className="location-container">{"destination"}</div>
+			<div>
+				{destination !== "" && destination === undefined
+					? destination
+					: "destination"}
+			</div>
 			<div className="date-container">
 				<img className="arrow-icon btn" src={leftArrow} alt="go back" />
 				<span className="date-content">
-					{formatDate}
-					<span className="day-container">{formatDay}</span>
+					{date !== "" && date !== undefined
+						? formatDate(date)
+						: formatDate(new Date())}
+					<span className="day-container">
+						{date !== "" && date !== undefined
+							? formatDay(date)
+							: formatDay(new Date())}
+					</span>
 				</span>
 				<img
 					className="arrow-icon btn"

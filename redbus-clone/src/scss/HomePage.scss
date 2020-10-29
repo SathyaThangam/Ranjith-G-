@@ -1,6 +1,7 @@
 .homepage-container {
 	display: flex;
 	flex-direction: column;
+	height: 100%;
 }
 
 .img-container {
@@ -47,8 +48,8 @@
 				cursor: pointer;
 
 				@media screen and (max-width: 950px) {
-					top: 30px;
-					left: 90px;
+					top: 40px;
+					left: 135px;
 					transform: rotate(90deg);
 				}
 			}

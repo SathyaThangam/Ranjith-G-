@@ -1,0 +1,46 @@
+.dropdown-input-container {
+	max-height: 400px;
+	width: 100%;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	position: relative;
+	z-index: 9000;
+	text-align: left;
+	background-color: #fff;
+	color: black;
+
+	// for Firefox add this class as well
+	.thin_scroll {
+		scrollbar-width: thin; // auto | thin | none | <length>;
+	}
+	.dropdown-content {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		list-style: none;
+		padding: 0;
+		margin: 5px;
+		& > .dropdown-element {
+			text-align: left;
+			
+			cursor: pointer;
+			display: block;
+			width: 200px;
+			word-wrap: break-word;
+			&:hover {
+				background-color: #eee;
+			}
+
+			& > div {
+                width: 100%;
+                padding: 10px 5px;
+			}
+        }
+        &.empty{
+            display: none;
+        }
+	}
+	.dropdown-content:empty {
+		display: none;
+	}
+}

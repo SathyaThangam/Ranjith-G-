@@ -1,6 +1,6 @@
-import React from "react";
+import React, { memo, useState } from "react";
 import "../scss/InputComponent.scss";
-function InputComponent({ label,type,value,setValue,iconImg }) {
+function InputComponent({ label, type, value, setValue, iconImg, inputProps }) {
 	const icon =
 		iconImg !== undefined ? (
 			<span className="icon-container">
@@ -9,17 +9,24 @@ function InputComponent({ label,type,value,setValue,iconImg }) {
 		) : (
 			""
 		);
+	const [empty, setEmpty] = useState(false);
+
 	return (
-		<div className="input-container">
+		<div className={empty ? "input-container empty" : "input-container"}>
 			{icon}
 			<input
 				type={type}
 				value={value}
-				onChange={(e) => setValue(e.target.value)}
+				{...(inputProps !== undefined ? inputProps : "")}
+				onChange={(e) => {
+					if (e.target.value === "") setEmpty(true);
+					else setEmpty(false);
+					setValue(e.target.value);
+				}}
 			/>
 			<label>{label}</label>
 		</div>
 	);
 }
 
-export default InputComponent;
+export default memo(InputComponent);

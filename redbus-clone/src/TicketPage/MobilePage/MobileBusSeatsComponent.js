@@ -5,7 +5,6 @@ import uid from "uid";
 function MobileBusSeatsComponent() {
 	const text = (value) => console.log("hello text", value);
     const width = window.innerWidth - 10;
-    console.log(width);
     const style = {
         width,
         height: "176px",

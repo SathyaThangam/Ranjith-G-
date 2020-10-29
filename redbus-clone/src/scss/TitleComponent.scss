@@ -1,51 +1,31 @@
-.title-container {
+.title-container{
 	display: flex;
-	border-bottom: 1px solid #ddd;
-	padding: 15px 10px 15px 25px;
+	position: sticky;
+	top: 0;
+	z-index: 300;
+	background-color: white;
 	align-items: center;
-
-	& .arrow-icon {
-		width: 14px;
-		padding: 0px 15px;
-
-		&.btn {
+	padding: 15px 10px 15px 25px;
+	justify-content: flex-start;
+	border-bottom: 1px solid #eee;
+	font-weight: 700;
+	margin: 0;
+	.arrow-icon{
+		display: inline-block;
+		width: 16px;
+		padding: 0px 5px;
+		&.btn:hover{
 			cursor: pointer;
 		}
 	}
-
-	.location-container {
-		font-weight: 700;
-		font-size: 16px;
-		margin: 5px;
-	}
-
-	.date-container {
-		font-weight: 700;
-		font-size: 16px;
-		margin: 0px 10px;
-
-		&>.date-content{
-			position: relative;
-			&>.day-container {
-			font-size: 12px;
-			position: absolute;
-			width: 56px;
-			top: 18px;
-			right: -4px;
-		}
-		}
-
-		
-	}
-
-	& > button {
+		& > button {
 		border: 1px solid #3e3e52;
 		border-radius: 3px;
 		background-color: #f8f4f4;
 		padding: 5px 25px;
-		display: inline-block;
+		display: none;
 		font-weight: 400;
-		font-size: 14px;
+		font-size: 0.8em;
 		margin-left: 24px;
 		cursor: pointer;
 		font-family: Montserrat;
@@ -54,5 +34,99 @@
 			font-weight: 700;
 			border: 1px solid #000000;
 		}
+		@media screen and (min-width:500px){
+			display: inline-block;
+		}
+	}
+
+	.date-container{
+		display: flex;
+		font-size: 0.8em;
+		margin-left: 20px;
+		&> .date-content{
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			&> .day-container{
+			font-size: 0.7rem;
+			padding: 0;
+			width: fit-content;
+			background-color: #eee;
+
+		}
+		}
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// .title-container {
+// 	display: flex;
+// 	border-bottom: 1px solid #ddd;
+// 	padding: 15px 10px 15px 25px;
+// 	align-items: center;
+
+// 	& .arrow-icon {
+// 		width: 14px;
+// 		padding: 0px 15px;
+
+// 		&.btn {
+// 			cursor: pointer;
+// 		}
+// 	}
+
+// 	.location-container {
+// 		font-weight: 700;
+// 		font-size: 16px;
+// 		margin: 5px;
+// 	}
+
+// 	.date-container {
+// 		font-weight: 700;
+// 		font-size: 16px;
+// 		margin: 0px 10px;
+
+// 		& > .date-content {
+// 			position: relative;
+// 			& > .day-container {
+// 				font-size: 12px;
+// 				position: absolute;
+// 				width: 56px;
+// 				top: 18px;
+// 				right: -4px;
+// 			}
+// 		}
+// 	}
+
+// 	& > button {
+// 		border: 1px solid #3e3e52;
+// 		border-radius: 3px;
+// 		background-color: #f8f4f4;
+// 		padding: 5px 25px;
+// 		display: inline-block;
+// 		font-weight: 400;
+// 		font-size: 14px;
+// 		margin-left: 24px;
+// 		cursor: pointer;
+// 		font-family: Montserrat;
+
+// 		&:hover {
+// 			font-weight: 700;
+// 			border: 1px solid #000000;
+// 		}
+// 	}
+// }

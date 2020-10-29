@@ -1,0 +1,38 @@
+.side-draw-container {
+    display: flex;
+    width: 30%;
+    border-right: 1px solid #eee;
+    margin-right: 20px;
+	@media screen and (max-width: 600px) {
+		display: flex;
+		position: absolute;
+        left: 0;
+        width: 100%;
+		height: 100%;
+		color: black;
+		z-index: 300;
+		& > .side-draw-content {
+			width: 80%;
+			height: 100%;
+			padding: 10px;
+			text-align: left;
+			background-color: white;
+			opacity: 1;
+		}
+		& .sidebar-content {
+			padding: .5rem 1rem;
+			font-weight: 400;
+			color: #4a4a4a;
+			font-size: 0.86em;
+			text-decoration: none;
+			cursor: pointer;
+		}
+		&>.dark-container{
+			height: 100%;
+			width: 50%;
+			background-color: black;
+			opacity: 0.6;
+		}
+		
+	}
+}

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect, useCallback } from "react";
 import "../scss/HomePage.scss";
 import InputComponent from "../components/InputComponent";
 import doubleArrow from "../img/double-arrow.svg";
@@ -10,21 +10,59 @@ import cityIcon from "../img/city-solid.svg";
 import { DataContext } from "../context/DataContext";
 import { Link } from "react-router-dom";
 import HeaderComponent from "../components/HeaderComponent";
+import DropDownComponent from "../components/DropDownComponent";
+import cities from "../data/cities-name-list.json";
+import uid from "uid";
+import DateComponent from "./DateComponent";
 function HomePage() {
 	const [source, setSource] = useState("");
+	const [sourceDropdown, setSourceDropdown] = useState([]);
+	const [destinationDropDown, setDestinationDropDown] = useState([]);
+	const [cityData] = useState(() => {
+		return cities.map((city) => ({
+			key: uid(),
+			name: city,
+		}));
+	});
 	const [destination, setDestination] = useState("");
 	const { setQueryData } = useContext(DataContext);
-	const [date] = useState(() => {
-		var today = new Date();
-		var dd = String(today.getDate()).padStart(2, "0");
-		var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-		var yyyy = today.getFullYear();
+	const [date, setDate] = useState(new Date());
 
-		return dd + "/" + mm + "/" + yyyy;
-	});
+	const searchCities = async (searchString, cities) =>
+		await cities.filter((city) =>
+			city["name"].toLowerCase().includes(searchString.toLowerCase())
+		);
 
-	const searchBuses = () => {
-		setQueryData({ source, destination, date });
+	const setDropDown = useCallback(async (state, setFn, cityData) => {
+		if (!isEmpty(state)) {
+			const data = await searchCities(state, cityData);
+			if (data.length === 1 && data[0].name === state) setFn([]);
+			else setFn(data);
+		} else setFn([]);
+	}, []);
+
+	const swapSourceAndDestination = () => {
+		const tempSource = source;
+		setSource(destination);
+		setDestination(tempSource);
+	};
+
+	useEffect(() => {
+		setDropDown(source, setSourceDropdown, cityData);
+	}, [source, setDropDown, cityData]);
+
+	useEffect(() => {
+		setDropDown(destination, setDestinationDropDown, cityData);
+	}, [destination, setDropDown, cityData]);
+
+	const isEmpty = (variable) => variable === "";
+
+	const searchBuses = (e) => {
+		if (!isEmpty(source) && !isEmpty(destination) && !isEmpty(date)) {
+			setQueryData({ source, destination, date });
+		} else {
+			e.preventDefault();
+		}
 	};
 
 	return (
@@ -34,30 +72,46 @@ function HomePage() {
 				<div className="img-container"></div>
 				<div className="img-content">
 					<div className="search-container">
-						<InputComponent
-							label="FROM"
-							type="text"
-							value={source}
-							setValue={setSource}
-							iconImg={cityIcon}
-						/>
+						<div>
+							<InputComponent
+								label="FROM"
+								type="text"
+								value={source}
+								setValue={setSource}
+								iconImg={cityIcon}
+							/>
+							<DropDownComponent
+								list={sourceDropdown}
+								setValue={setSource}
+							/>
+						</div>
 						<span className="arrow-container">
-							<img src={doubleArrow} alt="interchange location" />
+							<img
+								src={doubleArrow}
+								onClick={() => swapSourceAndDestination()}
+								alt="interchange location"
+							/>
 						</span>
-						<InputComponent
-							label="TO"
-							type="text"
-							value={destination}
-							setValue={setDestination}
-							iconImg={cityIcon}
-						/>
-						<InputComponent
-							label="Date"
-							type="text"
-							value={date}
-							setValue={setDestination}
-							iconImg={cityIcon}
-						/>
+						<div>
+							<InputComponent
+								label="TO"
+								type="text"
+								value={destination}
+								setValue={setDestination}
+								iconImg={cityIcon}
+							/>
+							<DropDownComponent
+								list={destinationDropDown}
+								setValue={setDestination}
+							/>
+						</div>
+						<div>
+							<DateComponent
+								label="DATE"
+								type="text"
+								setValue={setDate}
+							/>
+						</div>
 						<Link
 							className="search-btn"
 							to="/tickets"

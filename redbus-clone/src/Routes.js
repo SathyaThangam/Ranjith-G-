@@ -9,6 +9,7 @@ function Routes() {
 				<Switch>
 					<Route path="/" exact component={HomePage} />
 					<Route path="/tickets" component={TicketPage} />
+					<Route component={HomePage}/>
 				</Switch>
 			</div>
 		</Router>
