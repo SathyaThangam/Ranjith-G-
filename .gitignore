@@ -9,7 +9,7 @@
 
 **/debug.log
 # testing
-/coverage
+**/coverage
 
 # production
 **/build

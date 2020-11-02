@@ -33,6 +33,10 @@
 		margin: 0;
 	}
 
+	& > .filter-search{
+		color: black;
+	}
+
 	&> .checkbox-container{
 		&> li{
 			padding: 5px 0px;

@@ -7,50 +7,7 @@ function BusComponent() {
 	return (
 		<div className="bus-container">
 			<div className="bus-content">
-				<div className="bus-content-top">
-					<div className="bus-details">
-						<div className="bus-details top">
-							<span className="f-bold">
-								Neeta Tours and travels
-							</span>
-						</div>
-						<div className="bus-details bottom">
-							Bharat Benz A/C Seater (2+1)
-						</div>
-					</div>
-					<div className="bus-details">
-						<div className="bus-details top">
-							<span className="f-bold">07:15</span>
-						</div>
-						<div className="bus-details bottom">Borivali West</div>
-					</div>
-					<div className="bus-details">
-						<div className="bus-details top">04h 55m</div>
-					</div>
-					<div className="bus-details">
-						<div className="bus-details top">12:10</div>
-						<div className="bus-details bottom">Wakad</div>
-					</div>
-					<div className="bus-details">
-						<div className="bus-details top">
-							<span className="rating">3.5</span>
-						</div>
-						<div className="bus-details bottom">102</div>
-					</div>
-					<div className="bus-details">
-						<div className="bus-details top">
-							INR <span className="f-bold">380</span>
-						</div>
-					</div>
-					<div className="bus-details">
-						<div className="bus-details top">
-							<span className="red-bar"></span>
-							<div className="bus-details bottom">
-								<span>22 Seats Available</span>
-							</div>
-						</div>
-					</div>
-				</div>
+				
 			</div>
 			<div className="seat-container">
 				<div className="bus-options">
