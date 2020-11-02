@@ -3,7 +3,7 @@ import "../scss/TitleComponent.scss";
 import arrowRight from "../img/arrow-right.svg";
 import leftArrow from "../img/previous_arrow.svg";
 import rightArrow from "../img/right_arrow.svg";
-import { formatDate, formatDay } from "./helpers";
+import { formatDate, formatDay } from "../helpers/helper";
 function TitleComponent({ source, destination, date }) {
 	return (
 		<div className="title-container">

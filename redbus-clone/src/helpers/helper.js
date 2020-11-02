@@ -13,10 +13,10 @@ const monthShortNames = [
 	"Nov",
 	"Dec",
 ];
-const formatDate = newDate => `${newDate.getDate()} ${
-	monthShortNames[newDate.getMonth()]
-}`;
+const formatDate = (newDate) =>
+	`${newDate.getDate()} ${monthShortNames[newDate.getMonth()]}`;
 const dayShortNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-const formatDay = newDate => `${dayShortNames[newDate.getDay()]}`;
+const formatDay = (newDate) => `${dayShortNames[newDate.getDay()]}`;
 
 export { formatDate, formatDay };
+

@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Path } from "react-konva";
 function SeatComponent({ x, y, onClick, disabled }) {
 	const [selected, setSelected] = useState(false);
-    const [strokeColor, setStrokeColor] = useState("red");
-	
+	const [strokeColor, setStrokeColor] = useState("red");
+
 	const handleClick = () => {
 		if (disabled) return;
 		setSelected((prev) => {
@@ -17,7 +17,6 @@ function SeatComponent({ x, y, onClick, disabled }) {
 		<Path
 			x={x}
 			y={y}
-			
 			data="m 20 20 h 25 v 25 h -25 v -5.5 h 20 v -15 h -20 v -5 m 0 2.5 h -10 v 20 h 10 v -2.5 h 20 v -15 h -20 z"
 			fill={disabled ? "#9C9A9A" : "transparent"}
 			stroke={disabled ? "#686565" : strokeColor}

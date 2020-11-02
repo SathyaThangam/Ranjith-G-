@@ -1,0 +1,41 @@
+.mobile-filter-footer {
+	display: flex;
+	position: fixed;
+	bottom: 0;
+	background-color: #3e3e52;
+	box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.26);
+	z-index: 1000;
+	width: 100%;
+	color: white;
+
+	& > .filter-options {
+		width: 25%;
+		height: 60px;
+		display: flex;
+		flex-direction: column;
+		font-size: 9.6px;
+		padding: 0.1em 0.35em;
+		align-items: center;
+		justify-content: center;
+		border: 0;
+
+		&.highlighted {
+			color: #ff5b61 !important;
+		}
+	}
+
+	& > .filter-option-btn {
+		width: 21%;
+		font-weight: 700;
+		line-height: 1.2em;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		text-align: left;
+		word-wrap: break-word;
+		background-color: var(--red-color);
+		color: white;
+		border: 0;
+		padding: 0 0.5em;
+	}
+}

@@ -4,6 +4,7 @@ import rushHourCard from "../../img/rushhour_card.svg";
 import safetyPlusCard from "../../img/safetyplus_card.svg";
 import MobileTitleComponent from "./MobileTitleComponent";
 import MobileBusComponent from "./MobileBusComponent";
+import MobileFilterComponent from "./MobileFooterComponent";
 
 function MobilePage() {
 	return (
@@ -18,20 +19,16 @@ function MobilePage() {
 						<img src={safetyPlusCard} alt="get safety offers" />
 					</div>
 				</div>
-				<div className="announcement f-bold">
-					All bus ratings include safety as a major factor
+				<div className="announcement">431 Buses found</div>
+				<div className="mobile-results-container">
+					<MobileBusComponent />
+					<MobileBusComponent />
+					<MobileBusComponent />
+					<MobileBusComponent />
+					<MobileBusComponent />
 				</div>
-				<div className="announcement">
-					431 Buses found
-				</div>
-                <div className="mobile-results-container">
-                    <MobileBusComponent/>
-                    <MobileBusComponent/>
-                    <MobileBusComponent/>
-                    <MobileBusComponent/>
-                    <MobileBusComponent/>
-                </div>
 			</div>
+			<MobileFilterComponent/>
 		</div>
 	);
 }

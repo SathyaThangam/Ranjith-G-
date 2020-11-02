@@ -1,17 +1,16 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import "../../scss/MobileBusComponent.scss";
 import MobileBusSeatsComponent from "./MobileBusSeatsComponent";
 function MobileBusComponent() {
+	const [show, setShow] = useState(false);
 
-    const [show, setShow] = useState(false)
-
-    return (
+	return (
 		<div
 			className="mobile-bus-container"
-			onClick={() => setShow(prev => !prev)}
+			onClick={() => setShow((prev) => !prev)}
 		>
 			<div className="stops">1 Rest stop</div>
-			<div className="">
+			<div>
 				<span className="bus-timing">
 					<b>13:15</b> - 18:10
 				</span>
@@ -30,7 +29,7 @@ function MobileBusComponent() {
 					<div>Bharat Benz A/C Seater (2+1)</div>
 				</div>
 				<div className="tags">
-					<div className="red-badge">1.6</div>
+					<div className="green-badge">1.6</div>
 					<div className="grey-badge">5</div>
 				</div>
 			</div>

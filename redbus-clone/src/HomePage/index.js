@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "../scss/HomePage.scss";
 import InputComponent from "../components/InputComponent";
 import doubleArrow from "../img/double-arrow.svg";
@@ -7,7 +7,6 @@ import offerImg1 from "../img/offer-img01.png";
 import offerImg2 from "../img/offer-img02.png";
 import safetyImg from "../img/safetyplus.svg";
 import cityIcon from "../img/city-solid.svg";
-import { DataContext } from "../context/DataContext";
 import { Link } from "react-router-dom";
 import HeaderComponent from "../components/HeaderComponent";
 import DropDownComponent from "../components/DropDownComponent";
@@ -15,7 +14,11 @@ import cities from "../data/cities-name-list.json";
 import uid from "uid";
 import DateComponent from "./DateComponent";
 function HomePage() {
+	
 	const [source, setSource] = useState("");
+	const [destination, setDestination] = useState("");
+	const [date, setDate] = useState(new Date());
+
 	const [sourceDropdown, setSourceDropdown] = useState([]);
 	const [destinationDropDown, setDestinationDropDown] = useState([]);
 	const [cityData] = useState(() => {
@@ -24,9 +27,6 @@ function HomePage() {
 			name: city,
 		}));
 	});
-	const [destination, setDestination] = useState("");
-	const { setQueryData } = useContext(DataContext);
-	const [date, setDate] = useState(new Date());
 
 	const searchCities = async (searchString, cities) =>
 		await cities.filter((city) =>
@@ -55,11 +55,24 @@ function HomePage() {
 		setDropDown(destination, setDestinationDropDown, cityData);
 	}, [destination, setDropDown, cityData]);
 
+	useEffect(() => {
+		const tempSource = localStorage.getItem('source');
+		const tempDestination = localStorage.getItem('destination');
+		const tempDate = localStorage.getItem('date');
+		if(tempSource !== null)
+			setSource(tempSource);
+		if(tempDestination !== null)
+			setDestination(tempDestination);
+		if (tempDate !== null && tempDate < new Date()) setDate(tempDate);
+	},[])
+	
 	const isEmpty = (variable) => variable === "";
 
 	const searchBuses = (e) => {
 		if (!isEmpty(source) && !isEmpty(destination) && !isEmpty(date)) {
-			setQueryData({ source, destination, date });
+			localStorage.setItem('source',source);
+			localStorage.setItem('destination',destination);
+			localStorage.setItem('date',date);
 		} else {
 			e.preventDefault();
 		}

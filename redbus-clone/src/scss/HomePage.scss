@@ -152,5 +152,9 @@
 		align-items: center;
 		justify-content: center;
 		overflow-x: scroll;
+		
+		@media screen and (max-width:650px) {
+			justify-content: flex-start;	
+		}
 	}
 }
