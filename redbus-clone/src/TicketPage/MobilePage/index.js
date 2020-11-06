@@ -1,12 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import "../../scss/MobilePage.scss";
 import rushHourCard from "../../img/rushhour_card.svg";
 import safetyPlusCard from "../../img/safetyplus_card.svg";
 import MobileTitleComponent from "./MobileTitleComponent";
 import MobileBusComponent from "./MobileBusComponent";
-import MobileFilterComponent from "./MobileFooterComponent";
-
+import MobileFooterComponent from "./MobileFooterComponent";
+import MobileOverlayComponent from "./MobileOverlayComponent";
+import MobileFilterComponent from "./MobileFilterComponent";
 function MobilePage() {
+
+	const [showFilter, setShowFilter] = useState(false)
+
+	if(showFilter)
+		return (
+			<MobileOverlayComponent>
+				<MobileFilterComponent setShowFilter={setShowFilter} />
+			</MobileOverlayComponent>
+		);
+
 	return (
 		<div>
 			<MobileTitleComponent />
@@ -28,7 +39,7 @@ function MobilePage() {
 					<MobileBusComponent />
 				</div>
 			</div>
-			<MobileFilterComponent/>
+			<MobileFooterComponent setShowFilter={setShowFilter} />
 		</div>
 	);
 }

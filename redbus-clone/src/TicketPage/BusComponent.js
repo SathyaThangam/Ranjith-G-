@@ -6,9 +6,7 @@ function BusComponent() {
 	const toggleShow = () => setShow((prev) => !prev);
 	return (
 		<div className="bus-container">
-			<div className="bus-content">
-				
-			</div>
+			<div className="bus-content"></div>
 			<div className="seat-container">
 				<div className="bus-options">
 					<div onClick={toggleShow}>Safety+</div>

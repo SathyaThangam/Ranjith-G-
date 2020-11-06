@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../../scss/MobileFooterComponent.scss";
-function MobileFooterComponent() {
+function MobileFooterComponent({setShowFilter}) {
 	const [selectedAC, setSelectedAC] = useState(false);
 	const [selectedNonAC, setSelectedNonAC] = useState(false);
 	const [selectedSleeper, setSelectedSleeper] = useState(false);
@@ -43,7 +43,7 @@ function MobileFooterComponent() {
 				<span className="filter-option-img"></span>
 				<span className="filter-option-title">18:00 - 24:00</span>
 			</div>
-			<button className="filter-option-btn cur-pointer">
+			<button className="filter-option-btn cur-pointer" onClick={() => setShowFilter(true)}>
 				SORT& FILTER
 			</button>
 		</div>

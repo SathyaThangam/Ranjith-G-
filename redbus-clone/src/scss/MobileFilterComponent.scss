@@ -1,0 +1,119 @@
+.mobile-filter-container {
+	& > .mobile-filter-header {
+		color: white;
+		background-color: var(--red-color);
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		padding: 10px 3px;
+		font-weight: 700;
+		position: sticky;
+		font-size: 1em;
+		top: 0;
+		z-index: 9999;
+		& > .close {
+			padding: 10px;
+		}
+	}
+
+	.mobile-filter-segment {
+		& > .header {
+			font-weight: 700;
+			font-size: 13.6px;
+			text-align: left;
+			margin-left: 13px;
+		}
+
+		padding-bottom: 10px;
+		margin-top: 10px;
+		border-bottom: 1px solid #ddd;
+
+		&.more-options {
+			display: flex;
+			align-items: center;
+			text-align: left;
+			justify-content: space-between;
+			padding: 16px 13px;
+			font-size: 13.6px;
+			text-transform: uppercase;
+
+			& > img {
+				width: 18px;
+                height: 18px;
+                opacity: 0.8;
+            }
+            
+            & .new-badge{
+                padding: 5px;
+                margin-left: 5px;
+                background-color: #B74046;
+                font-size: 10.6px;
+                color: white;
+                font-weight: 700;
+                border-radius: 3px;
+            }
+        }
+        
+        &.mobile-feature-options-container{
+        text-align: left;
+        padding-left: 13px;
+        padding-top: 15px;
+        margin-right: 50px;
+        
+        & > span {
+            text-align: left;
+            font-size: 13.6px;
+        }
+
+        & > div {
+            padding-left: 18px;
+            margin-top: 5px;
+        }
+
+        .feature-options{
+            border-bottom: 1px solid #eee;
+            padding: 10px 5px;
+            display: flex;
+            font-size: 13.6px;
+            justify-content: space-between;
+            
+            // & > input[type="checkbox"]{
+            // }
+        }
+    }
+    }
+    
+
+	& > .sort-by-container {
+		& > .radio-container {
+			text-align: left;
+			padding: 10px 0px;
+			padding-left: 16px;
+			display: flex;
+			align-items: center;
+			& > img {
+				margin-right: 15px;
+			}
+		}
+	}
+	.mobile-filter-options-container {
+		padding-top: 10px;
+		text-align: left;
+		margin-left: 13px;
+		& > span {
+			color: #3e3e52;
+			text-transform: uppercase;
+		}
+		& > .filter-options {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			justify-content: space-evenly;
+			& > div {
+				line-height: 1.5em;
+				margin-top: 0.2em;
+				font-size: 0.85em;
+			}
+		}
+	}
+}
