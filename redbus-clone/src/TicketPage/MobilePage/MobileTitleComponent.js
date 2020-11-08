@@ -15,7 +15,7 @@ function MobileTitleComponent() {
 	});
 
 	const formatPlaces = (place) => {
-		if (place.length > 10) return place.slice(0, 10).trim().concat('..');
+		if (place.length > 10) return place.slice(0, 10).trim().concat("..");
 		return place;
 	};
 

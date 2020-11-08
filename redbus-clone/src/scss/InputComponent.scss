@@ -31,6 +31,7 @@
 
 	& > input {
 		border: none;
+		width: 100%;
 		font-size: 18px;
 		height: 50px;
 		padding: 1px 4px;
@@ -39,9 +40,9 @@
 		&:focus {
 			outline: none;
 		}
-		@media screen and (max-width: 950px) {
-			width: 40vw;
-		}
+		// @media screen and (max-width: 950px) {
+		// 	width: 40vw;
+		// }
 		&:focus ~ label,
 		&:not([value=""]) ~ label {
 			top: -2px;

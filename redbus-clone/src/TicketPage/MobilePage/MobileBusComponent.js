@@ -1,53 +1,47 @@
-import React, { useState } from "react";
+import React from "react";
 import "../../scss/MobileBusComponent.scss";
-import MobileBusSeatsComponent from "./MobileBusSeatsComponent";
-function MobileBusComponent() {
-	const [show, setShow] = useState(false);
-
+import uid from "uid";
+function MobileBusComponent({ busData, setNoOfSeats, setShowSeats }) {
 	return (
 		<div
 			className="mobile-bus-container"
-			onClick={() => setShow((prev) => !prev)}
+			onClick={() => {
+				setNoOfSeats(busData["no-of-seats"]);
+				setShowSeats(true);
+			}}
 		>
-			<div className="stops">1 Rest stop</div>
+			<div className="stops">{busData["rest-stops"]} Rest stop</div>
 			<div>
 				<span className="bus-timing">
-					<b>13:15</b> - 18:10
+					<b>{busData["departure-time"]}</b> -{" "}
+					{busData["arrival-time"]}
 				</span>
-				<span className="bus-price">₹ 475</span>
+				<span className="bus-price">₹ {busData["seat-price"]}</span>
 			</div>
 			<div className="other-info">
-				<span>4h 55m </span>
+				<span>{busData["travel-time"]} </span>
 				<span>•</span>
-				<span> 22 Seats</span>
+				<span> {busData["no-of-seats"]} Seats</span>
 			</div>
 			<div className="operator-details">
 				<div className="operator-details-content">
 					<div>
-						<b>Neeta tours and travels</b>
+						<b>{busData["operator-name"]}</b>
 					</div>
-					<div>Bharat Benz A/C Seater (2+1)</div>
+					<div>{busData["bus-name"]}</div>
 				</div>
 				<div className="tags">
-					<div className="green-badge">1.6</div>
-					<div className="grey-badge">5</div>
+					<div className="green-badge">{busData["ratings"]}</div>
+					<div className="grey-badge">{busData["no-of-ratings"]}</div>
 				</div>
 			</div>
 			<div className="tags">
-				<div className="grey-badge">RESCHEDULABLE</div>
-				<div className="grey-badge">RESCHEDULABLE</div>
-			</div>
-			{show ? (
-				<div className="dropdown-content">
-					<div className="dropdown-announcement">
-						Click on the Available seat to proceed with your
-						transaction
+				{busData["tags"].map((tag) => (
+					<div key={uid(8)} className="grey-badge">
+						{tag}
 					</div>
-					<MobileBusSeatsComponent />
-				</div>
-			) : (
-				""
-			)}
+				))}
+			</div>
 		</div>
 	);
 }

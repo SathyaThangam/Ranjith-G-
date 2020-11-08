@@ -2,6 +2,7 @@
 	padding: 10px 16px;
 	text-align: left;
 	position: relative;
+	border-bottom: 1px solid #eee;
 	& > .stops {
 		color: #1446a0;
 		text-transform: uppercase;
@@ -22,7 +23,7 @@
 		display: inline-flex;
 		font-size: 16px;
 		font-weight: 700;
-		width: 75%;
+		width: 100%;
 		text-align: right;
 		flex-direction: column;
 		justify-self: flex-end;
@@ -81,6 +82,7 @@
 		}
 		& > .grey-badge {
 			padding: 5px;
+			text-transform: uppercase;
 			width: fit-content;
 			height: fit-content;
 			text-align: center;

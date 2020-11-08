@@ -1,0 +1,20 @@
+
+.mobile-bus-seats-container {
+    width: 100%;
+	& > .mobile-filter-header {
+		color: white;
+		background-color: var(--red-color);
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		padding: 10px 3px;
+		font-weight: 700;
+		position: sticky;
+		font-size: 1em;
+		top: 0;
+		z-index: 9999;
+		& > .close {
+			padding: 10px;
+		}
+	}
+}

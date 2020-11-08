@@ -1,0 +1,172 @@
+[
+	{
+		"id": "1a222f66c851d754",
+        "operator-name": "Neeta tours and travels",
+        "bus-name":"Bharat Benz A/C Seater (2+1)",
+        "no-of-seats":22,
+        "seat-price":475,
+        "ratings":1.6,
+        "no-of-ratings":6,
+        "travel-time":"4h 55m",
+        "departure-time":"13:15",
+        "arrival-time":"18:10",
+        "departure-stop":"Mumbai",
+        "arrival-stop":"Delhi",
+        "rest-stops":1,
+        "tags":["reschedulable","sleeper"]
+
+	},
+	{
+		"id": "5985fd872ca92f03",
+        "operator-name": "ABC tours and travels",
+        "bus-name":"Bharat Benz A/C Seater (2+1)",
+        "no-of-seats":22,
+        "seat-price":475,
+        "ratings":2.6,
+        "no-of-ratings":6,
+        "travel-time":"4h 55m",
+        "departure-time":"13:15",
+        "arrival-time":"18:10",
+        "departure-stop":"Mumbai",
+        "arrival-stop":"Delhi",
+        "rest-stops":1,
+        "tags":["reschedulable","sleeper"]
+
+	},
+	{
+		"id": "10e1e6f0cb0e5469",
+        "operator-name": "DEF tours and travels",
+        "bus-name":"Bharat Benz A/C Seater (2+1)",
+        "no-of-seats":22,
+        "seat-price":475,
+        "ratings":3.6,
+        "no-of-ratings":6,
+        "travel-time":"4h 55m",
+        "departure-time":"13:15",
+        "arrival-time":"18:10",
+        "departure-stop":"Mumbai",
+        "arrival-stop":"Delhi",
+        "rest-stops":1,
+        "tags":["reschedulable","sleeper"]
+
+	},
+	{
+		"id": "456c7942d8356692",
+        "operator-name": "GHI tours and travels",
+        "bus-name":"Bharat Benz A/C Seater (2+1)",
+        "no-of-seats":22,
+        "seat-price":475,
+        "ratings":1.6,
+        "no-of-ratings":6,
+        "travel-time":"4h 55m",
+        "departure-time":"13:15",
+        "arrival-time":"18:10",
+        "departure-stop":"Mumbai",
+        "arrival-stop":"Delhi",
+        "rest-stops":1,
+        "tags":["reschedulable","sleeper"]
+
+	},
+	{
+		"id": "4bbb54b369ece0e6",
+        "operator-name": "JKL tours and travels",
+        "bus-name":"Bharat Benz A/C Seater (2+1)",
+        "no-of-seats":22,
+        "seat-price":475,
+        "ratings":1.6,
+        "no-of-ratings":6,
+        "travel-time":"4h 55m",
+        "departure-time":"13:15",
+        "arrival-time":"18:10",
+        "departure-stop":"Mumbai",
+        "arrival-stop":"Delhi",
+        "rest-stops":1,
+        "tags":["reschedulable","sleeper"]
+
+	},
+	{
+		"id": "f653be5102864a22",
+        "operator-name": "MNO tours and travels",
+        "bus-name":"Bharat Benz A/C Seater (2+1)",
+        "no-of-seats":22,
+        "seat-price":475,
+        "ratings":1.6,
+        "no-of-ratings":6,
+        "travel-time":"4h 0m",
+        "departure-time":"13:15",
+        "arrival-time":"17:15",
+        "departure-stop":"Chennai",
+        "arrival-stop":"Erode",
+        "rest-stops":1,
+        "tags":["reschedulable","sleeper"]
+
+	},
+	{
+		"id": "d5317d277b0bf201",
+        "operator-name": "PQR tours and travels",
+        "bus-name":"Bharat Benz A/C Seater (2+1)",
+        "no-of-seats":22,
+        "seat-price":475,
+        "ratings":1.6,
+        "no-of-ratings":6,
+        "travel-time":"4h 0m",
+        "departure-time":"13:15",
+        "arrival-time":"17:15",
+        "departure-stop":"Chennai",
+        "arrival-stop":"Erode",
+        "rest-stops":1,
+        "tags":["reschedulable","sleeper"]
+
+	},
+	{
+		"id": "1a222f66c851d754",
+        "operator-name": "STU tours and travels",
+        "bus-name":"Bharat Benz A/C Seater (2+1)",
+        "no-of-seats":22,
+        "seat-price":475,
+        "ratings":1.6,
+        "no-of-ratings":6,
+        "travel-time":"4h 0m",
+        "departure-time":"13:15",
+        "arrival-time":"17:15",
+        "departure-stop":"Chennai",
+        "arrival-stop":"Erode",
+        "rest-stops":1,
+        "tags":["reschedulable","sleeper"]
+
+	},
+	{
+		"id": "24c540e6d2945d7c",
+        "operator-name": "VWX tours and travels",
+        "bus-name":"Bharat Benz A/C Seater (2+1)",
+        "no-of-seats":22,
+        "seat-price":475,
+        "ratings":1.6,
+        "no-of-ratings":6,
+        "travel-time":"4h 0m",
+        "departure-time":"13:15",
+        "arrival-time":"17:15",
+        "departure-stop":"Chennai",
+        "arrival-stop":"Erode",
+        "rest-stops":1,
+        "tags":["reschedulable","sleeper"]
+
+	},
+	{
+		"id": "54c37a3fae12165a",
+        "operator-name": "YZA tours and travels",
+        "bus-name":"Bharat Benz A/C Seater (2+1)",
+        "no-of-seats":22,
+        "seat-price":475,
+        "ratings":1.6,
+        "no-of-ratings":6,
+        "travel-time":"4h 0m",
+        "departure-time":"13:15",
+        "arrival-time":"17:15",
+        "departure-stop":"Chennai",
+        "arrival-stop":"Erode",
+        "rest-stops":1,
+        "tags":["reschedulable","sleeper"]
+
+	}
+]

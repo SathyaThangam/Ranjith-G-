@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { Path } from "react-konva";
-function SeatComponent({ x, y, onClick, disabled }) {
+function SeatComponent({ x, y, onClick, disabled,rotation }) {
 	const [selected, setSelected] = useState(false);
 	const [strokeColor, setStrokeColor] = useState("red");
-
 	const handleClick = () => {
 		if (disabled) return;
 		setSelected((prev) => {
@@ -23,6 +22,7 @@ function SeatComponent({ x, y, onClick, disabled }) {
 			strokeWidth={1}
 			onClick={handleClick}
 			onTap={handleClick}
+			rotation={rotation}
 			onMouseEnter={(e) => {
 				// style stage container:
 				const container = e.target.getStage().container();

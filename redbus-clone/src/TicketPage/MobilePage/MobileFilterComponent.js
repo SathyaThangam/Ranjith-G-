@@ -9,11 +9,11 @@ function MobileFilterComponent({ setShowFilter }) {
 	const EARLY_DEPARTURE = "Early Departure";
 	const LATE_DEPARTURE = "Late Departure";
 
-	const [radioValue, setRadioValue] = useState("");
+	// const [radioValue, setRadioValue] = useState("");
 	const [selectedRadio, setSelectedRadio] = useState("");
 
 	const handleRadioChange = (value) => {
-		setRadioValue(value);
+		// setRadioValue(value);
 		setSelectedRadio(value);
 	};
 

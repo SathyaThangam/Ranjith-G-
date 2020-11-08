@@ -7,11 +7,32 @@ import MobileBusComponent from "./MobileBusComponent";
 import MobileFooterComponent from "./MobileFooterComponent";
 import MobileOverlayComponent from "./MobileOverlayComponent";
 import MobileFilterComponent from "./MobileFilterComponent";
+import {getBusData} from "../../helpers/helper";
+import MobileBusSeatsComponent from "./MobileBusSeatsComponent";
+
 function MobilePage() {
+	const [showFilter, setShowFilter] = useState(false);
+	const [showSeats, setShowSeats] = useState(false);
+	const [noOfSeats, setNoOfSeats] = useState(0);
+	const [data] = useState(() => {
+		const source = localStorage.getItem("source");
+		const destination = localStorage.getItem("destination");
+		if (source !== null && destination !== null)
+			return getBusData(source, destination);
+		return [];
+	});
 
-	const [showFilter, setShowFilter] = useState(false)
+	if(showSeats)
+		{
+			return (
+				<MobileOverlayComponent>
+					<MobileBusSeatsComponent setShowSeats={setShowSeats}  noOfSeats={noOfSeats}/>
+				</MobileOverlayComponent>
+			);
+		}
 
-	if(showFilter)
+
+	if (showFilter)
 		return (
 			<MobileOverlayComponent>
 				<MobileFilterComponent setShowFilter={setShowFilter} />
@@ -30,13 +51,18 @@ function MobilePage() {
 						<img src={safetyPlusCard} alt="get safety offers" />
 					</div>
 				</div>
-				<div className="announcement">431 Buses found</div>
+				<div className="announcement">{data.length} Buses found</div>
 				<div className="mobile-results-container">
-					<MobileBusComponent />
-					<MobileBusComponent />
-					<MobileBusComponent />
-					<MobileBusComponent />
-					<MobileBusComponent />
+					{data.length !== 0
+						? data.map((bus) => (
+								<MobileBusComponent
+									key={bus["id"]}
+									busData={bus}
+									setNoOfSeats={setNoOfSeats}
+									setShowSeats={setShowSeats}
+								/>
+						  ))
+						: "No Buses Found"}
 				</div>
 			</div>
 			<MobileFooterComponent setShowFilter={setShowFilter} />
