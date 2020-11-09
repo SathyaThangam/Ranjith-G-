@@ -1,4 +1,4 @@
-.title-container{
+.title-container {
 	display: flex;
 	position: sticky;
 	top: 0;
@@ -10,15 +10,15 @@
 	border-bottom: 1px solid #eee;
 	font-weight: 700;
 	margin: 0;
-	.arrow-icon{
+	.arrow-icon {
 		display: inline-block;
 		width: 16px;
 		padding: 0px 5px;
-		&.btn:hover{
+		&.btn:hover {
 			cursor: pointer;
 		}
 	}
-		& > button {
+	& > button {
 		border: 1px solid #3e3e52;
 		border-radius: 3px;
 		background-color: #f8f4f4;
@@ -34,45 +34,44 @@
 			font-weight: 700;
 			border: 1px solid #000000;
 		}
-		@media screen and (min-width:500px){
+		@media screen and (min-width: 500px) {
 			display: inline-block;
 		}
 	}
+	& > .search-btn {
+		padding: 10px;
+		border-radius: 0px;
+		background-color: #d84f55;
+		color: white;
+		font-weight: 700;
+		box-shadow: 0 2px 4px 0 hsla(0,0%,77%,.5);
+		border: none;
+		padding: 7px 18px 8px;
+	}
 
-	.date-container{
+	& > .close{
+		cursor: pointer;
+		position: absolute;
+		right: 10px;
+	}
+
+	.date-container {
 		display: flex;
 		font-size: 0.8em;
 		margin-left: 20px;
-		&> .date-content{
+		& > .date-content {
 			display: flex;
 			flex-direction: column;
 			align-items: center;
-			&> .day-container{
-			font-size: 0.7rem;
-			padding: 0;
-			width: fit-content;
-			background-color: #eee;
-
-		}
+			& > .day-container {
+				font-size: 0.7rem;
+				padding: 0;
+				width: fit-content;
+				background-color: #eee;
+			}
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // .title-container {
 // 	display: flex;

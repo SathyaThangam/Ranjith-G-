@@ -1,23 +1,26 @@
-import React, { useContext, useState } from "react";
-import { DataContext } from "../context/DataContext";
+import React, { useState } from "react";
 import TitleComponent from "./TitleComponent";
 import FilterComponent from "./FilterComponent";
 import rushHourCard from "../img/rushhour_card.svg";
 import safetyPlusCard from "../img/safetyplus_card.svg";
 import "../scss/TicketPage.scss";
 import BusComponent from "./BusComponent";
+import { getBusData } from "../helpers/helper";
 function DesktopPage() {
-	const { queryData } = useContext(DataContext);
-	const [showFilter, setShowFilter] = useState(false);
+	const source = localStorage.getItem("source");
+	const destination = localStorage.getItem("destination");
+	const [data] = useState(() => {
+		const source = localStorage.getItem("source");
+		const destination = localStorage.getItem("destination");
+		if (source !== null && destination !== null)
+			return getBusData(source, destination);
+		return [];
+	});
 	return (
 		<div>
-			<TitleComponent
-				source={queryData.source}
-				destination={queryData.destination}
-				date={queryData.date}
-			/>
+			<TitleComponent />
 			<div className="ticket-container">
-				<FilterComponent show={showFilter} />
+				<FilterComponent />
 				<div className="main-content">
 					<div className="offers-container">
 						<div className="offer-card">
@@ -30,12 +33,6 @@ function DesktopPage() {
 							<img src={safetyPlusCard} alt="get safety offers" />
 						</div>
 					</div>
-					<div
-						className="set-filters"
-						onClick={() => setShowFilter((prev) => !prev)}
-					>
-						<span>FILTERS</span>
-					</div>
 					<div className="announcement">
 						All bus ratings include safety as a major factor
 					</div>
@@ -43,7 +40,9 @@ function DesktopPage() {
 					<div className="results-title-container">
 						<div className="result-title-heading">
 							<div>
-								<span className="f-bold">99 BUSES</span>
+								<span className="f-bold">
+									{data.length} BUSES
+								</span>
 								<span> </span>
 								<span>found</span>
 							</div>
@@ -59,13 +58,16 @@ function DesktopPage() {
 						</div>
 					</div>
 					<div className="search-result-heading">
-						Showing <span className="f-bold">6 Buses </span>
-						from <span className="f-bold">Source </span>
-						to <span className="f-bold">destination</span>
+						Showing{" "}
+						<span className="f-bold">{data.length} Buses </span>
+						from <span className="f-bold">{source} </span>
+						to <span className="f-bold">{destination}</span>
 					</div>
 					<div className="search-result">
-						<BusComponent />
-						<BusComponent />
+						{data &&
+							data.length &&
+							data.map((bus) => <BusComponent data={bus} />)
+						}
 					</div>
 				</div>
 			</div>
