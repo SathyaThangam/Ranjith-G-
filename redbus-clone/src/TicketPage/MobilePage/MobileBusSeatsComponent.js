@@ -42,14 +42,13 @@ function MobileBusSeatsComponent({ setShowSeats, busData }) {
 						x={col}
 						y={y}
 						rotation={90}
-						position={seatNum}
+						position={seatNum++}
 						// disabled={i % 2 === 0}
 						strokeColor="red"
 						onClick={handleSeatClick}
 					/>
 				);
 				y += 60;
-				seatNum++;
 			}
 			if (remainingSeats > 0) {
 				seats.push(
@@ -57,7 +56,7 @@ function MobileBusSeatsComponent({ setShowSeats, busData }) {
 						key={uid()}
 						x={col}
 						y={y}
-						position={seatNum}
+						position={seatNum++}
 						rotation={90}
 						strokeColor="red"
 						onClick={handleSeatClick}

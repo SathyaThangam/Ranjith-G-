@@ -1,40 +1,61 @@
-import React, { useMemo } from "react";
-import "../scss/BusSeatsComponent.scss";
+import React, { useCallback } from "react";
 import { Stage, Layer, Path } from "react-konva";
 import SeatComponent from "./SeatComponent";
 import uid from "uid";
-function BusSeatsComponent() {
-    
-    const text = (value) => console.log("hello text",value);
+function BusSeatsComponent({ seats }) {
+	const rows = Math.floor(seats / 3);
+	let remainingSeats = seats % 3;
+	const width = 70 + (rows + 1) * 45;
+	const style = {
+		width: `${width}px`,
+		height: "176px",
+		backgroundColor: "#ddd",
+		marginLeft: "30px",
+		marginTop: "10px",
+		color: "#07a31c",
+	};
+	const text = (value) => console.log("hello text", value);
+	const genSeats = useCallback((remainingSeats,rows) => {
+		let tempSeats = [];
+		let x = 70,
+			y = [-5, 45, 115];
+		let seatNum = 1;
+		y.forEach((col) => {
+			for (let index = 0; index < rows; index++) {
+				tempSeats.push(
+					<SeatComponent
+						key={uid()}
+						x={x}
+						y={col}
+						disabled={index % 6 === 0}
+						strokeColor="red"
+						position={seatNum++}
+						onClick={text}
+					/>
+				);
+				x += 40;
+			}
+			if (remainingSeats-- > 0) {
+				tempSeats.push(
+					<SeatComponent
+						key={uid()}
+						x={x}
+						y={col}
+						strokeColor="red"
+						position={seatNum++}
+						onClick={text}
+					/>
+				);
+			}
+			x = 70;
+		});
 
-    const seats = useMemo(()=>{
-        let tempSeats = [];
-        let x = 70,y=[-5,45,115];
-        y.forEach((col) => {
-             for (let index = 0; index < 7; index++) {
-					tempSeats.push(
-						<SeatComponent
-							x={x}
-                            y={col}
-                            disabled = {index % 6 === 0}
-							key={uid()}
-							strokeColor="red"
-							onClick={(value) => {
-								text(value);
-							}}
-						/>
-					);
-					x += 40;
-                }
-                x = 70
-        })
-       
-        return tempSeats;
-    },[])
+		return tempSeats;
+	},[]);
 
 	return (
-		<div className="canvas-container">
-			<Stage width={384} height={176}>
+		<div style={style}>
+			<Stage width={width} height={176}>
 				<Layer>
 					<Path
 						x={0}
@@ -46,7 +67,7 @@ function BusSeatsComponent() {
 						fill="transparent"
 						scaleY={5}
 					/>
-                    {seats}
+					{genSeats(remainingSeats,rows)}
 				</Layer>
 			</Stage>
 		</div>

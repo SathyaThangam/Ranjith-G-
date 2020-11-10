@@ -66,7 +66,7 @@ function DesktopPage() {
 					<div className="search-result">
 						{data &&
 							data.length &&
-							data.map((bus) => <BusComponent data={bus} />)
+							data.map((bus) => <BusComponent key={bus["id"]} data={bus} />)
 						}
 					</div>
 				</div>

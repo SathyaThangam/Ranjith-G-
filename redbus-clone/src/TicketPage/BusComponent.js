@@ -1,9 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../scss/BusComponent.scss";
 import BusSeatsComponent from "./BusSeatsComponent";
-function BusComponent() {
+import MobileBoardingPointsComponent from "./MobilePage/MobileBoardingPointsComponent";
+import BoardingTicketComponent from "./BoardingTicketComponent";
+function BusComponent({ data }) {
 	const [show, setShow] = useState(false);
+	const [boardingPoint, setBoardingPoint] = useState("");
+	const [droppingPoint, setDroppingPoint] = useState("");
+	const [choosePoint, setChoosePoint] = useState("boarding");
 	const toggleShow = () => setShow((prev) => !prev);
+	const [ticketShowStatus,setTicketShowStatus] = useState("");
+
+	useEffect(() => {
+		if(ticketShowStatus === "reset"){
+			setDroppingPoint("")
+			setBoardingPoint("")
+			setTicketShowStatus("hide")
+		}
+		else if((droppingPoint === "" ) || (boardingPoint === ""))
+			setTicketShowStatus("hide")
+		else if ((droppingPoint !== "" ) && (boardingPoint !== ""))
+			setTicketShowStatus("show")
+	},[droppingPoint,boardingPoint,ticketShowStatus]);
+
 	return (
 		<div className="bus-container">
 			<div className="bus-content">
@@ -11,42 +30,57 @@ function BusComponent() {
 					<div className="bus-details">
 						<div className="bus-details top">
 							<span className="f-bold">
-								Neeta Tours and travels
+								{data["operator-name"]}
 							</span>
 						</div>
 						<div className="bus-details bottom">
-							Bharat Benz A/C Seater (2+1)
+							{data["bus-name"]}
 						</div>
 					</div>
 					<div className="bus-details">
 						<div className="bus-details top">
-							<span className="f-bold">07:15</span>
+							<span className="f-bold">
+								{data["departure-time"]}
+							</span>
 						</div>
-						<div className="bus-details bottom">Borivali West</div>
-					</div>
-					<div className="bus-details">
-						<div className="bus-details top">04h 55m</div>
-					</div>
-					<div className="bus-details">
-						<div className="bus-details top">12:10</div>
-						<div className="bus-details bottom">Wakad</div>
+						<div className="bus-details bottom">
+							{data["departure-stop"]}
+						</div>
 					</div>
 					<div className="bus-details">
 						<div className="bus-details top">
-							<span className="rating">3.5</span>
+							{data["travel-time"]}
 						</div>
-						<div className="bus-details bottom">102</div>
 					</div>
 					<div className="bus-details">
 						<div className="bus-details top">
-							INR <span className="f-bold">380</span>
+							{data["arrival-time"]}
+						</div>
+						<div className="bus-details bottom">
+							{data["arrival-stop"]}
+						</div>
+					</div>
+					<div className="bus-details">
+						<div className="bus-details top">
+							<span className="rating">{data["ratings"]}</span>
+						</div>
+						<div className="bus-details bottom">
+							{data["no-of-ratings"]}
+						</div>
+					</div>
+					<div className="bus-details">
+						<div className="bus-details top">
+							INR{" "}
+							<span className="f-bold">{data["seat-price"]}</span>
 						</div>
 					</div>
 					<div className="bus-details">
 						<div className="bus-details top">
 							<span className="red-bar"></span>
 							<div className="bus-details bottom">
-								<span>22 Seats Available</span>
+								<span>
+									{data["no-of-seats"]} Seats Available
+								</span>
 							</div>
 						</div>
 					</div>
@@ -67,11 +101,66 @@ function BusComponent() {
 			</div>
 			{show ? (
 				<div className="dropdown-content">
-					<div className="dropdown-announcement">
-						Click on the Available seat to proceed with your
-						transaction
+					<div>
+						<div className="dropdown-announcement">
+							Click on the Available seat to proceed with your
+							transaction
+						</div>
+						<BusSeatsComponent seats={data["no-of-seats"]} />
 					</div>
-					<BusSeatsComponent />
+					<div className="boarding-container">
+						{ticketShowStatus === "hide" ? (
+							<>
+								<div className="boarding-container-header">
+									<span
+										className={
+											choosePoint === "boarding"
+												? "selected"
+												: ""
+										}
+										onClick={() => {
+											setChoosePoint("boarding");
+										}}
+									>
+										Select Boarding Point{" "}
+									</span>
+									<span
+										className={
+											choosePoint === "dropping"
+												? "selected"
+												: ""
+										}
+										onClick={() =>
+											setChoosePoint("dropping")
+										}
+									>
+										Select Dropping Point
+									</span>
+								</div>
+								{choosePoint === "boarding" ? (
+									<MobileBoardingPointsComponent
+										key={data["id"]}
+										data={data["bus-boarding-pts"]}
+										heading="Pick your stop"
+										boardingPoint={boardingPoint}
+										setBoardingPoint={setBoardingPoint}
+									/>
+								) : (
+									<MobileBoardingPointsComponent
+										key={data["id"]}
+										data={data["bus-dropping-pts"]}
+										heading="Pick your stop"
+										boardingPoint={droppingPoint}
+										setBoardingPoint={setDroppingPoint}
+									/>
+								)}
+							</>
+						) : (
+							<BoardingTicketComponent
+								setTicketShowStatus={setTicketShowStatus}
+							/>
+						)}
+					</div>
 				</div>
 			) : (
 				""

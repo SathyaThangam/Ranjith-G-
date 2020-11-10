@@ -7,7 +7,7 @@ function SeatComponent({ x, y, onClick, position, disabled, rotation }) {
 	const handleClick = () => {
 		if (disabled) return;
 		setStrokeColor(!selected ? "#07a31c" : "red");
-		setFillColor(!selected ? "#95e09f" : "red");
+		setFillColor(!selected ? "#95e09f" : "transparent");
 		setSelected((prev) => !prev);
 		onClick(position);
 	};

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import "../../scss/MobileBoardingPointsComponent.scss";
 import uid from "uid";
 import emptyRadio from "../../img/radio_btn_empty.svg";
@@ -9,7 +9,7 @@ function MobileBoardingPointsComponent({
 	boardingPoint,
 	setBoardingPoint,
 }) {
-	const initialData = useMemo(() => {
+	const initialData = (data) => {
 		return data.map((item) => (
 			<div
 				key={uid()}
@@ -23,9 +23,12 @@ function MobileBoardingPointsComponent({
 				{item}
 			</div>
 		));
-	}, [data, boardingPoint, setBoardingPoint]);
-	const [items, setItems] = useState(initialData);
+	};
 
+	useEffect(() => {
+		setItems(initialData(data));
+	}, [data]);
+	const [items, setItems] = useState(initialData(data));
 	useEffect(() => {
 		if (boardingPoint !== "")
 			setItems([
@@ -38,19 +41,21 @@ function MobileBoardingPointsComponent({
 
 	return (
 		<div className="mb-boarding-pt-container">
-			<div className="mb-boarding-pt-heading">
-				<span>{heading}</span>
-				{boardingPoint !== "" ? (
-					<button
-						className="mb-change-btn"
-						onClick={() => setItems(initialData)}
-					>
-						Change
-					</button>
-				) : (
-					""
-				)}
-			</div>
+			{heading && (
+				<div className="mb-boarding-pt-heading">
+					<span>{heading}</span>
+					{boardingPoint !== "" ? (
+						<button
+							className="mb-change-btn"
+							onClick={() => setItems(initialData(data))}
+						>
+							Change
+						</button>
+					) : (
+						""
+					)}
+				</div>
+			)}
 			{items}
 		</div>
 	);
