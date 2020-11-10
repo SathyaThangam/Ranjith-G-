@@ -4,6 +4,7 @@
 	& .header-content {
 		max-width: 1300px;
 		margin: 0 auto;
+		padding: 10px 0px;
 		display: flex;
 		flex-direction: row;
 		align-items: center;
@@ -168,21 +169,21 @@
 			opacity: 1;
 		}
 		& .sidebar-content {
-			padding: .5rem 1rem;
+			padding: 0.5rem 1rem;
 			font-weight: 400;
 			color: #4a4a4a;
 			font-size: 0.86em;
 			text-decoration: none;
 			cursor: pointer;
 		}
-		&>.dark-container{
+		& > .dark-container {
 			height: 100%;
 			width: 50%;
 			background-color: black;
 			opacity: 0.6;
 		}
-		&.show{
-			display: flex;	
+		&.show {
+			display: flex;
 		}
 	}
 }

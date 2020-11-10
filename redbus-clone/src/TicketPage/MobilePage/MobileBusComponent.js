@@ -1,12 +1,12 @@
 import React from "react";
 import "../../scss/MobileBusComponent.scss";
 import uid from "uid";
-function MobileBusComponent({ busData, setNoOfSeats, setShowSeats }) {
+function MobileBusComponent({ busData, setShowSeats, setSelectedBus }) {
 	return (
 		<div
 			className="mobile-bus-container"
 			onClick={() => {
-				setNoOfSeats(busData["no-of-seats"]);
+				setSelectedBus(busData);
 				setShowSeats(true);
 			}}
 		>

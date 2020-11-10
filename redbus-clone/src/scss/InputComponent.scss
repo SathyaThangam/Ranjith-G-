@@ -1,6 +1,7 @@
 .input-container {
-	--input-container-bg:#ffffff;
+	--input-container-bg: #ffffff;
 	width: 250px;
+	padding-top: 5px;
 	border: 1px solid #d2d2d2;
 	height: 50px;
 	background-color: var(--input-container-bg);
@@ -9,47 +10,51 @@
 	align-items: center;
 	position: relative;
 	justify-content: flex-start;
-	padding: 1px;
 
-	& > .icon-container {
-		width: 25px;
+	& > .space-container {
+		margin-right: 15px;
 	}
-	& > label {
-		color: black;
-		position: absolute;
-		pointer-events: none;
-		left: 30px;
-		top: 15px;
-		font-size: 14px;
-		transition: 0.2s ease all;
-		-moz-transition: 0.2s ease all;
-		-webkit-transition: 0.2s ease all;
+
+	.input-label-group {
+		position: relative;
+		label {
+			color: black;
+			position: absolute;
+			pointer-events: none;
+			left: 10px;
+			top: 15px;
+			font-size: 14px;
+			transition: 0.2s ease all;
+			-moz-transition: 0.2s ease all;
+			-webkit-transition: 0.2s ease all;
+		}
+		input {
+			border: none;
+			width: 100%;
+			font-size: 18px;
+			height: 50px;
+			padding: 1px 4px;
+			margin-left: 5px;
+			background-color: var(--input-container-bg);
+			&:focus {
+				outline: none;
+			}
+			// @media screen and (max-width: 950px) {
+			// 	width: 40vw;
+			// }
+			&:focus ~ label,
+			&:not([value=""]) ~ label {
+				top: -2px;
+				font-size: 12px;
+				color: #9b9b9b;
+			}
+		}
 	}
+
 	&.empty {
-		--input-container-bg:  rgb(226, 145, 145);
+		--input-container-bg: rgb(226, 145, 145);
 	}
 
-	& > input {
-		border: none;
-		width: 100%;
-		font-size: 18px;
-		height: 50px;
-		padding: 1px 4px;
-		margin-left: 5px;
-		background-color: var(--input-container-bg);
-		&:focus {
-			outline: none;
-		}
-		// @media screen and (max-width: 950px) {
-		// 	width: 40vw;
-		// }
-		&:focus ~ label,
-		&:not([value=""]) ~ label {
-			top: -2px;
-			font-size: 12px;
-			color: #9b9b9b;
-		}
-	}
 	@media screen and (max-width: 950px) {
 		width: 80vw;
 		margin-bottom: 10px;

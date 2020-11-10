@@ -1,16 +1,14 @@
 import React, { useState } from "react";
 import { Path } from "react-konva";
-function SeatComponent({ x, y, onClick, disabled,rotation }) {
+function SeatComponent({ x, y, onClick, position, disabled, rotation }) {
 	const [selected, setSelected] = useState(false);
 	const [strokeColor, setStrokeColor] = useState("red");
 	const handleClick = () => {
 		if (disabled) return;
-		setSelected((prev) => {
-			let tempColor = !prev ? "#07a31c" : "red";
-			setStrokeColor(tempColor);
-			return !prev;
-		});
-		onClick(!selected);
+		let tempColor = !selected ? "#07a31c" : "red";
+		setStrokeColor(tempColor);
+		setSelected((prev) => !prev);
+		onClick(position);
 	};
 	return (
 		<Path

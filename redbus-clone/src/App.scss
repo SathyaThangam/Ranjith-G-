@@ -1,19 +1,24 @@
 @import "./scss/variables.scss";
 
 .App {
-  text-align: center;
-  display: block;
-  width: 100%;
-  min-height: 100vh;
+	text-align: center;
+	display: block;
+	width: 100%;
+	min-height: 100vh;
 }
 
-ul{
-  text-decoration: none;
-  padding: 0;
-  margin: 0;
-  text-align: left;
+ul {
+	text-decoration: none;
+	padding: 0;
+	margin: 0;
+	text-align: left;
 }
 
-.cur-pointer:hover{
-  cursor: pointer;
+.cur-pointer:hover {
+	cursor: pointer;
+}
+
+.link-style-reset {
+	text-decoration: none;
+	color: inherit;
 }

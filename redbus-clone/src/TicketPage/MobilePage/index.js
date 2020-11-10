@@ -7,30 +7,40 @@ import MobileBusComponent from "./MobileBusComponent";
 import MobileFooterComponent from "./MobileFooterComponent";
 import MobileOverlayComponent from "./MobileOverlayComponent";
 import MobileFilterComponent from "./MobileFilterComponent";
-import {getBusData} from "../../helpers/helper";
+import { getBusData, formatDate, changeDate } from "../../helpers/helper";
 import MobileBusSeatsComponent from "./MobileBusSeatsComponent";
+import leftArrow from "../../img/left_arrow.svg";
+import rightArrow from "../../img/right_arrow.svg";
+import arrowRight from "../../img/arrow-right.svg";
+import { Link } from "react-router-dom";
 
 function MobilePage() {
 	const [showFilter, setShowFilter] = useState(false);
 	const [showSeats, setShowSeats] = useState(false);
-	const [noOfSeats, setNoOfSeats] = useState(0);
+	const [selectedBus, setSelectedBus] = useState({});
+	const source = localStorage.getItem("source");
+	const destination = localStorage.getItem("destination");
+	const [date, setDate] = useState(() =>
+		localStorage.getItem("date")
+			? new Date(localStorage.getItem("date").valueOf())
+			: new Date()
+	);
 	const [data] = useState(() => {
-		const source = localStorage.getItem("source");
-		const destination = localStorage.getItem("destination");
 		if (source !== null && destination !== null)
 			return getBusData(source, destination);
 		return [];
 	});
 
-	if(showSeats)
-		{
-			return (
-				<MobileOverlayComponent>
-					<MobileBusSeatsComponent setShowSeats={setShowSeats}  noOfSeats={noOfSeats}/>
-				</MobileOverlayComponent>
-			);
-		}
-
+	if (showSeats) {
+		return (
+			<MobileOverlayComponent>
+				<MobileBusSeatsComponent
+					setShowSeats={setShowSeats}
+					busData={selectedBus}
+				/>
+			</MobileOverlayComponent>
+		);
+	}
 
 	if (showFilter)
 		return (
@@ -41,7 +51,33 @@ function MobilePage() {
 
 	return (
 		<div>
-			<MobileTitleComponent />
+			<MobileTitleComponent>
+				<span className="back-btn">
+					<Link className=".link-style-reset" to="/">
+						<img
+							className="arrow-icon btn"
+							src={arrowRight}
+							alt="back"
+						/>
+					</Link>
+				</span>
+				<div className="title-content">{`${source} to ${destination}`}</div>
+				<div className="mobile-date-container">
+					<img
+						className="arrow-icon btn"
+						src={leftArrow}
+						alt="go back"
+						onClick={() => setDate(prev => changeDate(prev,-1))}
+					/>
+					<span className="date-content">{formatDate(date)}</span>
+					<img
+						className="arrow-icon btn"
+						src={rightArrow}
+						alt="go forward"
+						onClick={() => setDate(prev => changeDate(prev,1))}
+					/>
+				</div>
+			</MobileTitleComponent>
 			<div className="mobile-main-content">
 				<div className="offers-container">
 					<div className="offer-card">
@@ -58,7 +94,7 @@ function MobilePage() {
 								<MobileBusComponent
 									key={bus["id"]}
 									busData={bus}
-									setNoOfSeats={setNoOfSeats}
+									setSelectedBus={setSelectedBus}
 									setShowSeats={setShowSeats}
 								/>
 						  ))

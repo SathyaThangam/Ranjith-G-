@@ -3,6 +3,7 @@ import "../../scss/MobileFilterComponent.scss";
 import emptyRadio from "../../img/radio_btn_empty.svg";
 import filledRadio from "../../img/radio_btn_filled.svg";
 import MoreOptionsFragment from "./MoreOptionsFragment";
+import MobileTitleComponent from "./MobileTitleComponent";
 function MobileFilterComponent({ setShowFilter }) {
 	const CHEAPEST_FIRST = "Cheapest First";
 	const BEST_RATED_FIRST = "Best Rated First";
@@ -22,12 +23,12 @@ function MobileFilterComponent({ setShowFilter }) {
 
 	return (
 		<div className="mobile-filter-container">
-			<div className="mobile-filter-header">
-				<span className="close" onClick={() => setShowFilter(false)}>
+			<MobileTitleComponent style={{justifyContent:"flex-start"}}>
+				<span className="mb-title-close" onClick={() => setShowFilter(false)}>
 					X
 				</span>
 				<div> Sort and Filter</div>
-			</div>
+			</MobileTitleComponent>
 			<div className="mobile-filter-segment sort-by-container">
 				<div className="header">SORT BY</div>
 				<div

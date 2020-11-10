@@ -6,7 +6,6 @@ import OfferBannerComponent from "../components/OfferBannerComponent";
 import offerImg1 from "../img/offer-img01.png";
 import offerImg2 from "../img/offer-img02.png";
 import safetyImg from "../img/safetyplus.svg";
-import cityIcon from "../img/city-solid.svg";
 import { Link } from "react-router-dom";
 import HeaderComponent from "../components/HeaderComponent";
 import DropDownComponent from "../components/DropDownComponent";
@@ -14,7 +13,6 @@ import cities from "../data/cities-name-list.json";
 import uid from "uid";
 import DateComponent from "./DateComponent";
 function HomePage() {
-	
 	const [source, setSource] = useState("");
 	const [destination, setDestination] = useState("");
 	const [date, setDate] = useState(new Date());
@@ -56,23 +54,21 @@ function HomePage() {
 	}, [destination, setDropDown, cityData]);
 
 	useEffect(() => {
-		const tempSource = localStorage.getItem('source');
-		const tempDestination = localStorage.getItem('destination');
-		const tempDate = localStorage.getItem('date');
-		if(tempSource !== null)
-			setSource(tempSource);
-		if(tempDestination !== null)
-			setDestination(tempDestination);
+		const tempSource = localStorage.getItem("source");
+		const tempDestination = localStorage.getItem("destination");
+		const tempDate = localStorage.getItem("date");
+		if (tempSource !== null) setSource(tempSource);
+		if (tempDestination !== null) setDestination(tempDestination);
 		if (tempDate !== null && tempDate < new Date()) setDate(tempDate);
-	},[])
-	
+	}, []);
+
 	const isEmpty = (variable) => variable === "";
 
 	const searchBuses = (e) => {
 		if (!isEmpty(source) && !isEmpty(destination) && !isEmpty(date)) {
-			localStorage.setItem('source',source);
-			localStorage.setItem('destination',destination);
-			localStorage.setItem('date',date);
+			localStorage.setItem("source", source);
+			localStorage.setItem("destination", destination);
+			localStorage.setItem("date", date);
 		} else {
 			e.preventDefault();
 		}
@@ -91,7 +87,6 @@ function HomePage() {
 								type="text"
 								value={source}
 								setValue={setSource}
-								iconImg={cityIcon}
 							/>
 							<DropDownComponent
 								list={sourceDropdown}
@@ -107,11 +102,12 @@ function HomePage() {
 						</span>
 						<div>
 							<InputComponent
+								style={{backgroundColor:"#000"}}
 								label="TO"
 								type="text"
 								value={destination}
+								addSpace
 								setValue={setDestination}
-								iconImg={cityIcon}
 							/>
 							<DropDownComponent
 								list={destinationDropDown}

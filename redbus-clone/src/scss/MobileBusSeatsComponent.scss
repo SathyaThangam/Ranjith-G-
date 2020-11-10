@@ -1,20 +1,47 @@
 
-.mobile-bus-seats-container {
+.mb-bus-seats-container {
     width: 100%;
-	& > .mobile-filter-header {
-		color: white;
-		background-color: var(--red-color);
-		display: flex;
-		justify-content: flex-start;
-		align-items: center;
-		padding: 10px 3px;
-		font-weight: 700;
-		position: sticky;
+
+	.mb-title-close{
+		padding: 10px;
+	}
+
+	& > .mb-seat-result-container{
+		position: fixed;
+		width: 100%;
 		font-size: 1em;
-		top: 0;
+		bottom: 0;
+		background-color: White;
+		// color: white;
 		z-index: 9999;
-		& > .close {
-			padding: 10px;
+
+		& > .mb-selected-seats{
+			width: 90%;
+			padding: 20px 10px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+		}
+
+		& > .mb-seat-result-options{
+			width: 100%;
+			background-color: var(--red-color);
+			color: white;
+			border: 0;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 15px;
+			padding: 14px 5px;
+			border-top-right-radius: 6px;
+			border-top-left-radius: 6px;
+
+			& > img {
+				width: 20px;
+				margin-left: 5px;
+				color: white;
+				filter: invert(1);
+			}
 		}
 	}
 }
