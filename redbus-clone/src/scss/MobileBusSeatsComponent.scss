@@ -1,12 +1,11 @@
-
 .mb-bus-seats-container {
-    width: 100%;
+	width: 100%;
 
-	.mb-title-close{
+	.mb-title-close {
 		padding: 10px;
 	}
 
-	& > .mb-seat-result-container{
+	& > .mb-seat-result-container {
 		position: fixed;
 		width: 100%;
 		font-size: 1em;
@@ -15,7 +14,7 @@
 		// color: white;
 		z-index: 9999;
 
-		& > .mb-selected-seats{
+		& > .mb-selected-seats {
 			width: 90%;
 			padding: 20px 10px;
 			display: flex;
@@ -23,7 +22,7 @@
 			justify-content: space-between;
 		}
 
-		& > .mb-seat-result-options{
+		& > .mb-seat-result-options {
 			width: 100%;
 			background-color: var(--red-color);
 			color: white;
@@ -44,4 +43,27 @@
 			}
 		}
 	}
+}
+
+.mb-footer {
+	position: fixed;
+	width: 100%;
+	font-size: 1em;
+	bottom: 0;
+	background-color: White;
+	// color: white;
+	z-index: 9999;
+}
+
+.boarding-footer {
+	padding: 10px;
+	width: 100%;
+	background-color: var(--red-color);
+	color: white;
+	border: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 15px;
+	padding: 14px 5px;
 }

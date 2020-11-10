@@ -10,6 +10,8 @@ import MobileTitleComponent from "./MobileTitleComponent";
 function MobileBusSeatsComponent({ setShowSeats, busData }) {
 	const [selectedSeats, setSelectedSeats] = useState([]);
 	const [displayBoardingPoints, setdisplayBoardingPoints] = useState(false);
+	const [boardingPoint, setBoardingPoint] = useState("");
+	const [droppingPoint, setDroppingPoint] = useState("");
 	const width = window.innerWidth;
 	const vw = width / 100;
 	const height = window.innerHeight;
@@ -55,8 +57,10 @@ function MobileBusSeatsComponent({ setShowSeats, busData }) {
 						key={uid()}
 						x={col}
 						y={y}
+						position={seatNum}
 						rotation={90}
 						strokeColor="red"
+						onClick={handleSeatClick}
 					/>
 				);
 				remainingSeats--;
@@ -71,7 +75,7 @@ function MobileBusSeatsComponent({ setShowSeats, busData }) {
 		const boardingData = busData["bus-boarding-pts"];
 		const droppingData = busData["bus-dropping-pts"];
 		return (
-			<MobileOverlayComponent>
+			<MobileOverlayComponent style={{ backgroundColor: "#eee" }}>
 				<MobileTitleComponent>
 					<span className="back-btn">
 						<img
@@ -88,11 +92,22 @@ function MobileBusSeatsComponent({ setShowSeats, busData }) {
 				<MobileBoardingPointsComponent
 					data={boardingData}
 					heading="Select Boarding Points"
+					boardingPoint={boardingPoint}
+					setBoardingPoint={setBoardingPoint}
 				/>
 				<MobileBoardingPointsComponent
 					data={droppingData}
 					heading="Select Dropping Points"
+					boardingPoint={droppingPoint}
+					setBoardingPoint={setDroppingPoint}
 				/>
+				{droppingPoint !== "" && boardingPoint !== "" ? (
+					<button className="mb-footer boarding-footer">
+						Fill Passenger Details
+					</button>
+				) : (
+					""
+				)}
 			</MobileOverlayComponent>
 		);
 	}

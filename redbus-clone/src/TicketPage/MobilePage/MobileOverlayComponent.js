@@ -1,21 +1,19 @@
 import React from "react";
 
-function MobileOverlayComponent({ children }) {
-	// const style = {
-
-	// }
+function MobileOverlayComponent({ children,style }) {
+	const initialStyle = {
+		height: "100vh",
+		position: "absolute",
+		top: 0,
+		width: "100%",
+		display: "block",
+		zIndex: 9999,
+		...style
+	};
 
 	return (
 		<div
-			style={{
-				zIndex: 9999,
-				height: "100vh",
-                position: "absolute",
-                top:0,
-                width:"100%",
-                display:"block",
-
-			}}
+			style={initialStyle}
 		>
 			{children}
 		</div>

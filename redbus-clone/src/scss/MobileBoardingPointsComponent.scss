@@ -1,9 +1,33 @@
 .mb-boarding-pt-container {
 	margin: 10px;
 	border-radius: 5px;
+	padding: 5px;
 	background-color: #fff;
 
-	// & > .mb-boarding-pt{
+	.mb-boarding-pt-heading{
+		display: flex;
+		justify-content: space-between;
+		padding: 5px 3px;
+		margin-bottom: 5px;
+		border-bottom: 1px solid #ccc;
 
-	// }
+		& > .mb-change-btn{
+			border: 0;
+			padding: 0;
+			background-color: transparent;
+			font-size: 14px;
+			text-decoration: underline;
+			color: #6d6a6a;
+		}
+	}
+
+	& > .mb-boarding-pt{
+		display: flex;
+		width: 100%;
+		align-items: center;
+		padding: 10px 0px;
+		& > img {
+			padding-right: 8px;
+		}
+	}
 }
