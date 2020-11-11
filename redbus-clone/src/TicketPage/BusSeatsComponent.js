@@ -1,8 +1,8 @@
-import React, { useCallback } from "react";
+import React, { useCallback,memo } from "react";
 import { Stage, Layer, Path } from "react-konva";
 import SeatComponent from "./SeatComponent";
 import uid from "uid";
-function BusSeatsComponent({ seats }) {
+function BusSeatsComponent({ seats, handleSeatClick }) {
 	const rows = Math.floor(seats / 3);
 	let remainingSeats = seats % 3;
 	const width = 70 + (rows + 1) * 45;
@@ -14,12 +14,22 @@ function BusSeatsComponent({ seats }) {
 		marginTop: "10px",
 		color: "#07a31c",
 	};
-	const text = (value) => console.log("hello text", value);
-	const genSeats = useCallback((remainingSeats,rows) => {
+	// const appendAndReturnNewArray = (arr, value) => arr.push(value);
+	const genSeats = useCallback((remainingSeats, rows) => {
 		let tempSeats = [];
 		let x = 70,
 			y = [-5, 45, 115];
 		let seatNum = 1;
+
+		const seatOnClick = (seatPosition) =>
+			handleSeatClick((prev) => {
+				const isSelected = prev.includes(seatPosition);
+				if (isSelected) {
+					return prev.filter((seat) => seat !== seatPosition);
+				}
+				return [...prev, seatPosition];
+			});
+
 		y.forEach((col) => {
 			for (let index = 0; index < rows; index++) {
 				tempSeats.push(
@@ -30,7 +40,7 @@ function BusSeatsComponent({ seats }) {
 						disabled={index % 6 === 0}
 						strokeColor="red"
 						position={seatNum++}
-						onClick={text}
+						onClick={seatOnClick}
 					/>
 				);
 				x += 40;
@@ -43,7 +53,7 @@ function BusSeatsComponent({ seats }) {
 						y={col}
 						strokeColor="red"
 						position={seatNum++}
-						onClick={text}
+						onClick={seatOnClick}
 					/>
 				);
 			}
@@ -51,7 +61,7 @@ function BusSeatsComponent({ seats }) {
 		});
 
 		return tempSeats;
-	},[]);
+	}, [handleSeatClick]);
 
 	return (
 		<div style={style}>
@@ -67,11 +77,11 @@ function BusSeatsComponent({ seats }) {
 						fill="transparent"
 						scaleY={5}
 					/>
-					{genSeats(remainingSeats,rows)}
+					{genSeats(remainingSeats, rows)}
 				</Layer>
 			</Stage>
 		</div>
 	);
 }
 
-export default BusSeatsComponent;
+export default memo(BusSeatsComponent);

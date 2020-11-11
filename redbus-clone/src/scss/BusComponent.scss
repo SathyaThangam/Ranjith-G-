@@ -76,8 +76,12 @@
 			padding: 5px 10px;
 		}
 
+		& .bus-seats-container{
+			width: 50%;
+		}
+
 		& .boarding-container{
-			width: 100%;
+			width: 50%;
 			background-color: #fff;
 			display: flex;
 			margin: 20px;

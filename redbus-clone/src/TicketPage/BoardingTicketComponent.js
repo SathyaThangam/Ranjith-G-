@@ -4,7 +4,7 @@ function BoardingTicketComponent({
 	departure,
 	arrival,
 	seatNum,
-	totalPrice,
+	seatPrice,
 	setTicketShowStatus,
 }) {
 	return (
@@ -18,8 +18,8 @@ function BoardingTicketComponent({
 			<div className="boarding-ticket-travel-details">
 				<div className="boarding-ticket-stop">
 					<div>
-						<h1>Borivali-(W) Neeta....</h1>
-						<span className="f-bold">07:15</span>
+						<h1>{departure.stop}</h1>
+						<span className="f-bold">{departure.time}</span>
 					</div>
 					<p>
 						Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -27,15 +27,17 @@ function BoardingTicketComponent({
 				</div>
 				<div className="boarding-ticket-stop">
 					<div>
-						<h1>Wakad Indira College</h1>
-						<span className="f-bold">07:15</span>
+						<h1>{arrival.stop}</h1>
+						<span className="f-bold">{arrival.time}</span>
 					</div>
-					<p>Wakad Indira College</p>
+					<p>
+						Lorem ipsum dolor sit amet consectetur adipisicing elit.
+					</p>
 				</div>
 			</div>
 			<div className="boarding-ticket-seat-details f-bold">
 				<span className="">Seat No.</span>
-				<span>18</span>
+				<span>{seatNum.toString()}</span>
 			</div>
 			<div className="boarding-ticket-fare-details">
 				<div className="f-bold">Fare Details</div>
@@ -44,7 +46,9 @@ function BoardingTicketComponent({
 						<h1>Amount</h1>
 						<span>Taxes will be calculated during payment</span>
 					</div>
-					<div className="amount f-bold">INR 399.00</div>
+					<div className="amount f-bold">
+						INR {(seatNum.length * seatPrice).toFixed(2)}
+					</div>
 				</div>
 			</div>
 			<div className="fare-details-container">

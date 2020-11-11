@@ -7,21 +7,23 @@ function BusComponent({ data }) {
 	const [show, setShow] = useState(false);
 	const [boardingPoint, setBoardingPoint] = useState("");
 	const [droppingPoint, setDroppingPoint] = useState("");
+	const [selectedSeats, setSelectedSeats] = useState([]);
 	const [choosePoint, setChoosePoint] = useState("boarding");
+	const [ticketShowStatus, setTicketShowStatus] = useState("");
+
 	const toggleShow = () => setShow((prev) => !prev);
-	const [ticketShowStatus,setTicketShowStatus] = useState("");
 
 	useEffect(() => {
-		if(ticketShowStatus === "reset"){
-			setDroppingPoint("")
-			setBoardingPoint("")
-			setTicketShowStatus("hide")
-		}
-		else if((droppingPoint === "" ) || (boardingPoint === ""))
-			setTicketShowStatus("hide")
-		else if ((droppingPoint !== "" ) && (boardingPoint !== ""))
-			setTicketShowStatus("show")
-	},[droppingPoint,boardingPoint,ticketShowStatus]);
+		if (ticketShowStatus === "reset") {
+			setDroppingPoint("");
+			setBoardingPoint("");
+			setTicketShowStatus("hide");
+		} else if (droppingPoint === "" || boardingPoint === "")
+			setTicketShowStatus("hide");
+		else if (droppingPoint !== "" && boardingPoint !== "")
+			setTicketShowStatus("show");
+	}, [droppingPoint, boardingPoint, ticketShowStatus]);
+
 
 	return (
 		<div className="bus-container">
@@ -101,66 +103,83 @@ function BusComponent({ data }) {
 			</div>
 			{show ? (
 				<div className="dropdown-content">
-					<div>
+					<div className="bus-seats-container">
 						<div className="dropdown-announcement">
 							Click on the Available seat to proceed with your
 							transaction
 						</div>
-						<BusSeatsComponent seats={data["no-of-seats"]} />
+						<BusSeatsComponent
+							seats={data["no-of-seats"]}
+							handleSeatClick={setSelectedSeats}
+						/>
 					</div>
-					<div className="boarding-container">
-						{ticketShowStatus === "hide" ? (
-							<>
-								<div className="boarding-container-header">
-									<span
-										className={
-											choosePoint === "boarding"
-												? "selected"
-												: ""
-										}
-										onClick={() => {
-											setChoosePoint("boarding");
-										}}
-									>
-										Select Boarding Point{" "}
-									</span>
-									<span
-										className={
-											choosePoint === "dropping"
-												? "selected"
-												: ""
-										}
-										onClick={() =>
-											setChoosePoint("dropping")
-										}
-									>
-										Select Dropping Point
-									</span>
-								</div>
-								{choosePoint === "boarding" ? (
-									<MobileBoardingPointsComponent
-										key={data["id"]}
-										data={data["bus-boarding-pts"]}
-										heading="Pick your stop"
-										boardingPoint={boardingPoint}
-										setBoardingPoint={setBoardingPoint}
-									/>
-								) : (
-									<MobileBoardingPointsComponent
-										key={data["id"]}
-										data={data["bus-dropping-pts"]}
-										heading="Pick your stop"
-										boardingPoint={droppingPoint}
-										setBoardingPoint={setDroppingPoint}
-									/>
-								)}
-							</>
-						) : (
-							<BoardingTicketComponent
-								setTicketShowStatus={setTicketShowStatus}
-							/>
-						)}
-					</div>
+					{selectedSeats.length > 0 ? (
+						<div className="boarding-container">
+							{ticketShowStatus === "hide" ? (
+								<>
+									<div className="boarding-container-header">
+										<span
+											className={
+												choosePoint === "boarding"
+													? "selected"
+													: ""
+											}
+											onClick={() => {
+												setChoosePoint("boarding");
+											}}
+										>
+											Select Boarding Point{" "}
+										</span>
+										<span
+											className={
+												choosePoint === "dropping"
+													? "selected"
+													: ""
+											}
+											onClick={() =>
+												setChoosePoint("dropping")
+											}
+										>
+											Select Dropping Point
+										</span>
+									</div>
+									{choosePoint === "boarding" ? (
+										<MobileBoardingPointsComponent
+											key={data["id"]}
+											data={data["bus-boarding-pts"]}
+											heading="Pick your stop"
+											boardingPoint={boardingPoint}
+											setBoardingPoint={setBoardingPoint}
+										/>
+									) : (
+										<MobileBoardingPointsComponent
+											key={data["id"]}
+											data={data["bus-dropping-pts"]}
+											heading="Pick your stop"
+											boardingPoint={droppingPoint}
+											setBoardingPoint={setDroppingPoint}
+										/>
+									)}
+								</>
+							) : (
+								<BoardingTicketComponent
+									setTicketShowStatus={setTicketShowStatus}
+									seatNum={selectedSeats}
+									seatPrice={data["seat-price"]}
+									departure={{
+										time: data["departure-time"],
+										stop: data["departure-stop"],
+									}}
+									arrival={{
+										time: data["arrival-time"],
+										stop: data["arrival-stop"],
+									}}
+								/>
+							)}
+						</div>
+					) : (
+						""
+					)}
 				</div>
 			) : (
 				""
