@@ -7,11 +7,18 @@ import MobileBoardingPointsComponent from "./MobileBoardingPointsComponent";
 import MobileOverlayComponent from "./MobileOverlayComponent";
 import "../../scss/MobileBusSeatsComponent.scss";
 import MobileTitleComponent from "./MobileTitleComponent";
-function MobileBusSeatsComponent({ setShowSeats, busData }) {
+import MobilePassengerDetailsComponent from "./MobilePassengerDetailsComponent";
+function MobileBusSeatsComponent({
+	setShowSeats,
+	busData,
+	boardingPoint,
+	setBoardingPoint,
+	droppingPoint,
+	setDroppingPoint,
+}) {
 	const [selectedSeats, setSelectedSeats] = useState([]);
 	const [displayBoardingPoints, setdisplayBoardingPoints] = useState(false);
-	const [boardingPoint, setBoardingPoint] = useState("");
-	const [droppingPoint, setDroppingPoint] = useState("");
+	const [displayPassengerDetailsComp, setDisplayPassengerDetailsComp] = useState(false);
 	const width = window.innerWidth;
 	const vw = width / 100;
 	const height = window.innerHeight;
@@ -34,16 +41,15 @@ function MobileBusSeatsComponent({ setShowSeats, busData }) {
 		let remainingSeats = noOfSeats % 3;
 		let y = 70;
 		let seatNum = 1;
-		cols.forEach((col, index) => {
+		cols.forEach((col) => {
 			for (let i = 0; i < rows; i++) {
 				seats.push(
 					<SeatComponent
 						key={uid()}
 						x={col}
 						y={y}
-						rotation={90}
 						position={seatNum++}
-						// disabled={i % 2 === 0}
+						rotation={90}
 						strokeColor="red"
 						onClick={handleSeatClick}
 					/>
@@ -69,6 +75,9 @@ function MobileBusSeatsComponent({ setShowSeats, busData }) {
 
 		return seats;
 	});
+
+	if(displayBoardingPoints && displayPassengerDetailsComp)
+		return <MobilePassengerDetailsComponent toggleVisibility={setDisplayPassengerDetailsComp}/>
 
 	if (displayBoardingPoints) {
 		const boardingData = busData["bus-boarding-pts"];
@@ -101,7 +110,7 @@ function MobileBusSeatsComponent({ setShowSeats, busData }) {
 					setBoardingPoint={setDroppingPoint}
 				/>
 				{droppingPoint !== "" && boardingPoint !== "" ? (
-					<button className="mb-footer boarding-footer">
+					<button className="mb-footer boarding-footer" onClick={() => setDisplayPassengerDetailsComp(true)}>
 						Fill Passenger Details
 					</button>
 				) : (

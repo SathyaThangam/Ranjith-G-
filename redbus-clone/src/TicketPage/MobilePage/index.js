@@ -18,6 +18,10 @@ function MobilePage() {
 	const [showFilter, setShowFilter] = useState(false);
 	const [showSeats, setShowSeats] = useState(false);
 	const [selectedBus, setSelectedBus] = useState({});
+	const [boardingPoint, setBoardingPoint] = useState("");
+	const [droppingPoint, setDroppingPoint] = useState("");
+	
+
 	const source = localStorage.getItem("source");
 	const destination = localStorage.getItem("destination");
 	const [date, setDate] = useState(() =>
@@ -31,12 +35,18 @@ function MobilePage() {
 		return [];
 	});
 
+	// if()
+
 	if (showSeats) {
 		return (
 			<MobileOverlayComponent>
 				<MobileBusSeatsComponent
 					setShowSeats={setShowSeats}
 					busData={selectedBus}
+					boardingPoint={boardingPoint}
+					setBoardingPoint={setBoardingPoint}
+					droppingPoint={droppingPoint}
+					setDroppingPoint={setDroppingPoint}
 				/>
 			</MobileOverlayComponent>
 		);
