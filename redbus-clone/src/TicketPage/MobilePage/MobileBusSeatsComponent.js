@@ -35,28 +35,31 @@ function MobileBusSeatsComponent({
 
 	const placeOrder = () => {
 		const order = {
-			"order_id": `Order#${uid(16)}`,
-			"price":selectedSeats.length*busData["seat-price"],
-			"boardingPoint":boardingPoint,
-			"droppingPoint":droppingPoint,
-			"contactDetails":contactDetails,
-			"passengerData":passengerData.data
-		}
-		console.log("Order",order);
-		if(localStorage.getItem("getBusOrders") !== null){
-			const prevData = JSON.parse(localStorage.getItem("getBusOrders")  || "[]");
+			order_id: `Order#${uid(16)}`,
+			price: selectedSeats.length * busData["seat-price"],
+			boardingPoint: boardingPoint,
+			droppingPoint: droppingPoint,
+			contactDetails: contactDetails,
+			passengerData: passengerData.data,
+			source: busData["departure-stop"],
+			destination: busData["arrival-stop"],
+		};
+		console.log("Order", order);
+		if (localStorage.getItem("getBusOrders") !== null) {
+			const prevData = JSON.parse(
+				localStorage.getItem("getBusOrders") || "[]"
+			);
 			localStorage.setItem(
 				"getBusOrders",
 				JSON.stringify([...prevData, order])
 			);
-		}
-		else{
+		} else {
 			const orderStr = JSON.stringify([order]);
-			localStorage.setItem("getBusOrders",orderStr);
+			localStorage.setItem("getBusOrders", orderStr);
 			console.log(orderStr);
 		}
 		console.log(JSON.parse(localStorage.getItem("getBusOrders")));
-	}
+	};
 
 	useEffect(() => {
 		if (selectedSeats.length > 0) {
@@ -81,11 +84,10 @@ function MobileBusSeatsComponent({
 	}, [selectedSeats]);
 
 	useEffect(() => {
-		if (!displayPassengerDetailsComp) 
-			{
-				setSelectedSeats([]);
-				setdisplayBoardingPoints(false)
-			}
+		if (!displayPassengerDetailsComp) {
+			setSelectedSeats([]);
+			setdisplayBoardingPoints(false);
+		}
 	}, [displayPassengerDetailsComp]);
 
 	const handleSeatClick = (seatPosition) => {
