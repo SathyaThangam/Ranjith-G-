@@ -1,14 +1,28 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import MobilePassengerDetailsContainerFragment from "./MobilePassengerDetailsContainerFragment";
 import MobilePassengerInputFragment from "./MobilePassengerInputFragment";
 import "../../scss/MobilePassengerDetailsComponent.scss";
+import {DataContext} from '../../context/DataContext'
 function MobilePassengerDetailsFragment({
 	passengerNo,
 	seatNo,
 	inputGrp,
-	setInputGrp,
 }) {
-	const [genderSwitch, setGenderSwitch] = useState("Male");
+	const passengerData = useContext(DataContext);
+
+	const handlePassengerInput = (seatNo, valName, value) => {
+		const index = passengerData.data.findIndex(
+			(passenger) => passenger.seatNo === seatNo
+		);
+		if (index !== -1) {
+			passengerData.setData((prev) => {
+				const temp = [...prev];
+				temp[index][valName] = value;
+				return temp;
+			});
+		}
+	};
+
 	return (
 		<MobilePassengerDetailsContainerFragment>
 			<div
@@ -20,29 +34,48 @@ function MobilePassengerDetailsFragment({
 				}}
 			>
 				<div className="mb-passenger-heading">
-					Passenger 1 | Seat 23
+					Passenger {passengerNo} | Seat {seatNo}
 				</div>
 				<div className="mb-passenger-content">
 					<label>Name</label>
 					<MobilePassengerInputFragment
 						type="text"
 						placeholder="Enter your Name"
+						value={inputGrp["name"]}
+						onChange={(value) => {
+							handlePassengerInput(seatNo, "name", value);
+						}}
 					/>
-					<div style={{ display: "flex",justifyContent:"space-between" }}>
+					<div
+						style={{
+							display: "flex",
+							justifyContent: "space-between",
+						}}
+					>
 						<div>
 							<label>Age</label>
 							<MobilePassengerInputFragment
 								type="number"
 								placeholder="Enter Age"
+								value={inputGrp["age"]}
+								onChange={(value) =>
+									handlePassengerInput(seatNo, "age", value)
+								}
 							/>
 						</div>
 						<div>
-                            <label>Gender</label>
+							<label>Gender</label>
 							<div className="switch-two-values">
 								<button
-									onClick={() => setGenderSwitch("Male")}
+									onClick={() =>
+										handlePassengerInput(
+											seatNo,
+											"gender",
+											"Male"
+										)
+									}
 									className={
-										genderSwitch === "Male"
+										inputGrp["gender"] === "Male"
 											? "selected"
 											: ""
 									}
@@ -50,9 +83,15 @@ function MobilePassengerDetailsFragment({
 									Male
 								</button>
 								<button
-									onClick={() => setGenderSwitch("Female")}
+									onClick={() =>
+										handlePassengerInput(
+											seatNo,
+											"gender",
+											"Female"
+										)
+									}
 									className={
-										genderSwitch === "Female"
+										inputGrp["gender"] === "Female"
 											? "selected"
 											: ""
 									}
@@ -68,4 +107,4 @@ function MobilePassengerDetailsFragment({
 	);
 }
 
-export default MobilePassengerDetailsFragment;
+export default (MobilePassengerDetailsFragment);

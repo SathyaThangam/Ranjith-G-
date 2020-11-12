@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 //Context to pass around the user search parameters
 
-const initialContext = { source: "", destination: "", date: "" };
+const initialContext = [];
 const DataContext = React.createContext(initialContext);
 
 const withDataContext = (WrappedComponent) => {
 	
     function WithDateContext(props){
-        const [queryData,setQueryData] = useState(initialContext);
+        const [data,setData] = useState(initialContext);
         return (
             <DataContext.Provider
                 value={{
-                    queryData,
-                    setQueryData:setQueryData
+                    data,
+                    setData:setData
                 }}
             >
                 <WrappedComponent {...props}/>

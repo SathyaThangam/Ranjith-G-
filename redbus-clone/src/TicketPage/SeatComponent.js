@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Path } from "react-konva";
-function SeatComponent({ x, y, onClick, position, disabled, rotation }) {
-	const [selected, setSelected] = useState(false);
+function SeatComponent({ x, y, onClick, position, disabled, rotation,isSelected }) {
+	const [selected, setSelected] = useState(isSelected);
 	const [strokeColor, setStrokeColor] = useState("red");
 	const [fillColor, setFillColor] = useState("transparent");
 	const handleClick = () => {

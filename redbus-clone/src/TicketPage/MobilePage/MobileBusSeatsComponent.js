@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Stage, Layer, Path } from "react-konva";
 import SeatComponent from "../SeatComponent";
 import uid from "uid";
@@ -8,6 +8,7 @@ import MobileOverlayComponent from "./MobileOverlayComponent";
 import "../../scss/MobileBusSeatsComponent.scss";
 import MobileTitleComponent from "./MobileTitleComponent";
 import MobilePassengerDetailsComponent from "./MobilePassengerDetailsComponent";
+import { DataContext, withDataContext } from "../../context/DataContext";
 function MobileBusSeatsComponent({
 	setShowSeats,
 	busData,
@@ -18,10 +19,74 @@ function MobileBusSeatsComponent({
 }) {
 	const [selectedSeats, setSelectedSeats] = useState([]);
 	const [displayBoardingPoints, setdisplayBoardingPoints] = useState(false);
-	const [displayPassengerDetailsComp, setDisplayPassengerDetailsComp] = useState(false);
+	const [
+		displayPassengerDetailsComp,
+		setDisplayPassengerDetailsComp,
+	] = useState(false);
+	const [contactDetails, setContactDetails] = useState({
+		email: "",
+		phone: "",
+		sendUpdates: true,
+	});
+	const passengerData = useContext(DataContext);
 	const width = window.innerWidth;
 	const vw = width / 100;
 	const height = window.innerHeight;
+
+	const placeOrder = () => {
+		const order = {
+			"order_id": `Order#${uid(16)}`,
+			"price":selectedSeats.length*busData["seat-price"],
+			"boardingPoint":boardingPoint,
+			"droppingPoint":droppingPoint,
+			"contactDetails":contactDetails,
+			"passengerData":passengerData.data
+		}
+		console.log("Order",order);
+		if(localStorage.getItem("getBusOrders") !== null){
+			const prevData = JSON.parse(localStorage.getItem("getBusOrders")  || "[]");
+			localStorage.setItem(
+				"getBusOrders",
+				JSON.stringify([...prevData, order])
+			);
+		}
+		else{
+			const orderStr = JSON.stringify([order]);
+			localStorage.setItem("getBusOrders",orderStr);
+			console.log(orderStr);
+		}
+		console.log(JSON.parse(localStorage.getItem("getBusOrders")));
+	}
+
+	useEffect(() => {
+		if (selectedSeats.length > 0) {
+			passengerData.setData((prev) => {
+				const duplicates = prev.filter((data) =>
+					selectedSeats.includes(data.seatNo)
+				);
+				const newlySelected = selectedSeats.filter(
+					(seat) => !duplicates.includes(seat)
+				);
+				const temp = newlySelected.map((seat) => {
+					return {
+						seatNo: seat,
+						name: "",
+						age: "",
+						gender: "Male",
+					};
+				});
+				return temp;
+			});
+		}
+	}, [selectedSeats]);
+
+	useEffect(() => {
+		if (!displayPassengerDetailsComp) 
+			{
+				setSelectedSeats([]);
+				setdisplayBoardingPoints(false)
+			}
+	}, [displayPassengerDetailsComp]);
 
 	const handleSeatClick = (seatPosition) => {
 		setSelectedSeats((prev) => {
@@ -76,8 +141,15 @@ function MobileBusSeatsComponent({
 		return seats;
 	});
 
-	if(displayBoardingPoints && displayPassengerDetailsComp)
-		return <MobilePassengerDetailsComponent toggleVisibility={setDisplayPassengerDetailsComp}/>
+	if (displayBoardingPoints && displayPassengerDetailsComp)
+		return (
+			<MobilePassengerDetailsComponent
+				toggleVisibility={setDisplayPassengerDetailsComp}
+				contactDetails={contactDetails}
+				setContactDetails={setContactDetails}
+				placeOrder={placeOrder}
+			/>
+		);
 
 	if (displayBoardingPoints) {
 		const boardingData = busData["bus-boarding-pts"];
@@ -110,7 +182,10 @@ function MobileBusSeatsComponent({
 					setBoardingPoint={setDroppingPoint}
 				/>
 				{droppingPoint !== "" && boardingPoint !== "" ? (
-					<button className="mb-footer boarding-footer" onClick={() => setDisplayPassengerDetailsComp(true)}>
+					<button
+						className="mb-footer boarding-footer"
+						onClick={() => setDisplayPassengerDetailsComp(true)}
+					>
 						Fill Passenger Details
 					</button>
 				) : (
@@ -180,4 +255,4 @@ function MobileBusSeatsComponent({
 	);
 }
 
-export default MobileBusSeatsComponent;
+export default withDataContext(MobileBusSeatsComponent);
