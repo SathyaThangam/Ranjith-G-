@@ -88,3 +88,25 @@
 .f-bold {
 	font-weight: 700;
 }
+
+.passenger-details-container {
+	width: 100%;
+	height: 100vh;
+	position: fixed;
+	z-index: 9999;
+	right: 0;
+	top: 0;
+	overflow: scroll;
+	background-color: rgba(0, 0, 0, 0.3);
+
+	& > .passenger-details-content {
+		width: 30%;
+		height: 100%;
+
+		position: absolute;
+		z-index: 9999;
+		right: 0;
+		top: 0;
+		background-color: #fff;
+	}
+}

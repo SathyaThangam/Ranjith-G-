@@ -6,6 +6,7 @@ function BoardingTicketComponent({
 	seatNum,
 	seatPrice,
 	setTicketShowStatus,
+	setShowPassengerDetailsForm,
 }) {
 	return (
 		<div className="boarding-ticket-container">
@@ -54,7 +55,12 @@ function BoardingTicketComponent({
 			<div className="fare-details-container">
 				<button className="fare-details-btn">Show Fare Details</button>
 			</div>
-			<button className="booking-ticket-btn">Proceed to Book</button>
+			<button
+				className="booking-ticket-btn"
+				onClick={() => setShowPassengerDetailsForm(true)}
+			>
+				Proceed to Book
+			</button>
 		</div>
 	);
 }

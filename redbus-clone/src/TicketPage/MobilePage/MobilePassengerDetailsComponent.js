@@ -11,7 +11,7 @@ function MobilePassengerDetailsComponent({
 	toggleVisibility,
 	contactDetails,
 	setContactDetails,
-	placeOrder
+	placeOrder,
 }) {
 	const passengerData = useContext(DataContext);
 	const displayPassengers = useMemo(() => {
@@ -30,21 +30,28 @@ function MobilePassengerDetailsComponent({
 	useEffect(() => {
 		const isComplete = (passenger) =>
 			passenger.name !== "" && passenger.age !== "";
-		const isContactFilled = () => contactDetails.email !== "" && contactDetails.phone !== ""
-		setDisplayPlaceOrderBtn(isContactFilled && passengerData.data.every(isComplete));
-	},[passengerData.data,contactDetails]);
+		const isContactFilled = () =>
+			contactDetails.email !== "" && contactDetails.phone !== "";
+		setDisplayPlaceOrderBtn(
+			isContactFilled && passengerData.data.every(isComplete)
+		);
+	}, [passengerData.data, contactDetails]);
 
 	return (
 		<div className="mb-passenger-details-container">
-			<MobileTitleComponent style={{ justifyContent: "flex-start" }}>
-				<span className="back-btn">
-					<img
-						className="arrow-icon btn"
-						src={arrowRight}
-						alt="back"
-						onClick={() => toggleVisibility(false)}
-					/>
-				</span>
+			<MobileTitleComponent style={{ justifyContent: "flex-start", position:"relative" }}>
+				{toggleVisibility !== "none" ? (
+					<span className="back-btn">
+						<img
+							className="arrow-icon btn"
+							src={arrowRight}
+							alt="back"
+							onClick={() => toggleVisibility(false)}
+						/>
+					</span>
+				) : (
+					""
+				)}
 				<div className="title-content">Fill Passenger Details</div>
 			</MobileTitleComponent>
 			<MobilePassengerDetailsContainerFragment>

@@ -12,7 +12,7 @@ function OrderFragment({ order }) {
 			<div className="segment">
 				<div className="flex-center">
 					<span>{order.boardingPoint}</span>
-					<img src={arrowRight} className="arrow-icon btn" />
+					<img src={arrowRight} alt="to" className="arrow-icon btn" />
 					<span>{order.droppingPoint}</span>
 				</div>
 				<span className="f-bold"> INR {order.price}</span>
