@@ -6,6 +6,7 @@ import BoardingTicketComponent from "./BoardingTicketComponent";
 import MobilePassengerDetailsComponent from "./MobilePage/MobilePassengerDetailsComponent";
 import { DataContext } from "../context/DataContext";
 import uid from "uid";
+import { useHistory } from "react-router-dom";
 function BusComponent({ data }) {
 	const [show, setShow] = useState(false);
 	const [boardingPoint, setBoardingPoint] = useState("");
@@ -24,6 +25,8 @@ function BusComponent({ data }) {
 	const toggleShow = () => setShow((prev) => !prev);
 
 	const passengerData = useContext(DataContext);
+
+	const history = useHistory();
 
 	const placeOrder = () => {
 		const order = {
@@ -51,6 +54,7 @@ function BusComponent({ data }) {
 			console.log(orderStr);
 		}
 		console.log(JSON.parse(localStorage.getItem("getBusOrders")));
+		history.push("/vieworders");
 	};
 
 	useEffect(() => {

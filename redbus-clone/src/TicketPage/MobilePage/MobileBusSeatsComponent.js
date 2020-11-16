@@ -9,6 +9,7 @@ import "../../scss/MobileBusSeatsComponent.scss";
 import MobileTitleComponent from "./MobileTitleComponent";
 import MobilePassengerDetailsComponent from "./MobilePassengerDetailsComponent";
 import { DataContext, withDataContext } from "../../context/DataContext";
+import { useHistory } from "react-router-dom";
 function MobileBusSeatsComponent({
 	setShowSeats,
 	busData,
@@ -33,6 +34,7 @@ function MobileBusSeatsComponent({
 	const vw = width / 100;
 	const height = window.innerHeight;
 
+	const history = useHistory();
 	const placeOrder = () => {
 		const order = {
 			order_id: `Order#${uid(16)}`,
@@ -59,6 +61,7 @@ function MobileBusSeatsComponent({
 			console.log(orderStr);
 		}
 		console.log(JSON.parse(localStorage.getItem("getBusOrders")));
+		history.push("/vieworders");
 	};
 
 	useEffect(() => {
