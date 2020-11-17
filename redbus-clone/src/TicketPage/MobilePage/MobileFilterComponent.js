@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../../scss/MobileFilterComponent.scss";
 import emptyRadio from "../../img/radio_btn_empty.svg";
 import filledRadio from "../../img/radio_btn_filled.svg";
+import closeIcon from "../../img/close-icon.svg";
 import MoreOptionsFragment from "./MoreOptionsFragment";
 import MobileTitleComponent from "./MobileTitleComponent";
 function MobileFilterComponent({ setShowFilter }) {
@@ -23,10 +24,13 @@ function MobileFilterComponent({ setShowFilter }) {
 
 	return (
 		<div className="mobile-filter-container">
-			<MobileTitleComponent style={{justifyContent:"flex-start"}}>
-				<span className="mb-title-close" onClick={() => setShowFilter(false)}>
-					X
-				</span>
+			<MobileTitleComponent style={{ justifyContent: "flex-start" }}>
+				<img
+					src={closeIcon}
+					alt="close"
+					className="mb-title-close close-icon"
+					onClick={() => setShowFilter(false)}
+				/>
 				<div> Sort and Filter</div>
 			</MobileTitleComponent>
 			<div className="mobile-filter-segment sort-by-container">

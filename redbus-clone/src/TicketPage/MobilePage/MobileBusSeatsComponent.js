@@ -3,6 +3,7 @@ import { Stage, Layer, Path } from "react-konva";
 import SeatComponent from "../SeatComponent";
 import uid from "uid";
 import arrowRight from "../../img/arrow-right.svg";
+import closeIcon from "../../img/close-icon.svg";
 import MobileBoardingPointsComponent from "./MobileBoardingPointsComponent";
 import MobileOverlayComponent from "./MobileOverlayComponent";
 import "../../scss/MobileBusSeatsComponent.scss";
@@ -203,12 +204,13 @@ function MobileBusSeatsComponent({
 	return (
 		<div className="mb-bus-seats-container">
 			<MobileTitleComponent style={{ justifyContent: "flex-start" }}>
-				<span
-					className="mb-title-close"
+				<img
+					className="mb-title-close close-icon"
+					src={closeIcon}
+					alt="close"
 					onClick={() => setShowSeats(false)}
-				>
-					X
-				</span>
+				/>
+
 				<div> Select Your seats</div>
 			</MobileTitleComponent>
 			<div style={{ backgroundColor: "#eee" }}>

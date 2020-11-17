@@ -3,6 +3,7 @@ import "../scss/TitleComponent.scss";
 import arrowRight from "../img/arrow-right.svg";
 import leftArrow from "../img/previous_arrow.svg";
 import rightArrow from "../img/right_arrow.svg";
+import closeIcon from "../img/close-icon.svg";
 import { formatDate, formatDay } from "../helpers/helper";
 import InputComponent from "../components/InputComponent";
 function TitleComponent() {
@@ -34,7 +35,9 @@ function TitleComponent() {
 			<InputComponent label="FROM" value={source} setValue={setSource} />
 			<InputComponent label="TO" value={destination} setValue={setDestination} />
 			<button className="search-btn">SEARCH</button>
-			<div className="close" onClick={() => setModifyTitle(false)}>X</div>
+			<div className="close" onClick={() => setModifyTitle(false)}>
+				<img src={closeIcon} className="close-icon" alt="close"/>
+			</div>
 		</div>
 	);
 

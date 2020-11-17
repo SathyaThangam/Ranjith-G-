@@ -13,7 +13,7 @@ const monthShortNames = [
 	"Nov",
 	"Dec",
 ];
-const formatDate = (newDate) => 
+const formatDate = (newDate) =>
 	`${newDate.getDate()} ${monthShortNames[newDate.getMonth()]}`;
 const dayShortNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const formatDay = (newDate) => `${dayShortNames[newDate.getDay()]}`;
@@ -29,7 +29,7 @@ export const getBusData = (source, destination) => {
 	);
 };
 
-export const changeDate = (currentDate,difference) => {
+export const changeDate = (currentDate, difference) => {
 	const newDate = new Date(currentDate.valueOf());
 	newDate.setDate(newDate.getDate() + difference);
 	return newDate;
