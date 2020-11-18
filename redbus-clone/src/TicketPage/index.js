@@ -7,6 +7,10 @@ function TicketPage() {
 	const handleResize = () => setWidth(window.innerWidth);
 	useEffect(() => {
 		window.addEventListener('resize',handleResize);
+		const script = document.createElement("script");
+		script.src = "https://checkout.razorpay.com/v1/checkout.js";
+		script.defer = true;
+		document.body.appendChild(script);
 		return () => {
 			window.removeEventListener('resize',handleResize);
 		}
