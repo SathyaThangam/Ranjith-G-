@@ -10,13 +10,14 @@ function LoginComponentDesktopView({
 	handleLoginPwd,
 	loginCPwd,
 	handleLoginCPwd,
-    isSignUp,
-    isValidInputs,
-    setIsSignUp,
-    setShow
+	isSignUp,
+	isValidInputs,
+	setIsSignUp,
+	setShow,
+	alert,
+	handleAction
 }) {
-
-    const styleCondition = (value) =>
+	const styleCondition = (value) =>
 		isValidInputs[value]
 			? { border: "1px solid black" }
 			: { border: "1px solid red" };
@@ -55,6 +56,13 @@ function LoginComponentDesktopView({
 						/>{" "}
 						New Account?
 					</label>
+					{Object.keys(alert).length === 0 ? (
+						""
+					) : (
+						<div className={`login-alert ${alert["class"]}`}>
+							{alert["message"]}
+						</div>
+					)}
 					<OutlinedInputComponent
 						type="email"
 						placeholder="Enter your email"
@@ -80,7 +88,7 @@ function LoginComponentDesktopView({
 					) : (
 						""
 					)}
-					<div className="login-btn">
+					<div className="login-btn" onClick={() => handleAction()}>
 						{isSignUp ? "Create a New Account" : "Login"}
 					</div>
 					<span className="info">

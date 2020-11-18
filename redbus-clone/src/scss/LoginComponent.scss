@@ -2,12 +2,14 @@
 	background-color: white;
 	position: fixed;
 	z-index: 99999;
-	height: 100vh;
 	width: 100%;
+	top: 0;
+	bottom: 0;
+	overflow: scroll;
 	& > .login-image {
 		background: url("../img/payment_offers_mb.png") no-repeat;
 		background-size: cover;
-		height: 12em;
+		height: 16em;
 		position: relative;
 
 		& > .login-close-icon {
@@ -47,7 +49,6 @@
 		text-align: center;
 		margin: 15px;
 		font-size: 12px;
-		margin-top: 50px;
 		& > .info-link {
 			text-decoration: none;
 		}
@@ -98,12 +99,14 @@
         font-size: 28px;
         text-align: left;
         margin-left: 10px;
-        margin-top: 30px;
+		margin-top: 30px;
+		margin-bottom: 10px;
 	}
 
 	.login-btn {
 		width: 90%;
 		margin:20px 10px;
+		margin-bottom: 0;
 		background-color: var(--red-color);
 		color: white;
 		padding: 15px 20px;
@@ -118,7 +121,7 @@
 		margin: 15px;
         font-size: 12px;
         position: absolute;
-        bottom: 20px;
+        bottom: 0;
 		& > .info-link {
 			text-decoration: none;
 		}
@@ -134,4 +137,28 @@
 
 .input-error{
     border: 1px solid red;
+}
+
+.login-alert{
+	text-align: left;
+	padding: 5px 15px;
+	margin: 10px;
+	width: 90%;
+	border-radius: 5px;
+	font-size: 13px;
+	background-color: #f8ada4;
+	color: #f05544;
+    border: 1px solid #f05544;
+
+	&.success {
+		background-color: #d4edda;
+        color: #449257;
+        border: 1px solid #449257;
+	}
+
+	&.message {
+        background-color: #cce5ff;
+        color: #5d7997;
+        border: 1px solid #5d7997;
+    }
 }

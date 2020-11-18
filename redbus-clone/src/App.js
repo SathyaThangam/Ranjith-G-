@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useEffect,useContext } from "react";
 import "./App.scss";
 import Routes from "./Routes";
-import {withDataContext} from './context/DataContext'
+import { withSessionContext,SessionContext } from "./context/SessionContext";
+import { isAuthenticated } from "./helpers/helper";
 function App() {
+	const session = useContext(SessionContext);
+	useEffect(() => {
+		session.setValue(isAuthenticated());
+		console.log(isAuthenticated());
+	},[]);
+
 	return (
 		<div className="App">
 			<Routes />
@@ -10,4 +17,4 @@ function App() {
 	);
 }
 
-export default withDataContext(App);
+export default withSessionContext(App);

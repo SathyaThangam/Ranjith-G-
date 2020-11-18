@@ -13,7 +13,9 @@ function LoginComponentMobileView({
 	isSignUp,
 	isValidInputs,
 	setIsSignUp,
-	setShow
+	setShow,
+	alert,
+	handleAction
 }) {
 	const styleCondition = (value) =>
 		isValidInputs[value]
@@ -51,6 +53,13 @@ function LoginComponentMobileView({
 					/>{" "}
 					New Account?
 				</label>
+				{Object.keys(alert).length === 0 ? (
+					""
+				) : (
+					<div className={`login-alert ${alert["class"]}`}>
+						{alert["message"]}
+					</div>
+				)}
 				<OutlinedInputComponent
 					type="email"
 					placeholder="Enter your email"
@@ -76,7 +85,7 @@ function LoginComponentMobileView({
 				) : (
 					""
 				)}
-				<div className="login-btn">
+				<div className="login-btn" onClick={() => handleAction()}>
 					{isSignUp ? "Create a New Account" : "Login"}
 				</div>
 				<span className="info">

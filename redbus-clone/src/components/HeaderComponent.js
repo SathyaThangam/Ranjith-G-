@@ -1,8 +1,11 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import "../scss/HeaderComponent.scss";
 import burgerIcon from "../img/burger.svg";
 import LoginComponent from "../LoginComponent";
+import { SessionContext } from "../context/SessionContext";
+import { postRequest } from "../helpers/request-helper";
+import Cookie from "js-cookie";
 function HeaderComponent() {
 	const [showBookingDropdown, setShowBookingDropdown] = useState(false);
 	const [showLoginDropdown, setShowLoginDropdown] = useState(false);
@@ -10,7 +13,7 @@ function HeaderComponent() {
 	const [showLoginComponent, setShowLoginComponent] = useState(false);
 	const bookingRef = useRef(null);
 	const loginRef = useRef(null);
-
+	const session = useContext(SessionContext);
 	useEffect(() => {
 		const clickOutside = (event) => {
 			if (
@@ -43,6 +46,17 @@ function HeaderComponent() {
 			window.removeEventListener("mousedown", clickOutside);
 		};
 	}, [showBookingDropdown, bookingRef]);
+
+	const handleLogout = () => {
+		const sessionID = Cookie.get("sessionID");
+		postRequest("/user/logout", { sessionID })
+			.then((response) => {
+				Cookie.remove("sessionID");
+				session.setValue(false);
+			})
+			.catch((err) => console.log(err));
+	};
+
 	return (
 		<>
 			{showLoginComponent ? (
@@ -156,7 +170,25 @@ function HeaderComponent() {
 										ref={loginRef}
 									>
 										<ul>
-											<li onClick={() => setShowLoginComponent(true)}>Sign In/Sign up</li>
+											{session.value ? (
+												<li
+													onClick={() =>
+														handleLogout()
+													}
+												>
+													Logout
+												</li>
+											) : (
+												<li
+													onClick={() =>
+														setShowLoginComponent(
+															true
+														)
+													}
+												>
+													Sign In/Sign up
+												</li>
+											)}
 										</ul>
 									</div>
 								</div>
@@ -172,10 +204,15 @@ function HeaderComponent() {
 					}
 				>
 					<ul>
-						<li className="sidebar-content" onClick={() => {
-							setShowLoginComponent(true);
-							setShowSideBar(false);
-						}}>Login/Signup</li>
+						<li
+							className="sidebar-content"
+							onClick={() => {
+								setShowLoginComponent(true);
+								setShowSideBar(false);
+							}}
+						>
+							Login/Signup
+						</li>
 						<li className="sidebar-content">Search Buses</li>
 						<li className="sidebar-content">Offers</li>
 						<li className="sidebar-content">Refer & Earn</li>

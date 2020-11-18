@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext } from "react";
 import LoginComponentMobileView from "./LoginComponentMobileView";
 import LoginComponentDesktopView from "./LoginComponentDesktopView";
 import {
@@ -6,6 +6,8 @@ import {
 	validatePassword,
 	validateConfirmPassword,
 } from "../helpers/helper";
+import { postRequest } from "../helpers/request-helper";
+import {SessionContext} from '../context/SessionContext'
 function LoginComponentContainer({ setShow }) {
 	const [width, setWidth] = useState(window.innerWidth);
 
@@ -18,6 +20,8 @@ function LoginComponentContainer({ setShow }) {
 		pwd: true,
 		cpwd: true,
 	});
+	const [alert, setAlert] = useState({});
+	const session = useContext(SessionContext);
 
 	const handleResize = () => setWidth(window.innerWidth);
 
@@ -29,12 +33,94 @@ function LoginComponentContainer({ setShow }) {
 		setFn(t);
 	};
 
+	const handleAction = () => {
+		const userData = { email: loginEmail, password: loginPwd };
+		const isAllValid = () =>
+			isValidInputs["email"] &&
+			isValidInputs["pwd"] &&
+			isValidInputs["cpwd"]; //value => value === true
+		if (isAllValid) {
+			if (isSignUp) {
+				postRequest("/user/signup", userData)
+					.then((response) => {
+						const { message } = response.data;
+						if (message) {
+							if (message === "success") {
+								setShow(false);
+								setAlert({
+									class: "success",
+									message: "Account created",
+								});
+								session.setValue(true);
+							} else {
+								if (message === "duplication") {
+									setAlert({
+										class: "",
+										message: "Account already exists",
+									});
+								} else if (message === "Invalid") {
+									setAlert({
+										class: "",
+										message: "Invalid Email/Password",
+									});
+								}
+							}
+						}
+					})
+					.catch((err) => console.log(err));
+			} else {
+				postRequest("/user/login", userData)
+					.then((response) => {
+						const { message } = response.data;
+						if (message) {
+							if (message === true) {
+								setAlert({
+									class: "success",
+									message: "Login Success",
+								});
+								session.setValue(true);
+								setShow(false);
+							} else if (message === false) {
+								setAlert({
+									class: "",
+									message: "Incorrect email/password",
+								});
+							} else if (message === "Unavailable") {
+								setAlert({
+									class: "",
+									message: "No account available",
+								});
+							} else if (message === "Invalid") {
+								setAlert({
+									class: "",
+									message: "Invalid email/password",
+								});
+							}
+						}
+					})
+					.catch((err) => console.log(err));
+			}
+		}
+	};
+
 	useEffect(() => {
 		window.addEventListener("resize", handleResize);
 		return () => {
 			window.removeEventListener("resize", handleResize);
 		};
 	}, []);
+
+	useEffect(() => {
+		if (isSignUp)
+			setAlert({
+				class: "message",
+				message:
+					"Password should be 8-16 characters long \n Should contain atleast one capital letter,one small letter, one number and one special character",
+			});
+		else {
+			setAlert({});
+		}
+	}, [isSignUp]);
 	return width <= 500 ? (
 		<LoginComponentMobileView
 			loginEmail={loginEmail}
@@ -60,6 +146,8 @@ function LoginComponentContainer({ setShow }) {
 			isValidInputs={isValidInputs}
 			setIsSignUp={setIsSignUp}
 			setShow={setShow}
+			alert={alert}
+			handleAction={handleAction}
 		/>
 	) : (
 		<LoginComponentDesktopView
@@ -86,6 +174,8 @@ function LoginComponentContainer({ setShow }) {
 			isValidInputs={isValidInputs}
 			setIsSignUp={setIsSignUp}
 			setShow={setShow}
+			alert={alert}
+			handleAction={handleAction}
 		/>
 	);
 }

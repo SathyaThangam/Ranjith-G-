@@ -4,7 +4,7 @@ import BusSeatsComponent from "./BusSeatsComponent";
 import MobileBoardingPointsComponent from "./MobilePage/MobileBoardingPointsComponent";
 import BoardingTicketComponent from "./BoardingTicketComponent";
 import MobilePassengerDetailsComponent from "./MobilePage/MobilePassengerDetailsComponent";
-import { DataContext } from "../context/DataContext";
+import { withDataContext,DataContext } from "../context/DataContext";
 import uid from "uid";
 import { useHistory } from "react-router-dom";
 function BusComponent({ data }) {
@@ -290,4 +290,4 @@ function BusComponent({ data }) {
 	);
 }
 
-export default BusComponent;
+export default withDataContext(BusComponent);

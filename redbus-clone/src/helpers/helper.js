@@ -50,3 +50,9 @@ export const validateConfirmPassword = (password, confirmPassword) => {
 	if (confirmPassword === "") return false;
 	else return password === confirmPassword;
 };
+
+export const isAuthenticated = () => {
+	const Cookie = require("js-cookie");
+	const sessionID = Cookie.get("sessionID");
+	return sessionID !== undefined;
+};
