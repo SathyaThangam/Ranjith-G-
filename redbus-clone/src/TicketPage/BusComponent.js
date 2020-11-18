@@ -4,9 +4,13 @@ import BusSeatsComponent from "./BusSeatsComponent";
 import MobileBoardingPointsComponent from "./MobilePage/MobileBoardingPointsComponent";
 import BoardingTicketComponent from "./BoardingTicketComponent";
 import MobilePassengerDetailsComponent from "./MobilePage/MobilePassengerDetailsComponent";
-import { withDataContext,DataContext } from "../context/DataContext";
+import { withDataContext, DataContext } from "../context/DataContext";
 import uid from "uid";
+import Cookie from "js-cookie";
 import { useHistory } from "react-router-dom";
+import { postRequest } from "../helpers/request-helper";
+import PaymentErrorComponent from "../components/PaymentErrorComponent";
+import LoginComponent from "../LoginComponent";
 function BusComponent({ data }) {
 	const [show, setShow] = useState(false);
 	const [boardingPoint, setBoardingPoint] = useState("");
@@ -14,6 +18,8 @@ function BusComponent({ data }) {
 	const [selectedSeats, setSelectedSeats] = useState([]);
 	const [choosePoint, setChoosePoint] = useState("boarding");
 	const [ticketShowStatus, setTicketShowStatus] = useState("");
+	const [showPaymentError, setShowPaymentError] = useState(false);
+	const [showLoginComponent, setShowLoginComponent] = useState(false);
 	const [contactDetails, setContactDetails] = useState({
 		email: "",
 		phone: "",
@@ -57,6 +63,72 @@ function BusComponent({ data }) {
 		history.push("/vieworders");
 	};
 
+	//Payment Gateway
+	const paymentHandler = async () => {
+		const PAYMENT_API_ENDPOINT = "/payment/";
+		const sessionID = Cookie.get("sessionID");
+		if(sessionID === null || sessionID === undefined){
+			setShowLoginComponent(true);
+			return;
+		}
+		const bookingDetails = {
+			contactEmail: contactDetails.email,
+			contactPhoneNo: contactDetails.phone,
+			ticketData: passengerData.data,
+			routeData: {
+				source: data["departure-stop"],
+				destination: data["arrival-stop"],
+			},
+		};
+		const itemData = {
+			bookingDetails,
+			totalprice: data["seat-price"] * selectedSeats.length,
+			sessionID,
+		};
+		console.log("Payment handler", itemData);
+		const orderUrl = `${PAYMENT_API_ENDPOINT}order`;
+		try {
+			const response = await postRequest(orderUrl, itemData);
+			const { data } = response;
+			console.log("data from order", data);
+			const options = {
+				key: process.env.RAZORPAY_API_KEY,
+				name: "getBus",
+				description: "Tickets",
+				order_id: data.id,
+				handler: (response) => {
+					try {
+						const paymentId = response.razorpay_payment_id;
+						const url = `${PAYMENT_API_ENDPOINT}capture/${paymentId}`;
+						postRequest(url, itemData)
+							.then((res) => {
+								const data = res.data;
+								if (data && data.status === "captured") {
+									placeOrder();
+								} else {
+									console.log("error in captured");
+									showPaymentError(true);
+								}
+							})
+							.catch((err) => console.log(err));
+						// console.log(captureResponse);
+					} catch (err) {
+						console.log(err);
+					}
+				},
+				theme: {
+					color: "#6cfc6a",
+				},
+			};
+			const rzp1 = new window.Razorpay(options);
+			rzp1.open();
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	
+
 	useEffect(() => {
 		if (selectedSeats.length > 0) {
 			passengerData.setData((prev) => {
@@ -92,6 +164,16 @@ function BusComponent({ data }) {
 
 	return (
 		<>
+			{showPaymentError ? (
+				<PaymentErrorComponent setShow={setShowPaymentError} />
+			) : (
+				""
+			)}
+			{showLoginComponent ? (
+				<LoginComponent setShow={setShowLoginComponent} />
+			) : (
+				""
+			)}
 			<div className="bus-container">
 				<div className="bus-content">
 					<div className="bus-content-top">
@@ -279,7 +361,7 @@ function BusComponent({ data }) {
 							toggleVisibility={setShowPassengerDetailsForm}
 							contactDetails={contactDetails}
 							setContactDetails={setContactDetails}
-							placeOrder={() => placeOrder()}
+							placeOrder={() => paymentHandler()}
 						/>
 					</div>
 				</div>

@@ -204,15 +204,24 @@ function HeaderComponent() {
 					}
 				>
 					<ul>
-						<li
-							className="sidebar-content"
-							onClick={() => {
-								setShowLoginComponent(true);
-								setShowSideBar(false);
-							}}
-						>
-							Login/Signup
-						</li>
+						{session.value ? (
+							<li
+								className="sidebar-content"
+								onClick={() => handleLogout()}
+							>
+								Logout
+							</li>
+						) : (
+							<li
+								className="sidebar-content"
+								onClick={() => {
+									setShowLoginComponent(true);
+									setShowSideBar(false);
+								}}
+							>
+								Login/Signup
+							</li>
+						)}
 						<li className="sidebar-content">Search Buses</li>
 						<li className="sidebar-content">Offers</li>
 						<li className="sidebar-content">Refer & Earn</li>

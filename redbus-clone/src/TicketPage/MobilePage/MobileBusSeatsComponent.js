@@ -11,6 +11,11 @@ import MobileTitleComponent from "./MobileTitleComponent";
 import MobilePassengerDetailsComponent from "./MobilePassengerDetailsComponent";
 import { DataContext, withDataContext } from "../../context/DataContext";
 import { useHistory } from "react-router-dom";
+import Cookie from "js-cookie";
+import { postRequest } from "../../helpers/request-helper";
+import PaymentErrorComponent from "../../components/PaymentErrorComponent";
+import LoginComponent from "../../LoginComponent";
+
 function MobileBusSeatsComponent({
 	setShowSeats,
 	busData,
@@ -25,6 +30,8 @@ function MobileBusSeatsComponent({
 		displayPassengerDetailsComp,
 		setDisplayPassengerDetailsComp,
 	] = useState(false);
+	const [showPaymentError, setShowPaymentError] = useState(false);
+	const [showLoginComponent, setShowLoginComponent] = useState(false);
 	const [contactDetails, setContactDetails] = useState({
 		email: "",
 		phone: "",
@@ -36,6 +43,8 @@ function MobileBusSeatsComponent({
 	const height = window.innerHeight;
 
 	const history = useHistory();
+
+
 	const placeOrder = () => {
 		const order = {
 			order_id: `Order#${uid(16)}`,
@@ -63,6 +72,69 @@ function MobileBusSeatsComponent({
 		}
 		console.log(JSON.parse(localStorage.getItem("getBusOrders")));
 		history.push("/vieworders");
+	};
+
+	const paymentHandler = async () => {
+		const PAYMENT_API_ENDPOINT = "/payment/";
+		const sessionID = Cookie.get("sessionID");
+		if (sessionID === null || sessionID === undefined) {
+			setShowLoginComponent(true);
+			return;
+		}
+		const bookingDetails = {
+			contactEmail: contactDetails.email,
+			contactPhoneNo: contactDetails.phone,
+			ticketData: passengerData.data,
+			routeData: {
+				source: busData["departure-stop"],
+				destination: busData["arrival-stop"],
+			},
+		};
+		const itemData = {
+			bookingDetails,
+			totalprice: busData["seat-price"] * selectedSeats.length,
+			sessionID,
+		};
+		console.log("Payment handler", itemData);
+		const orderUrl = `${PAYMENT_API_ENDPOINT}order`;
+		try {
+			const response = await postRequest(orderUrl, itemData);
+			const { data } = response;
+			console.log("data from order", data);
+			const options = {
+				key: process.env.RAZORPAY_API_KEY,
+				name: "getBus",
+				description: "Tickets",
+				order_id: data.id,
+				handler: (response) => {
+					try {
+						const paymentId = response.razorpay_payment_id;
+						const url = `${PAYMENT_API_ENDPOINT}capture/${paymentId}`;
+						postRequest(url, itemData)
+							.then((res) => {
+								const data = res.data;
+								if (data && data.status === "captured") {
+									placeOrder();
+								} else {
+									console.log("error in captured");
+									showPaymentError(true);
+								}
+							})
+							.catch((err) => console.log(err));
+						// console.log(captureResponse);
+					} catch (err) {
+						console.log(err);
+					}
+				},
+				theme: {
+					color: "#6cfc6a",
+				},
+			};
+			const rzp1 = new window.Razorpay(options);
+			rzp1.open();
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	useEffect(() => {
@@ -149,12 +221,24 @@ function MobileBusSeatsComponent({
 
 	if (displayBoardingPoints && displayPassengerDetailsComp)
 		return (
-			<MobilePassengerDetailsComponent
-				toggleVisibility={setDisplayPassengerDetailsComp}
-				contactDetails={contactDetails}
-				setContactDetails={setContactDetails}
-				placeOrder={placeOrder}
-			/>
+			<>
+				{showPaymentError ? (
+					<PaymentErrorComponent setShow={setShowPaymentError} />
+				) : (
+					""
+				)}
+				{showLoginComponent ? (
+					<LoginComponent setShow={setShowLoginComponent} />
+				) : (
+					""
+				)}
+				<MobilePassengerDetailsComponent
+					toggleVisibility={setDisplayPassengerDetailsComp}
+					contactDetails={contactDetails}
+					setContactDetails={setContactDetails}
+					placeOrder={paymentHandler}
+				/>
+			</>
 		);
 
 	if (displayBoardingPoints) {
