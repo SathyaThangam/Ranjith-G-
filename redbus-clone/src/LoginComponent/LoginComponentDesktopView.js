@@ -1,11 +1,102 @@
-import React from 'react'
+import React from "react";
+import "../scss/LoginComponent.scss";
+import OutlinedInputComponent from "./OutlinedInputComponent";
+import { Link } from "react-router-dom";
+import closeIcon from "../img/close-icon.svg";
+function LoginComponentDesktopView({
+	loginEmail,
+	handleLoginEmail,
+	loginPwd,
+	handleLoginPwd,
+	loginCPwd,
+	handleLoginCPwd,
+    isSignUp,
+    isValidInputs,
+    setIsSignUp,
+    setShow
+}) {
 
-function LoginComponentDesktopView() {
-    return (
-        <div>
-            Hello world on desktop
-        </div>
-    )
+    const styleCondition = (value) =>
+		isValidInputs[value]
+			? { border: "1px solid black" }
+			: { border: "1px solid red" };
+	return (
+		<div className="login-modal-container">
+			<div className="login-modal-content">
+				<div className="login-image">
+					<div className="img-text">
+						<div>Unlock the</div>
+						<div>Smarter Way to Travel</div>
+					</div>
+				</div>
+				<div
+					style={{
+						padding: "10px",
+						display: "flex",
+						flexDirection: "column",
+						width: "500px",
+						position: "relative",
+					}}
+				>
+					<img
+						className="login-close-icon close-icon"
+						src={closeIcon}
+						alt="close"
+						onClick={() => setShow(false)}
+					/>
+					<h2>
+						Sign in to avail exciting discounts and cashbacks!!!
+					</h2>
+					<label className="login-new-account">
+						<input
+							type="checkbox"
+							value={isSignUp}
+							onChange={(e) => setIsSignUp(e.target.checked)}
+						/>{" "}
+						New Account?
+					</label>
+					<OutlinedInputComponent
+						type="email"
+						placeholder="Enter your email"
+						value={loginEmail}
+						onChange={handleLoginEmail}
+						style={styleCondition("email")}
+					/>
+					<OutlinedInputComponent
+						type="password"
+						placeholder="Enter your password"
+						value={loginPwd}
+						onChange={handleLoginPwd}
+						style={styleCondition("pwd")}
+					/>
+					{isSignUp ? (
+						<OutlinedInputComponent
+							type="password"
+							placeholder="Confirm your password"
+							value={loginCPwd}
+							onChange={handleLoginCPwd}
+							style={styleCondition("cpwd")}
+						/>
+					) : (
+						""
+					)}
+					<div className="login-btn">
+						{isSignUp ? "Create a New Account" : "Login"}
+					</div>
+					<span className="info">
+						By signing up, you agree to our{" "}
+						<Link className="info-link" to="/terms">
+							Terms and Conditions
+						</Link>{" "}
+						and{" "}
+						<Link className="info-link" to="/privacypolicy">
+							Privacy Policy
+						</Link>
+					</span>
+				</div>
+			</div>
+		</div>
+	);
 }
 
-export default LoginComponentDesktopView
+export default LoginComponentDesktopView;

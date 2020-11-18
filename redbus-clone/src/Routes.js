@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import HomePage from "./HomePage/index";
 import TicketPage from "./TicketPage/index";
 import DisplayTicketsPage from "./DisplayTicketsPage/index";
-import LoginComponent from "./LoginComponent";
 function Routes() {
 	return (
 		<Router>
@@ -12,7 +11,6 @@ function Routes() {
 					<Route path="/" exact component={HomePage} />
 					<Route path="/tickets" component={TicketPage} />
 					<Route path="/vieworders" component={DisplayTicketsPage} />
-					<Route path="/dev" component={LoginComponent} />
 					<Route component={HomePage} />
 				</Switch>
 			</div>

@@ -1,54 +1,137 @@
+.login-mb-container {
+	background-color: white;
+	position: fixed;
+	z-index: 99999;
+	height: 100vh;
+	width: 100%;
+	& > .login-image {
+		background: url("../img/payment_offers_mb.png") no-repeat;
+		background-size: cover;
+		height: 12em;
+		position: relative;
 
-.login-mb-container{
-    & > .login-image{
-        background: url("../img/payment_offers_mb.png") no-repeat;
-        background-size: cover;
-        height: 12em;
-        position: relative;
+		& > .login-close-icon {
+			position: absolute;
+			top: 30px;
+			right: 30px;
+		}
 
-        & > .login-close-icon{
-           position: absolute;
-           top: 30px;
-           right: 30px;
-        }
+		& > .img-text {
+			position: absolute;
+			bottom: 10px;
+			left: 14px;
+			text-align: left;
+			font-size: 20px;
+			color: white;
+			font-weight: 900;
+		}
+	}
+	h2 {
+		color: var(--red-color);
+		font-weight: 900;
+		font-size: 20px;
+	}
 
-        & > .img-text{
-            position: absolute;
-            bottom: 10px;
-            left: 14px;
-            text-align: left;
-            font-size: 20px;
-            color: white;
-            font-weight: 900;
-        }
+	.login-btn {
+		width: 80%;
+		margin: 10px;
+		background-color: var(--red-color);
+		color: white;
+		padding: 10px 15px;
+		font-weight: 900;
+		border-radius: 3px;
+		cursor: pointer;
+	}
+
+	.info {
+		text-align: center;
+		margin: 15px;
+		font-size: 12px;
+		margin-top: 50px;
+		& > .info-link {
+			text-decoration: none;
+		}
+	}
+}
+
+.login-modal-container {
+	width: 100%;
+	height: 100vh;
+	overflow: hidden;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: absolute;
+	z-index: 99999;
+
+	& > .login-modal-content {
+        border: 5px solid white;
+        border-radius: 5px;
+        display: flex;
+        background-color: white;
+		& > .login-image {
+			background: url("../img/signup-img.svg") no-repeat;
+			background-size: cover;
+			width: 400px;
+            height: 500px;
+            position: relative;
+
+			& > .img-text {
+				text-align: left;
+				font-size: 24px;
+				color: white;
+                font-weight: 900;
+                padding: 20px;
+			}
+		}
+	}
+
+    .login-close-icon{
+        position: absolute;
+        margin-bottom: 20px;
+        right: 10px;
     }
-    h2 {
-        color: var(--red-color);
-        font-weight: 900;
-        font-size: 20px;
-    }
+	h2 {
+		color: var(--red-color);
+		font-weight: 900;
+        font-size: 28px;
+        text-align: left;
+        margin-left: 10px;
+        margin-top: 30px;
+	}
 
-    .login-btn{
-        width: 80%;
-        margin: 10px;
-        background-color: var(--red-color);
-        color: white;
-        padding: 10px 15px;
-        font-weight: 900;
-        border-radius: 3px;
+	.login-btn {
+		width: 90%;
+		margin:20px 10px;
+		background-color: var(--red-color);
+		color: white;
+		padding: 15px 20px;
+		font-weight: 900;
+		border-radius: 3px;
         cursor: pointer;
+        box-sizing: border-box;
+	}
 
-    }
-
-    .info{
-        text-align: center;
-        margin: 15px;
+	.info {
+		text-align: center;
+		margin: 15px;
         font-size: 12px;
-        margin-top: 50px;
-        & > .info-link {
-            text-decoration: none;
-            
-        }
-    }
+        position: absolute;
+        bottom: 20px;
+		& > .info-link {
+			text-decoration: none;
+		}
+	}
+}
 
+.login-new-account{
+    display: flex;
+    align-self: flex-start;
+    margin: 10px 15px;
+    cursor: pointer;
+}
+
+.input-error{
+    border: 1px solid red;
 }

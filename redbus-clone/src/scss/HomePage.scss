@@ -151,7 +151,7 @@
 		flex-direction: row;
 		align-items: center;
 		justify-content: center;
-		overflow-x: scroll;
+		overflow-x: auto;
 		
 		@media screen and (max-width:650px) {
 			justify-content: flex-start;	
