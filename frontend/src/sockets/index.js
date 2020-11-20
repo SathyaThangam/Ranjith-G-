@@ -1,6 +1,6 @@
 import socketIOClient from "socket.io-client";
 
-const ENDPOINT = "http://127.0.0.1:8080";
+const ENDPOINT = "";
 const socket = socketIOClient(ENDPOINT);
 
 export { socket };
