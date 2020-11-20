@@ -6,7 +6,7 @@ import { socket } from "./sockets";
 import { RoomContext, withRoomContext } from "./context/RoomContext";
 function HomePage() {
 	const [showChatList, setShowChatList] = useState(false);
-	const [name, setName] = useState("");
+	const [name, setName] = useState("name");
 	const [response, setResponse] = useState([]);
 	const [displayName, setDisplayName] = useState(false);
 
@@ -26,14 +26,13 @@ function HomePage() {
 			localStorage.getItem("name") !== null
 		) {
 			setName(localStorage.getItem("name"));
-			setDisplayName(true);
+		} else {
+			localStorage.setItem("name", "name");
 		}
 	}, []);
 
 	useEffect(() => {
-		if (displayName) {
-			localStorage.setItem("name", name);
-		}
+		localStorage.setItem("name", name);
 	}, [displayName]);
 
 	useEffect(() => {
