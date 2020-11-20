@@ -1,25 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import "./css/HomePage.css";
 import ChatListComponent from "./components/ChatListComponent";
 import ChatComponent from "./components/ChatComponent";
 import { socket } from "./sockets";
+import { RoomContext, withRoomContext } from "./context/RoomContext";
 function HomePage() {
-	const [activeRoomID, setActiveRoomID] = useState("");
 	const [showChatList, setShowChatList] = useState(false);
 	const [name, setName] = useState("");
 	const [response, setResponse] = useState([]);
 	const [displayName, setDisplayName] = useState(false);
+
+	const ref = useRef(null);
+	const { activeRoomID } = useContext(RoomContext);
+
 	useEffect(() => {
 		if (activeRoomID !== "") {
 			setResponse([]);
 			console.log(name);
-			socket.emit("joinroom", { name, roomID: activeRoomID });
 		}
 	}, [activeRoomID]);
 
 	useEffect(() => {
-		if (localStorage.getItem("name") !== undefined)
+		if (localStorage.getItem("name") !== undefined) {
 			setName(localStorage.getItem("name"));
+			setDisplayName(true);
+		}
 	}, []);
 
 	useEffect(() => {
@@ -27,6 +32,12 @@ function HomePage() {
 			localStorage.setItem("name", name);
 		}
 	}, [displayName]);
+
+	useEffect(() => {
+		if (ref.current) {
+			ref.current.scrollIntoView();
+		}
+	}, [response]);
 
 	return (
 		<>
@@ -52,7 +63,6 @@ function HomePage() {
 				<ChatListComponent
 					show={showChatList}
 					setShow={setShowChatList}
-					setActiveRoomID={setActiveRoomID}
 					name={name}
 					setName={setName}
 					displayName={displayName}
@@ -74,15 +84,15 @@ function HomePage() {
 					)}
 					<ChatComponent
 						socket={socket}
-						roomID={activeRoomID}
 						response={response}
 						setResponse={setResponse}
 						name={name}
 					/>
+					<div ref={ref}></div>
 				</div>
 			</div>
 		</>
 	);
 }
 
-export default HomePage;
+export default withRoomContext(HomePage);

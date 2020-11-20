@@ -38,22 +38,22 @@ io.on("connection", (socket) => {
 				formatMessage(name, roomID, `${name} has joined the room`)
 			);
 
-		//Listen for chats
-		socket.on("chatMsg", (data) => {
-			socket.broadcast
-				.to(data.roomID)
-				.emit(
-					"message",
-					formatMessage(data.name, data.roomID, data.message)
-				);
-		});
-
 		socket.on("disconnect", () => {
 			io.emit(
 				"info",
 				formatMessage(name, roomID, `${name} has left the chat`)
 			);
 		});
+	});
+	//Listen for chats
+	socket.on("chatMsg", (data) => {
+		console.log(data);
+		socket.broadcast
+			.to(data.roomID)
+			.emit(
+				"message",
+				formatMessage(data.name, data.roomID, data.message)
+			);
 	});
 });
 

@@ -27,7 +27,7 @@
 
 .home-container {
 	width: 100%;
-	min-height: 100vh;
+	height: 92vh;
 	display: flex;
 	align-items: flex-start;
 	position: relative;

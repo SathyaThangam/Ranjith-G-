@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import "../css/ChatListComponent.css";
 import { nanoid } from "nanoid";
 import InputComponent from "./InputComponent";
 import ChatNameFragment from "./ChatNameFragment";
+import { socket } from "../sockets";
+import { RoomContext } from "../context/RoomContext";
 function ChatListComponent({
-	setActiveRoomID,
 	show,
 	setShow,
 	name,
@@ -14,6 +15,7 @@ function ChatListComponent({
 }) {
 	const [roomList, setRoomList] = useState([]);
 	const [inputRoomID, setInputRoomID] = useState("");
+	const {setActiveRoomID} = useContext(RoomContext);
 	const createNewRoom = () => {
 		if (displayName) {
 			const newID = nanoid(6);
@@ -34,6 +36,7 @@ function ChatListComponent({
 				if (!prev.includes(inputRoomID)) return [...prev, inputRoomID];
 				else return prev;
 			});
+			socket.emit("joinroom", { name, roomID: inputRoomID });
 		}
 	};
 

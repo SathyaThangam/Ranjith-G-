@@ -1,0 +1,26 @@
+{
+	"name": "react-chat-app",
+	"version": "1.0.0",
+	"description": "",
+	"main": "backend/server.js",
+	"engines": {
+		"node": "10.x",
+		"npm": "6.x"
+	},
+	"cacheDirectories": [
+		"node_modules",
+		"backend/node_modules",
+		"frontend/node_modules"
+	],
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "cd backend && node server.js",
+		"postinstall": "npm install --prefix backend && npm install --prefix redbus-clone",
+		"build": "npm run build --prefix frontend"
+	},
+	"author": "Ranjith",
+	"license": "ISC",
+	"dependencies": {
+		"heroku": "^7.45.0"
+	}
+}
