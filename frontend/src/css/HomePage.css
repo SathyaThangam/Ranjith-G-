@@ -27,7 +27,7 @@
 
 .home-container {
 	width: 100%;
-	height: 100vh;
+	min-height: 100vh;
 	display: flex;
 	align-items: flex-start;
 	position: relative;
@@ -35,7 +35,7 @@
 
 .chat-content {
 	text-align: left;
-	background-color: #E0E2DB;
+	background-color: #e0e2db;
 	height: 100%;
 	width: 100%;
 }
