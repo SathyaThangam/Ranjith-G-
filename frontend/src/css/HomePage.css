@@ -7,6 +7,7 @@
 	flex-direction: column;
 	justify-content: center;
 	border-bottom: 1px solid #ccc;
+	z-index: 999;
 }
 
 .join-header {
@@ -33,7 +34,6 @@
 }
 
 .chat-content {
-	padding: 20px;
 	text-align: left;
 	background-color: #E0E2DB;
 	height: 100%;

@@ -4,7 +4,14 @@ function ChatComponent({ roomID }) {
 	return (
 		<div className="chat-message-container">
 			roomID: {roomID}
-			<input type="text" className="sticky-input" />
+			<form
+				onSubmit={(e) => {
+					e.preventDefault();
+					console.log(e);
+				}}
+			>
+				<input type="text" className="sticky-input" />
+			</form>
 		</div>
 	);
 }

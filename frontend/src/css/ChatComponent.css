@@ -1,0 +1,14 @@
+.chat-message-container {
+	position: relative;
+	height: 100%;
+	width: 100%;
+}
+
+.sticky-input {
+	width: 100%;
+    padding: 5px;
+    font-size: 14px;
+    margin: 0;
+    position: fixed;
+    bottom: 0;
+}
