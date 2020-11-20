@@ -21,7 +21,10 @@ function HomePage() {
 	}, [activeRoomID]);
 
 	useEffect(() => {
-		if (localStorage.getItem("name") !== undefined) {
+		if (
+			localStorage.getItem("name") !== undefined ||
+			localStorage.getItem("name") !== null
+		) {
 			setName(localStorage.getItem("name"));
 			setDisplayName(true);
 		}
