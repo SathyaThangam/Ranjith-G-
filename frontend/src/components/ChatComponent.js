@@ -5,15 +5,13 @@ import { nanoid } from "nanoid";
 import { socket } from "../sockets";
 import ChatView from "./ChatView";
 import { RoomContext } from "../context/RoomContext";
-function ChatComponent({ response, setResponse, name }) {
+function ChatComponent({ response, setResponse, name, loading, setLoading }) {
 	const [userMsg, setUserMsg] = useState("");
 
 	const { activeRoomID } = useContext(RoomContext);
 
-	const [flag, setFlag] = useState(true);
-
 	const messageHandler = (data) => {
-		console.table({ data: data.roomID, client: activeRoomID });
+		// console.table({ data: data.roomID, client: activeRoomID });
 		if (activeRoomID === data.roomID) {
 			setResponse((prev) => {
 				return [
@@ -25,6 +23,8 @@ function ChatComponent({ response, setResponse, name }) {
 	};
 
 	const infoHandler = (data) => {
+		if (loading) setLoading(false);
+
 		if (activeRoomID === data.roomID) {
 			setResponse((prev) => {
 				return [

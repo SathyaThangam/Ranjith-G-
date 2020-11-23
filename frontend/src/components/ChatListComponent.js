@@ -1,4 +1,4 @@
-import React, { useState,useContext } from "react";
+import React, { useState, useContext } from "react";
 import "../css/ChatListComponent.css";
 import { nanoid } from "nanoid";
 import InputComponent from "./InputComponent";
@@ -12,32 +12,34 @@ function ChatListComponent({
 	setName,
 	displayName,
 	setDisplayName,
+	setLoading,
 }) {
 	const [roomList, setRoomList] = useState([]);
 	const [inputRoomID, setInputRoomID] = useState("");
-	const {setActiveRoomID} = useContext(RoomContext);
+	const { setActiveRoomID } = useContext(RoomContext);
 	const createNewRoom = () => {
 		if (displayName) {
 			const newID = nanoid(6);
-			setActiveRoomID(newID);
-			setShow(false);
-			setRoomList((prev) => {
-				return [...prev, newID];
-			});
+			handleRooms(newID);
 		}
 	};
 
 	const handleInputRoom = () => {
 		if (inputRoomID !== "" && displayName) {
-			setActiveRoomID(inputRoomID);
 			setInputRoomID("");
-			setShow(false);
-			setRoomList((prev) => {
-				if (!prev.includes(inputRoomID)) return [...prev, inputRoomID];
-				else return prev;
-			});
-			socket.emit("joinroom", { name, roomID: inputRoomID });
+			handleRooms(inputRoomID);
 		}
+	};
+
+	const handleRooms = (newRoom) => {
+		setActiveRoomID(newRoom);
+		setShow(false);
+		setRoomList((prev) => {
+			if (!prev.includes(newRoom)) return [...prev, newRoom];
+			else return prev;
+		});
+		socket.emit("joinroom", { name, roomID: newRoom });
+		setLoading(true);
 	};
 
 	return (

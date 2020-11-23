@@ -4,11 +4,13 @@ import ChatListComponent from "./components/ChatListComponent";
 import ChatComponent from "./components/ChatComponent";
 import { socket } from "./sockets";
 import { RoomContext, withRoomContext } from "./context/RoomContext";
+import CircularLoaderComponent from "./components/CircularLoaderComponent";
 function HomePage() {
 	const [showChatList, setShowChatList] = useState(false);
 	const [name, setName] = useState("name");
 	const [response, setResponse] = useState([]);
 	const [displayName, setDisplayName] = useState(false);
+	const [loading, setLoading] = useState(false);
 
 	const ref = useRef(null);
 	const { activeRoomID } = useContext(RoomContext);
@@ -43,6 +45,7 @@ function HomePage() {
 
 	return (
 		<>
+			{loading ? <CircularLoaderComponent /> : ""}
 			<header className="header">
 				{showChatList ? (
 					<span
@@ -69,6 +72,7 @@ function HomePage() {
 					setName={setName}
 					displayName={displayName}
 					setDisplayName={setDisplayName}
+					setLoading={setLoading}
 				/>
 				<div className="chat-content">
 					{!displayName ? (
@@ -89,6 +93,8 @@ function HomePage() {
 						response={response}
 						setResponse={setResponse}
 						name={name}
+						setLoading={setLoading}
+						loading={loading}
 					/>
 					<div ref={ref}></div>
 				</div>
