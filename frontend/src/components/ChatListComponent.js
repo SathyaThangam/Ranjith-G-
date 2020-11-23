@@ -71,6 +71,9 @@ function ChatListComponent({
 							value={name}
 							onChange={setName}
 						/>
+						<button type="submit" className="join-btn">
+							Save
+						</button>
 					</form>
 				)}
 			</div>
