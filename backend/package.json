@@ -5,13 +5,16 @@
 	"main": "index.js",
 	"author": "Ranjith",
 	"license": "MIT",
+	"type": "module",
 	"private": true,
 	"scripts": {
 		"start": "node server.js",
 		"dev": "nodemon server.js"
 	},
 	"dependencies": {
+		"dotenv": "^8.2.0",
 		"express": "^4.17.1",
+		"mongoose": "^5.10.16",
 		"nodemon": "^2.0.6"
 	}
 }
