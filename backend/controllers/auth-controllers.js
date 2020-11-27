@@ -45,12 +45,18 @@ const loginController = async (req, res) => {
 	try {
 		const user = await getUser(email);
 
-		const isPasswordCorrect = await compareHash(password, user.password);
-		console.log(isPasswordCorrect);
-		if (isPasswordCorrect) {
-			const token = generateAccessToken({ email });
-			res.status(200).send({ token });
-		} else res.sendStatus(403);
+		if (user) {
+			const isPasswordCorrect = await compareHash(
+				password,
+				user.password
+			);
+			if (isPasswordCorrect) {
+				const token = generateAccessToken({ email });
+				res.status(200).send({ message: "Success", token });
+			} else res.sendStatus(403);
+		} else {
+			res.status(200).send({ message: "Unavailable" });
+		}
 	} catch (error) {
 		console.log(error);
 		res.sendStatus(500);
