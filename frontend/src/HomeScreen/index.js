@@ -27,7 +27,7 @@ const HomeScreen = () => {
   const [showLoginComp, setShowLoginComp] = useState(false);
 
   return (
-    <ScrollView>
+    <ScrollView keyboardShouldPersistTaps={'handled'}>
       <DrawerView show={showLocationList}>
         <LocationComp setShow={setShowLocationList} />
       </DrawerView>
@@ -56,7 +56,9 @@ const HomeScreen = () => {
               paddingRight: 20,
               paddingBottom: 10,
             }}>
-            <Pressable onPress={() => setShowLoginComp(true)}>
+            <Pressable
+              style={{padding: 10}}
+              onPress={() => setShowLoginComp(true)}>
               <FontAwesome name="user-circle-o" size={30} color="#FF6666" />
             </Pressable>
           </View>

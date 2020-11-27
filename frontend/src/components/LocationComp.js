@@ -8,7 +8,7 @@ const LocationComp = ({setShow}) => {
   const [searchInput, setSearchInput] = useState('');
 
   const onResultClick = (location) => {
-    console.log(location);
+    // console.log(location);
   };
 
   const popularLocations = [

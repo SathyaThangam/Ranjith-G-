@@ -1,11 +1,59 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {StyleSheet, Text, View, Pressable} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import CommonStyles from '../CommonStyles';
 import COLORS from '../ColorConstants';
 import OutlinedInputComp from '../components/OutlinedInputComp';
 import PasswordComp from './PasswordComp';
-const SignUpView = ({setShow, setShowLogin, signUpData, setSignUpData}) => {
+import {getDataFromStore} from '../Utils/storeUtils';
+import {
+  validateEmail,
+  validatePassword,
+  validateConfirmPassword,
+} from '../Utils/authUtils';
+const SignUpView = ({
+  setShow,
+  setShowLogin,
+  signUpData,
+  setSignUpData,
+  handleSignup,
+}) => {
+  const [inputValidColors, setInputValidColors] = useState({
+    email: COLORS.GREY,
+    password: COLORS.GREY,
+    cPassword: COLORS.GREY,
+  });
+
+  useEffect(() => {
+    getDataFromStore('token')
+      .then((data) => {
+        if (data !== null)
+          //user logged in use better method to check
+          console.log(data);
+      })
+      .catch((err) => console.error(err));
+  }, []);
+
+  const onChangeText = (text, property, validateFn) => {
+    setSignUpData((prev) => {
+      return {...prev, [property]: text};
+    });
+    setInputValidColors((prev) => {
+      if (text === '') return {...prev, [property]: COLORS.GREY};
+      if (property === 'cPassword')
+        return {
+          ...prev,
+          [property]: validateFn(signUpData.password, text)
+            ? COLORS.GREEN
+            : COLORS.RED,
+        };
+      return {
+        ...prev,
+        [property]: validateFn(text) ? COLORS.GREEN : COLORS.RED,
+      };
+    });
+  };
+
   return (
     <View style={{padding: 10}}>
       <View
@@ -17,51 +65,47 @@ const SignUpView = ({setShow, setShowLogin, signUpData, setSignUpData}) => {
         <MaterialCommunityIcons
           name="close"
           size={30}
-          onPress={() => setShow(false)}
+          onPress={() => {
+            setSignUpData({email: '', password: '', cPassword: ''});
+            setShow(false);
+          }}
         />
       </View>
       <OutlinedInputComp
         placeholder="Email"
         value={signUpData.email}
-        onChangeText={(text) =>
-          setSignUpData((prev) => {
-            return {
-              ...prev,
-              email: text,
-            };
-          })
-        }>
-        <MaterialCommunityIcons name="email" size={30} color={COLORS.GREY} />
+        onChangeText={(text) => onChangeText(text, 'email', validateEmail)}>
+        <MaterialCommunityIcons
+          name="email"
+          size={30}
+          color={inputValidColors.email}
+        />
       </OutlinedInputComp>
       <PasswordComp
         placeholder="Password"
         value={signUpData.password}
         onChangeText={(text) =>
-          setSignUpData((prev) => {
-            return {...prev, password: text};
-          })
+          onChangeText(text, 'password', validatePassword)
         }>
         <MaterialCommunityIcons
           name="lock-open"
           size={30}
-          color={COLORS.GREY}
+          color={inputValidColors.password}
         />
       </PasswordComp>
       <PasswordComp
         placeholder="Confirm Password"
         value={signUpData.cPassword}
         onChangeText={(text) =>
-          setSignUpData((prev) => {
-            return {...prev, cPassword: text};
-          })
+          onChangeText(text, 'cPassword', validateConfirmPassword)
         }>
         <MaterialCommunityIcons
           name="lock-open"
           size={30}
-          color={COLORS.GREY}
+          color={inputValidColors.cPassword}
         />
       </PasswordComp>
-      <Pressable>
+      <Pressable onPress={() => handleSignup()}>
         <View
           accessibilityRole="button"
           style={[
@@ -76,6 +120,7 @@ const SignUpView = ({setShow, setShowLogin, signUpData, setSignUpData}) => {
         <Pressable onPress={() => setShowLogin(true)}>
           <Text style={{fontSize: 18, color: COLORS.RED}}>Sign In</Text>
         </Pressable>
+        <Text></Text>
       </View>
     </View>
   );

@@ -1,11 +1,36 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, Text, View, Pressable} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import CommonStyles from '../CommonStyles';
 import COLORS from '../ColorConstants';
 import OutlinedInputComp from '../components/OutlinedInputComp';
 import PasswordComp from './PasswordComp';
-const LoginView = ({setShow, setShowLogin, loginData, setLoginData}) => {
+import {validateEmail, validatePassword} from '../Utils/authUtils';
+const LoginView = ({
+  setShow,
+  setShowLogin,
+  loginData,
+  setLoginData,
+  handleLogin,
+}) => {
+  const [inputValidColors, setInputValidColors] = useState({
+    email: COLORS.GREY,
+    password: COLORS.GREY,
+  });
+
+  const onChangeText = (text, property, validateFn) => {
+    setLoginData((prev) => {
+      return {...prev, [property]: text};
+    });
+    setInputValidColors((prev) => {
+      if (text === '') return {...prev, [property]: COLORS.GREY};
+      return {
+        ...prev,
+        [property]: validateFn(text) ? COLORS.GREEN : COLORS.RED,
+      };
+    });
+  };
+
   return (
     <View style={{padding: 10}}>
       <View
@@ -17,33 +42,35 @@ const LoginView = ({setShow, setShowLogin, loginData, setLoginData}) => {
         <MaterialCommunityIcons
           name="close"
           size={30}
-          onPress={() => setShow(false)}
+          onPress={() => {
+            setLoginData({email: '', password: ''});
+            setShow(false);
+          }}
         />
       </View>
       <OutlinedInputComp
         placeholder="Email"
         value={loginData.email}
-        onChangeText={(text) =>
-          setLoginData((prev) => {
-            return {
-              ...prev,
-              email: text,
-            };
-          })
-        }>
-        <MaterialCommunityIcons name="email" size={30} color="#FF6666" />
+        onChangeText={(text) => onChangeText(text, 'email', validateEmail)}>
+        <MaterialCommunityIcons
+          name="email"
+          size={30}
+          color={inputValidColors.email}
+        />
       </OutlinedInputComp>
       <PasswordComp
         placeholder="Password"
         value={loginData.password}
         onChangeText={(text) =>
-          setLoginData((prev) => {
-            return {...prev, password: text};
-          })
+          onChangeText(text, 'password', validatePassword)
         }>
-        <MaterialCommunityIcons name="lock-open" size={30} color="#FF6666" />
+        <MaterialCommunityIcons
+          name="lock-open"
+          size={30}
+          color={inputValidColors.password}
+        />
       </PasswordComp>
-      <Pressable>
+      <Pressable onPress={() => handleLogin()}>
         <View
           accessibilityRole="button"
           style={[
