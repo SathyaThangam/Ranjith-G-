@@ -1,11 +1,15 @@
 import express from "express";
 import authRoutes from "./routes/auth-routes.js";
 import dotenv from "dotenv";
+import mongoose from "mongoose";
+import morgan from "morgan";
 dotenv.config();
 
 const app = express();
 
 app.use(express.json());
+
+app.use(morgan("dev"));
 
 const PORT = process.env.PORT || 8080;
 
@@ -16,13 +20,20 @@ const PORT = process.env.PORT || 8080;
 // 	})
 // );
 
+mongoose.connect(`${process.env.DATABASE_URL}zomatoClone`, {
+	useNewUrlParser: true,
+	useUnifiedTopology: true,
+});
+
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error:"));
+db.once("open", function () {
+	console.log("connection established");
+});
+
 app.use("/auth", authRoutes);
 
 //Endpoint to check if connection has established
 app.get("/ping", (req, res) => res.send("pong"));
 
-app.listen(PORT, () =>
-	console.log(
-		`Server is running at ${PORT} Database URL ${process.env.DATABASE_URL}`
-	)
-);
+app.listen(PORT, () => console.log(`Server is running at ${PORT}`));

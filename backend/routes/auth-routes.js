@@ -1,5 +1,4 @@
 import express from "express";
-import db from "../utils/database-utils.js";
 const router = express.Router();
 
 import {
@@ -10,8 +9,8 @@ import {
 
 router.post("/signup", signUpController);
 
-router.post("login", loginController);
+router.post("/login", loginController);
 
-router.post("logout", logOutController);
+router.post("/logout", logOutController);
 
 export default router;
