@@ -3,6 +3,7 @@ import {SafeAreaView, StyleSheet, StatusBar} from 'react-native';
 import HomeScreen from './src/HomeScreen';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+import ResultsScreen from './src/ResultsScreen';
 const App = () => {
   const Stack = createStackNavigator();
 
@@ -18,6 +19,11 @@ const App = () => {
             name="Home"
             component={HomeScreen}
             options={{title: 'ZomatoClone'}}
+          />
+          <Stack.Screen
+            name="DEV"
+            component={ResultsScreen}
+            options={{title: 'Zomatoclone'}}
           />
         </Stack.Navigator>
       </SafeAreaView>

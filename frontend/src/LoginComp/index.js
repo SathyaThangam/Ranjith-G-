@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {Alert, Keyboard} from 'react-native';
 import LoginView from './LoginView';
 import SignupView from './SignupView';
+import LogOutView from './LogOutView';
 import {
   login,
   signup,
@@ -9,7 +10,11 @@ import {
   validatePassword,
   validateConfirmPassword,
 } from '../Utils/authUtils';
-import {saveDataToStore} from '../Utils/storeUtils';
+import {
+  saveDataToStore,
+  getDataFromStore,
+  deleteDataFromStore,
+} from '../Utils/storeUtils';
 const LoginComp = ({setShow}) => {
   const [showLogin, setShowLogin] = useState(true);
   const [loginData, setLoginData] = useState({
@@ -22,6 +27,18 @@ const LoginComp = ({setShow}) => {
     password: '',
     cPassword: '',
   });
+
+  const [loginStatus, setLoginStatus] = useState(false);
+  useEffect(() => {
+    getDataFromStore('token')
+      .then((token) => {
+        console.log(token);
+        if (token !== null) {
+          setLoginStatus(true);
+        }
+      })
+      .catch((err) => console.error(err));
+  }, []);
 
   useEffect(() => {
     setLoginData((prev) => {
@@ -134,7 +151,15 @@ const LoginComp = ({setShow}) => {
         .catch((err) => console.error('signup error', err));
   };
 
-  return showLogin ? (
+  const handleLogOut = () => {
+    deleteDataFromStore('token')
+      .then(() => setLoginStatus(false))
+      .catch((err) => console.error(err));
+  };
+
+  return loginStatus ? (
+    <LogOutView setShow={setShow} handleLogOut={handleLogOut} />
+  ) : showLogin ? (
     <LoginView
       setShow={setShow}
       setShowLogin={setShowLogin}

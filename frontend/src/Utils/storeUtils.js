@@ -13,3 +13,10 @@ export const getDataFromStore = async (key) =>
     sharedPreferencesName: STORE_NAME,
     keychainService: STORE_NAME,
   });
+
+export const deleteDataFromStore = async (key) => {
+  return RNSInfo.deleteItem(key, {
+    sharedPreferencesName: STORE_NAME,
+    keychainService: STORE_NAME,
+  });
+};

@@ -20,7 +20,7 @@ import CollectionItem from './CollectionItem';
 import PopularItemList from './PopularItemList';
 import RestuarantComp from '../components/RestuarantComp';
 import LoginComp from '../LoginComp';
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
   const [showLocationList, setShowLocationList] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState('Bengaluru');
   const [showRestaurantList, setShowRestaurantList] = useState(false);
@@ -158,9 +158,11 @@ const HomeScreen = () => {
               />
             </View>
           </View>
-          <View>
-            <Text style={styles.clearRed}>All collections in Chennai ▶</Text>
-          </View>
+          <Pressable onPress={() => navigation.navigate('DEV')}>
+            <View>
+              <Text style={styles.clearRed}>All collections in Chennai ▶</Text>
+            </View>
+          </Pressable>
         </View>
         <View style={{paddingHorizontal: 10}}>
           <Text style={{fontSize: 24}}>Popular localities in and around </Text>
