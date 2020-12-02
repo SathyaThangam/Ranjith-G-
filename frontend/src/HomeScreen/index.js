@@ -13,26 +13,29 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import DrawerView from '../components/DrawerView';
-import LocationComp from '../components/LocationComp';
-import OptionItem from './OptionItem';
-import CommonStyles from '../CommonStyles';
-import CollectionItem from './CollectionItem';
+import LocationComp from './LocationComp';
+import OptionItemList from './OptionItemList';
+import CollectionItemList from './CollectionItemList';
 import PopularItemList from './PopularItemList';
-import RestuarantComp from '../components/RestuarantComp';
+import RestuarantListComp from './RestuarantListComp';
 import LoginComp from '../LoginComp';
 const HomeScreen = ({navigation}) => {
   const [showLocationList, setShowLocationList] = useState(false);
-  const [selectedLocation, setSelectedLocation] = useState('Bengaluru');
+  const [selectedLocation, setSelectedLocation] = useState('Bangalore');
   const [showRestaurantList, setShowRestaurantList] = useState(false);
   const [showLoginComp, setShowLoginComp] = useState(false);
 
   return (
     <ScrollView keyboardShouldPersistTaps={'handled'}>
       <DrawerView show={showLocationList}>
-        <LocationComp setShow={setShowLocationList} />
+        <LocationComp
+          setShow={setShowLocationList}
+          selectedLocation={selectedLocation}
+          setSelectedLocation={setSelectedLocation}
+        />
       </DrawerView>
       <DrawerView show={showRestaurantList}>
-        <RestuarantComp
+        <RestuarantListComp
           selectedLocation={selectedLocation}
           setShow={setShowRestaurantList}
           setShowLocationList={setShowLocationList}
@@ -66,7 +69,7 @@ const HomeScreen = ({navigation}) => {
           <Text style={styles.subHeading}>
             Discover the best food and drinks in
           </Text>
-          <Text style={[styles.subHeading, styles.location]}>Bengaluru</Text>
+          <Text style={[styles.subHeading, styles.location]}>Bangalore</Text>
           <Pressable
             style={{width: '100%'}}
             onPress={() => setShowLocationList(true)}>
@@ -104,60 +107,14 @@ const HomeScreen = ({navigation}) => {
             </View>
           </Pressable>
         </ImageBackground>
-        <View>
-          <View style={CommonStyles.horizontalView}>
-            <OptionItem
-              image={require('../img/food1.png')}
-              title="Order Food online"
-            />
-            <OptionItem
-              image={require('../img/food2.png')}
-              title="Go out for a meal"
-            />
-          </View>
-          <View style={CommonStyles.horizontalView}>
-            <OptionItem
-              image={require('../img/food3.png')}
-              title="Nightlife & Clubs"
-            />
-            <OptionItem
-              image={require('../img/food4.png')}
-              title="Zomato Pro"
-            />
-          </View>
-        </View>
-        <View style={{marginTop: 100, padding: 10}}>
+        <OptionItemList />
+        <View style={{marginTop: 80, padding: 10}}>
           <Text style={{fontSize: 24}}>Collections</Text>
           <Text style={{paddingVertical: 10}}>
             Explore curated lists of top restaurants, cafes, pubs, and bars in
-            Bengaluru, based on trends
+            Bangalore, based on trends
           </Text>
-          <View>
-            <View style={[CommonStyles.horizontalView, {marginVertical: 10}]}>
-              <CollectionItem
-                image={require('../img/collection1.jpg')}
-                title="Trending this week"
-                subTitle="30 Places ▶"
-              />
-              <CollectionItem
-                image={require('../img/collection2.jpg')}
-                title="Chennai's Finest"
-                subTitle="102 Places ▶"
-              />
-            </View>
-            <View style={[CommonStyles.horizontalView, {marginVertical: 10}]}>
-              <CollectionItem
-                image={require('../img/collection1.jpg')}
-                title="Trending this week"
-                subTitle="30 Places ▶"
-              />
-              <CollectionItem
-                image={require('../img/collection2.jpg')}
-                title="Chennai's Finest"
-                subTitle="102 Places ▶"
-              />
-            </View>
-          </View>
+          <CollectionItemList />
           <Pressable onPress={() => navigation.navigate('DEV')}>
             <View>
               <Text style={styles.clearRed}>All collections in Chennai ▶</Text>

@@ -62,7 +62,6 @@ const LoginComp = ({setShow}) => {
     if (validateEmail(email) && validatePassword(password))
       login(email, password)
         .then(({data, status}) => {
-          console.log('status', status);
           if (data.message === 'Unavailable') {
             Alert.alert(
               "Account doesn't exist",
@@ -79,19 +78,6 @@ const LoginComp = ({setShow}) => {
             );
           } else if (data.message === 'Success') {
             const {accessToken} = data.token;
-            Alert.alert(
-              'Success',
-              accessToken,
-              [
-                {
-                  text: 'OK',
-                  onPress: () => setShowLogin(false),
-                },
-              ],
-              {
-                onDismiss: () => setShowLogin(false),
-              },
-            );
             saveDataToStore('token', accessToken)
               .then((data) => {
                 setShow(false);
@@ -100,6 +86,9 @@ const LoginComp = ({setShow}) => {
           }
         })
         .catch((err) => console.error('login error', err));
+    else {
+      Alert.alert('Invalid Email/Password');
+    }
   };
 
   const handleSignup = () => {
@@ -115,7 +104,6 @@ const LoginComp = ({setShow}) => {
           console.log('data', data);
           if (status === 200) {
             if (data.message === 'success') {
-              console.log(data.message);
               saveDataToStore('token', data.token.accessToken)
                 .then((success) => {
                   setShow(false);
@@ -154,6 +142,9 @@ const LoginComp = ({setShow}) => {
           }
         })
         .catch((err) => console.error('signup error', err));
+    else {
+      Alert.alert('Inavalid Email/Password');
+    }
   };
 
   const handleLogOut = () => {

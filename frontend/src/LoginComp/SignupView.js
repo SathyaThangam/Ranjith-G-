@@ -115,6 +115,12 @@ const SignUpView = ({
           <Text style={{color: 'white', fontSize: 18}}>Sign up</Text>
         </View>
       </Pressable>
+      <View>
+        <Text>Password should be 8-16 letters</Text>
+        <Text>
+          Password should contain atleast a number,a symbol and an alphabet
+        </Text>
+      </View>
       <View style={[CommonStyles.horizontalView, {marginTop: 20}]}>
         <Text style={{fontSize: 18}}>Existing User? </Text>
         <Pressable onPress={() => setShowLogin(true)}>

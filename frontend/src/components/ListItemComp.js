@@ -1,9 +1,8 @@
 import React from 'react';
 import {StyleSheet, Text, View, Image, Pressable} from 'react-native';
-import mockData from '../data/mockdata.json';
 import CommonStyles from '../CommonStyles';
 import {useNavigation} from '@react-navigation/native';
-const ListItemComp = ({setShow}) => {
+const ListItemComp = ({setShow, data}) => {
   const navigation = useNavigation();
 
   return (
@@ -13,11 +12,11 @@ const ListItemComp = ({setShow}) => {
         setShow(false);
       }}>
       <View style={[CommonStyles.horizontalView, {marginHorizontal: 10}]}>
-        <Image style={styles.image} source={{uri: mockData.thumb}} />
+        <Image style={styles.image} source={{uri: data.image}} />
         <View>
-          <Text style={{fontSize: 24, fontWeight: 'bold'}}>Title</Text>
+          <Text style={{fontSize: 24, fontWeight: 'bold'}}>{data.title}</Text>
           <Text style={{fontSize: 20, color: 'rgb(156,156,156)'}}>
-            sub title
+            {data.subTitle}
           </Text>
         </View>
       </View>

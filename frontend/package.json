@@ -6,7 +6,7 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
-    "debug":"react-devtools",
+    "debug": "react-devtools",
     "test": "jest",
     "lint": "eslint ."
   },
@@ -15,6 +15,7 @@
     "@react-navigation/native": "^5.8.10",
     "@react-navigation/stack": "^5.12.8",
     "axios": "^0.21.0",
+    "lodash.debounce": "^4.0.8",
     "nanoid": "^3.1.18",
     "react": "16.13.1",
     "react-native": "0.63.3",
