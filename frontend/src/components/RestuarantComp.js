@@ -3,11 +3,11 @@ import {StyleSheet, Text, View, Pressable, TextInput} from 'react-native';
 import {useWindowDimensions} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import CommonStyles from '../CommonStyles';
-
+import ListItemComp from './ListItemComp';
 const RestuarantComp = ({selectedLocation, setShow, setShowLocationList}) => {
   const dimensions = useWindowDimensions();
   return (
-    <View>
+    <View style={{flex: 1}}>
       <View
         style={{
           flexDirection: 'row',
@@ -38,6 +38,9 @@ const RestuarantComp = ({selectedLocation, setShow, setShowLocationList}) => {
         style={styles.searchInput}
         placeholder="Search for restaurant, cuisine or a dish.."
       />
+      <View style={{flex: 2}}>
+        <ListItemComp setShow={setShow} />
+      </View>
     </View>
   );
 };

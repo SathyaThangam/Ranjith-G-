@@ -93,7 +93,9 @@ const LoginComp = ({setShow}) => {
               },
             );
             saveDataToStore('token', accessToken)
-              .then((data) => console.log('store success', data))
+              .then((data) => {
+                setShow(false);
+              })
               .catch((err) => console.error('store error', err));
           }
         })
@@ -110,11 +112,14 @@ const LoginComp = ({setShow}) => {
     )
       signup(email, password, cPassword)
         .then(({data, status}) => {
-          console.log('status', status === 403, typeof status);
+          console.log('data', data);
           if (status === 200) {
             if (data.message === 'success') {
-              saveDataToStore('token', data.token)
-                .then((success) => console.log(success))
+              console.log(data.message);
+              saveDataToStore('token', data.token.accessToken)
+                .then((success) => {
+                  setShow(false);
+                })
                 .catch((err) => console.log(err));
             } else if (data.message === 'Unavailable') {
               Alert.alert(
