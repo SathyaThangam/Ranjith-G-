@@ -22,7 +22,7 @@ exports.getMatchingLocationController = async (req, res) => {
 					$options: "i",
 				},
 			},
-			"location.city location.locality_verbose"
+			"-_id location.city location.locality_verbose"
 		);
 		res.status(200).send(locationData);
 	} catch (error) {
@@ -34,14 +34,19 @@ exports.getMatchingLocationController = async (req, res) => {
 exports.getMatchingRestaurantsController = async (req, res) => {
 	const { location, restaurant } = req.query;
 	try {
-		const locationData = await Restaurant.find({
-			"location.city": location,
-			name: {
-				$regex: restaurant,
-				$options: "i",
-			},
-		});
-		res.status(200).send(locationData);
+		if (location && restaurant) {
+			const locationData = await Restaurant.find(
+				{
+					"location.city": location,
+					name: {
+						$regex: restaurant,
+						$options: "i",
+					},
+				},
+				"-_id"
+			);
+			res.status(200).send(locationData);
+		} else res.sendStatus(400);
 	} catch (error) {
 		console.error(error);
 		res.sendStatus(500);
