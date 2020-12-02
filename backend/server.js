@@ -1,9 +1,11 @@
 const express = require("express");
-const authRoutes = require("./routes/auth-routes.js");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
 dotenv.config();
+
+const authRoutes = require("./routes/auth-routes.js");
+const dataRoutes = require("./routes/data-routes.js");
 
 const app = express();
 
@@ -32,6 +34,8 @@ db.once("open", function () {
 });
 
 app.use("/auth", authRoutes);
+
+app.use("/data", dataRoutes);
 
 //Endpoint to check if connection has established
 app.get("/ping", (req, res) => res.send("pong"));

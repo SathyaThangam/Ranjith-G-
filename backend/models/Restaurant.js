@@ -26,6 +26,7 @@ const RestaurantSchema = new mongoose.Schema({
 	thumb: String,
 	establishment_types: Object,
 	events_url: String,
+	dishes: Array,
 });
 
 const Restaurant = mongoose.model("restaurant", RestaurantSchema);
