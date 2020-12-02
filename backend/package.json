@@ -5,7 +5,6 @@
 	"main": "index.js",
 	"author": "Ranjith",
 	"license": "MIT",
-	"type": "module",
 	"private": true,
 	"scripts": {
 		"start": "node server.js",

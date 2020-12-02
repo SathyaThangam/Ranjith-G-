@@ -1,10 +1,11 @@
-import {
+const {
 	compareHash,
 	generateAccessToken,
 	generateHash,
-} from "../utils/auth-utils.js";
+	validateEmail,
+} = require("../utils/auth-utils.js");
 
-import UserDetails from "../models/UserDetails.js";
+const UserDetails = require("../models/UserDetails.js");
 
 const getUser = async (email) => {
 	try {
@@ -13,11 +14,11 @@ const getUser = async (email) => {
 		console.log("error");
 	}
 };
-
-const signUpController = async (req, res) => {
+exports.signUpController = async (req, res) => {
 	const email = req.body.email;
 	const password = req.body.password;
 
+	console.log(generateAccessToken);
 	try {
 		const doesUserExist = await getUser(email);
 
@@ -29,7 +30,7 @@ const signUpController = async (req, res) => {
 			const saveUser = await UserDetails.create(user);
 			if (saveUser) {
 				const token = generateAccessToken({ email });
-				res.status(200).send({ token });
+				res.status(200).send({ message: "success", token });
 			}
 		}
 	} catch (err) {
@@ -38,7 +39,7 @@ const signUpController = async (req, res) => {
 	}
 };
 
-const loginController = async (req, res) => {
+exports.loginController = async (req, res) => {
 	const email = req.body.email;
 	const password = req.body.password;
 
@@ -62,7 +63,3 @@ const loginController = async (req, res) => {
 		res.sendStatus(500);
 	}
 };
-
-const logOutController = (req, res) => {};
-
-export { signUpController, loginController, logOutController };

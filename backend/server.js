@@ -1,8 +1,8 @@
-import express from "express";
-import authRoutes from "./routes/auth-routes.js";
-import dotenv from "dotenv";
-import mongoose from "mongoose";
-import morgan from "morgan";
+const express = require("express");
+const authRoutes = require("./routes/auth-routes.js");
+const dotenv = require("dotenv");
+const mongoose = require("mongoose");
+const morgan = require("morgan");
 dotenv.config();
 
 const app = express();
