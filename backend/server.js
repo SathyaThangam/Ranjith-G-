@@ -23,8 +23,11 @@ const PORT = process.env.PORT || 8080;
 // 		credentials: true,
 // 	})
 // );
-
-mongoose.connect(`${process.env.DATABASE_URL}zomatoClone`, {
+const DB_URI =
+	process.env.NODE_ENV === "development"
+		? `${process.env.DATABASE_URL}zomatoClone`
+		: `${process.env.DATABASE_URL}`;
+mongoose.connect(DB_URI, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
 });
