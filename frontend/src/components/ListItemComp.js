@@ -8,15 +8,15 @@ const ListItemComp = ({setShow, data}) => {
   return (
     <Pressable
       onPress={() => {
-        navigation.navigate('DEV');
+        navigation.navigate('Results', {data});
         setShow(false);
       }}>
       <View style={[CommonStyles.horizontalView, {marginHorizontal: 10}]}>
-        <Image style={styles.image} source={{uri: data.image}} />
+        <Image style={styles.image} source={{uri: data.thumb}} />
         <View>
-          <Text style={{fontSize: 24, fontWeight: 'bold'}}>{data.title}</Text>
+          <Text style={{fontSize: 24, fontWeight: 'bold'}}>{data.name}</Text>
           <Text style={{fontSize: 20, color: 'rgb(156,156,156)'}}>
-            {data.subTitle}
+            {data.cuisines}
           </Text>
         </View>
       </View>

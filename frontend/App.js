@@ -21,7 +21,7 @@ const App = () => {
             options={{title: 'ZomatoClone'}}
           />
           <Stack.Screen
-            name="DEV"
+            name="Results"
             component={ResultsScreen}
             options={{title: 'Zomatoclone'}}
           />

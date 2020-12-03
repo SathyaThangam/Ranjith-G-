@@ -35,12 +35,7 @@ const RestuarantListComp = ({
         data: {location, restaurant},
       });
       Keyboard.dismiss();
-      console.log(data);
-      setSearchResults(
-        data.map(({thumb, name, cuisines}) => {
-          return {image: thumb, title: name, subTitle: cuisines};
-        }),
-      );
+      setSearchResults(data);
     } catch (error) {
       console.log(error);
     }
@@ -82,6 +77,7 @@ const RestuarantListComp = ({
         />
       </View>
       <TextInput
+        autoFocus
         style={styles.searchInput}
         placeholder="Search for restaurant, cuisine or a dish.."
         value={searchInput}

@@ -20,8 +20,8 @@ import RestaurantComp from './RestaurantComp';
 //   );
 // };
 
-const ResultsScreen = () => {
-  return <RestaurantComp data={mockData} />;
+const ResultsScreen = ({route}) => {
+  return <RestaurantComp data={route.params.data} />;
 };
 
 export default ResultsScreen;

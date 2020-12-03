@@ -1,43 +1,110 @@
 {
-  "_id": {"$oid": "5fc62b0561207f6410993260"},
-  "has_online_delivery": {"$numberInt": "1"},
-  "photos_url": "https://www.zomato.com/ncr/spezia-bistro-delhi-university-gtb-nagar-new-delhi/photos?utm_source=api_basic_user&utm_medium=api&utm_campaign=v2.1#tabtop",
-  "url": "https://www.zomato.com/ncr/spezia-bistro-delhi-university-gtb-nagar-new-delhi?utm_source=api_basic_user&utm_medium=api&utm_campaign=v2.1",
-  "price_range": {"$numberInt": "2"},
+  "_id": "5fc62b0561207f641099326f",
+  "has_online_delivery": 0,
+  "photos_url": "https://www.zomato.com/kolkata/spice-kraft-ballygunge/photos?utm_source=api_basic_user&utm_medium=api&utm_campaign=v2.1#tabtop",
+  "url": "https://www.zomato.com/kolkata/spice-kraft-ballygunge?utm_source=api_basic_user&utm_medium=api&utm_campaign=v2.1",
+  "price_range": 3,
   "apikey": "b90e6a8c738410315a20c449fe2eb1b1",
   "user_rating": {
     "rating_text": "Excellent",
     "rating_color": "3F7E00",
-    "votes": "1071",
-    "aggregate_rating": "4.6"
+    "votes": "1424",
+    "aggregate_rating": "4.8"
   },
-  "R": {"res_id": {"$numberInt": "18161577"}},
-  "name": "Spezia Bistro",
-  "has_table_booking": {"$numberInt": "1"},
-  "is_delivering_now": {"$numberInt": "0"},
-  "deeplink": "zomato://restaurant/18161577",
-  "menu_url": "https://www.zomato.com/ncr/spezia-bistro-delhi-university-gtb-nagar-new-delhi/menu?utm_source=api_basic_user&utm_medium=api&utm_campaign=v2.1&openSwipeBox=menu&showMinimal=1#tabtop",
-  "average_cost_for_two": {"$numberInt": "900"},
-  "book_url": "https://www.zomato.com/ncr/spezia-bistro-delhi-university-gtb-nagar-new-delhi/book?utm_source=api_basic_user&utm_medium=api&utm_campaign=v2.1",
-  "switch_to_order_menu": {"$numberInt": "0"},
+  "R": {
+    "res_id": 18017612
+  },
+  "name": "Spice Kraft",
+  "has_table_booking": 0,
+  "is_delivering_now": 0,
+  "deeplink": "zomato://restaurant/18017612",
+  "menu_url": "https://www.zomato.com/kolkata/spice-kraft-ballygunge/menu?utm_source=api_basic_user&utm_medium=api&utm_campaign=v2.1&openSwipeBox=menu&showMinimal=1#tabtop",
+  "average_cost_for_two": 1200,
+  "switch_to_order_menu": 0,
   "offers": [],
-  "cuisines": "Cafe, Continental, Chinese, Italian",
+  "cuisines": "Continental, Middle Eastern, Asian",
   "location": {
-    "latitude": "28.6948390000",
-    "address": "2525, 1st Floor, Hudson Lane, Delhi University-GTB Nagar, New Delhi",
-    "city": "New Delhi",
-    "country_id": {"$numberInt": "1"},
-    "locality_verbose": "Delhi University-GTB Nagar, New Delhi",
-    "city_id": {"$numberInt": "1"},
+    "latitude": "22.5264613000",
+    "address": "54/1/2A, Hazra Road, Ballygunge Phari, Near Hazra Law College, Ballygunge, Kolkata",
+    "city": "Kolkata",
+    "country_id": 1,
+    "locality_verbose": "Ballygunge, Kolkata",
+    "city_id": 2,
     "zipcode": "",
-    "longitude": "77.2041413000",
-    "locality": "Delhi University-GTB Nagar"
+    "longitude": "88.3644527000",
+    "locality": "Ballygunge"
   },
-  "featured_image": "https://b.zmtcdn.com/data/pictures/7/18161577/d40268f4980f3e53349bca7055b87124_featured_v2.jpg",
+  "featured_image": "https://b.zmtcdn.com/data/pictures/2/18017612/913fd9a8d220821947d29c87320fcfc6_featured_v2.jpg",
   "currency": "Rs.",
-  "id": "18161577",
-  "thumb": "https://b.zmtcdn.com/data/pictures/7/18161577/d40268f4980f3e53349bca7055b87124_featured_v2.jpg",
+  "id": "18017612",
+  "thumb": "https://b.zmtcdn.com/data/pictures/2/18017612/913fd9a8d220821947d29c87320fcfc6_featured_v2.jpg",
   "establishment_types": [],
-  "events_url": "https://www.zomato.com/ncr/spezia-bistro-delhi-university-gtb-nagar-new-delhi/events#tabtop?utm_source=api_basic_user&utm_medium=api&utm_campaign=v2.1",
-  "__v": {"$numberInt": "0"}
+  "events_url": "https://www.zomato.com/kolkata/spice-kraft-ballygunge/events#tabtop?utm_source=api_basic_user&utm_medium=api&utm_campaign=v2.1",
+  "__v": 0,
+  "dishes": [
+    {
+      "name": "Balu shahi",
+      "diet": "vegetarian"
+    },
+    {
+      "name": "Boondi",
+      "diet": "vegetarian"
+    },
+    {
+      "name": "Gajar ka halwa",
+      "diet": "vegetarian"
+    },
+    {
+      "name": "Ghevar",
+      "diet": "vegetarian"
+    },
+    {
+      "name": "Gulab jamun",
+      "diet": "vegetarian"
+    },
+    {
+      "name": "Parotta",
+      "diet": "vegetarian"
+    },
+    {
+      "name": "Imarti",
+      "diet": "vegetarian"
+    },
+    {
+      "name": "Jalebi",
+      "diet": "vegetarian"
+    },
+    {
+      "name": "Kaju katli",
+      "diet": "vegetarian"
+    },
+    {
+      "name": "Kalakand",
+      "diet": "vegetarian"
+    },
+    {
+      "name": "Kheer",
+      "diet": "vegetarian"
+    },
+    {
+      "name": "Laddu",
+      "diet": "vegetarian"
+    },
+    {
+      "name": "Lassi",
+      "diet": "vegetarian"
+    },
+    {
+      "name": "Nankhatai",
+      "diet": "vegetarian"
+    },
+    {
+      "name": "Petha",
+      "diet": "vegetarian"
+    },
+    {
+      "name": "Phirni",
+      "diet": "vegetarian"
+    }
+  ]
 }
