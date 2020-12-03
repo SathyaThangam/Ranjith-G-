@@ -1,6 +1,8 @@
 import axios from 'axios';
 const API_URL =
-  process.env.NODE_ENV === 'production' ? '' : 'http://192.168.225.41:8080';
+  process.env.NODE_ENV === 'production'
+    ? 'https://zomato-clone-backend.herokuapp.com'
+    : 'http://192.168.225.41:8080';
 
 const postRequest = async ({url, data, headers}) => {
   try {
