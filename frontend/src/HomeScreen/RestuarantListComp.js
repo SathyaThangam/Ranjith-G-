@@ -28,6 +28,8 @@ const RestuarantListComp = ({
 
   const [searchResults, setSearchResults] = useState([]);
 
+  const [searchEmpty, setSearchEmpty] = useState(false);
+
   const getRestaurantsResults = async (location, restaurant) => {
     try {
       const {data} = await getRequest({
@@ -35,6 +37,8 @@ const RestuarantListComp = ({
         data: {location, restaurant},
       });
       Keyboard.dismiss();
+      if (data.length === 0) setSearchEmpty(true);
+      else setSearchEmpty(false);
       setSearchResults(data);
     } catch (error) {
       console.log(error);
@@ -84,11 +88,15 @@ const RestuarantListComp = ({
         onChangeText={(text) => setSearchInput(text)}
       />
       <View style={{paddingBottom: 20}}>
-        <FlatList
-          keyExtractor={() => nanoid(8)}
-          renderItem={renderItem}
-          data={searchResults}
-        />
+        {searchEmpty ? (
+          <Text style={{paddingLeft: 15, fontSize: 20}}>No results found</Text>
+        ) : (
+          <FlatList
+            keyExtractor={() => nanoid(8)}
+            renderItem={renderItem}
+            data={searchResults}
+          />
+        )}
       </View>
     </View>
   );

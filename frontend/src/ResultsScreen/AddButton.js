@@ -1,8 +1,7 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import CommonStyles from '../CommonStyles';
-const AddButton = () => {
-  const [count, setCount] = useState(0);
+const AddButton = ({count, setCount}) => {
   if (count > 0)
     return (
       <View style={[CommonStyles.horizontalView, styles.countContainer]}>
