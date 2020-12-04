@@ -6,6 +6,7 @@ dotenv.config();
 
 const authRoutes = require("./routes/auth-routes.js");
 const dataRoutes = require("./routes/data-routes.js");
+const orderRoutes = require("./routes/order-routes.js");
 
 const app = express();
 
@@ -17,12 +18,6 @@ if (process.env.NODE_ENV === "development") {
 
 const PORT = process.env.PORT || 8080;
 
-// app.use(
-// 	cors({
-// 		origin: "http://localhost:3000",
-// 		credentials: true,
-// 	})
-// );
 const DB_URI =
 	process.env.NODE_ENV === "development"
 		? `${process.env.DATABASE_URL}zomatoClone`
@@ -41,6 +36,8 @@ db.once("open", function () {
 app.use("/auth", authRoutes);
 
 app.use("/data", dataRoutes);
+
+app.use("/order", orderRoutes);
 
 //Endpoint to check if connection has established
 app.get("/ping", (req, res) => res.send("pong"));

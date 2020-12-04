@@ -26,7 +26,10 @@ exports.signUpController = async (req, res) => {
 			res.sendStatus(403);
 		} else {
 			const hash = await generateHash(password);
-			const user = new UserDetails({ email, password: hash });
+			const user = new UserDetails({
+				email: email.toLowerCase(),
+				password: hash,
+			});
 			const saveUser = await UserDetails.create(user);
 			if (saveUser) {
 				const token = generateAccessToken({ email });
@@ -44,7 +47,7 @@ exports.loginController = async (req, res) => {
 	const password = req.body.password;
 
 	try {
-		const user = await getUser(email);
+		const user = await getUser(email.toLowerCase());
 
 		if (user) {
 			const isPasswordCorrect = await compareHash(
