@@ -1,15 +1,18 @@
 import RazorpayCheckout from 'react-native-razorpay';
-import {postRequest} from './networkUtils';
+// import {postRequest} from './networkUtils';
 import COLORS from '../ColorConstants';
-const initiateRazorpayPayment = ({order_id, currency, amount}) => {
+export const initiateRazorpayPayment = ({order_id, amount}) => {
+  console.log(amount);
   const options = {
-    description: 'your description here',
-    currency: currency,
-    key: '<YOUR_KEY_ID>',
-    amount: amount,
+    description: 'Delivered at your doorstep',
+    currency: 'INR',
+    key: 'rzp_test_RMPy7D0r6knqam',
     name: 'Zomato Clone',
-    order_id: order_id, //Replace this with an order_id created using Orders API. Learn more at https://razorpay.com/docs/api/orders.
-
+    order_id: order_id,
     theme: {color: COLORS.RED},
   };
+
+  RazorpayCheckout.open(options)
+    .then((data) => console.log(data))
+    .catch((err) => console.error(err));
 };

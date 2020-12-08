@@ -1,7 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, Pressable} from 'react-native';
 import CommonStyles from '../CommonStyles';
 import COLORS from '../ColorConstants';
+import {postRequest} from '../Utils/networkUtils';
+import {getDataFromStore} from '../Utils/storeUtils';
+import {initiateRazorpayPayment} from '../Utils/razorpayUtils';
 const ResultFooter = ({orders}) => {
   const [hasOrders, setHasOrders] = useState(false);
 
@@ -14,8 +17,27 @@ const ResultFooter = ({orders}) => {
         orders.reduce((total, current) => total + current.price, 0),
       );
     }
-    console.log(hasOrders);
   }, [orders]);
+
+  const handleContinue = async () => {
+    const postData = {amount: totalAmount, orders};
+
+    try {
+      const token = await getDataFromStore('token');
+      const header = {authorization: `Bearer ${token}`};
+      const {data} = await postRequest({
+        url: '/order/create',
+        headers: header,
+        data: postData,
+      });
+      const paymentOrder = await initiateRazorpayPayment({
+        order_id: data.id,
+        amount: totalAmount,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <View style={styles.footer}>
@@ -35,11 +57,13 @@ const ResultFooter = ({orders}) => {
             <Text style={{color: COLORS.GREY}}>(plus taxes)</Text>
           </View>
         </View>
-        <View
+        <Pressable
           style={[CommonStyles.basicBtn, styles.continueBtn]}
-          accessibilityRole="button">
-          <Text style={{color: 'white', fontWeight: 'bold'}}>Continue</Text>
-        </View>
+          onPress={() => handleContinue()}>
+          <View accessibilityRole="button">
+            <Text style={{color: 'white', fontWeight: 'bold'}}>Continue</Text>
+          </View>
+        </Pressable>
       </View>
     </View>
   );
