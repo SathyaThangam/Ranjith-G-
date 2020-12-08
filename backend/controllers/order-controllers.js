@@ -12,9 +12,10 @@ const Order = require("../models/Order");
 // } = require("../helpers/DB-helper");
 //Generate order object
 exports.generateOrder = async (req, res) => {
-	const { price, orders } = req.body;
-	const amount = price * 100;
+	const { amount, orders } = req.body;
+	console.log(amount);
 	const { email } = res.locals;
+	console.log(req.headers);
 	try {
 		const razorpayOrder = await generateRazorpayOrder(amount);
 		const order = {
@@ -24,10 +25,15 @@ exports.generateOrder = async (req, res) => {
 			order_completed_status: razorpayOrder.status,
 			order_currency: razorpayOrder.currency,
 			order_payment_details: razorpayOrder,
+			amount,
 		};
 		const insertingOrder = await Order.create(order);
 		if (insertingOrder) {
-			res.status(200).send({ id: razorpayOrder.id });
+			res.status(200).send({
+				id: razorpayOrder.id,
+				currency: razorpayOrder.currency,
+				amount: razorpayOrder.amount,
+			});
 		} else {
 			res.sendStatus(500);
 		}
