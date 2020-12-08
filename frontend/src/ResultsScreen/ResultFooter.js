@@ -1,15 +1,37 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import CommonStyles from '../CommonStyles';
 import COLORS from '../ColorConstants';
 const ResultFooter = ({orders}) => {
+  const [hasOrders, setHasOrders] = useState(false);
+
+  const [totalAmount, setTotalAmount] = useState(0);
+
+  useEffect(() => {
+    if (orders.length > 0) {
+      setHasOrders(true);
+      setTotalAmount(
+        orders.reduce((total, current) => total + current.price, 0),
+      );
+    }
+    console.log(hasOrders);
+  }, [orders]);
+
   return (
     <View style={styles.footer}>
       <View style={[CommonStyles.horizontalView]}>
         <View style={{flex: 2}}>
           <View style={{paddingLeft: 10}}>
-            <Text style={{fontSize: 16}}>1 item</Text>
-            <Text style={{fontSize: 18}}>Rs. 168.00</Text>
+            <Text style={{fontSize: 16}}>
+              {orders.length < 0
+                ? ''
+                : orders.length === 1
+                ? '1 item'
+                : `${orders.length} items`}
+            </Text>
+            <Text style={{fontSize: 18}}>
+              {hasOrders ? totalAmount.toFixed(2) : `0.00`}
+            </Text>
             <Text style={{color: COLORS.GREY}}>(plus taxes)</Text>
           </View>
         </View>

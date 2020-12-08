@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, memo} from 'react';
 import {
   StyleSheet,
   Text,
@@ -14,13 +14,23 @@ import ResultFooter from './ResultFooter';
 const RestaurantComp = ({data}) => {
   const [vegOnly, setVegOnly] = useState(false);
 
-  const [dishList, setDishList] = useState(() => data.dishes);
-
   const [orderList, setOrderList] = useState([]);
 
-  useEffect(() => {
-    console.log(orderList);
-  }, [orderList]);
+  const [dishList, setDishList] = useState(() =>
+    data.dishes.map((item) => {
+      const uniqueID = nanoid(8);
+      return (
+        <MenuItem
+          key={uniqueID}
+          uniqueID={uniqueID}
+          name={item.name}
+          price={168}
+          currency={data.currency}
+          setOrderList={setOrderList}
+        />
+      );
+    }),
+  );
 
   useEffect(() => {
     setDishList((prev) => {
@@ -83,25 +93,11 @@ const RestaurantComp = ({data}) => {
             />
             <Text style={{fontSize: 20, paddingVertical: 15}}>Veg only</Text>
           </View>
-          <View style={{flex: 1, paddingBottom: 50}}>
-            {dishList.map((item) => {
-              const uniqueID = nanoid(8);
-              return (
-                <MenuItem
-                  key={uniqueID}
-                  uniqueID={uniqueID}
-                  name={item.name}
-                  price={168}
-                  currency={data.currency}
-                  setOrderList={setOrderList}
-                />
-              );
-            })}
-          </View>
+          <View style={{flex: 1, paddingBottom: 50}}>{dishList}</View>
         </ScrollView>
       </View>
       <View style={{flex: 0.12}}>
-        <ResultFooter />
+        <ResultFooter orders={orderList} />
       </View>
     </View>
   );
