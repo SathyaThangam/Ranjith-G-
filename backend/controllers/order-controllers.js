@@ -1,21 +1,15 @@
 const {
 	generateRazorpayOrder,
 	capturePaymentRazorpay,
+	verifyPaymentRazorPay,
 } = require("../services/razorpay-services");
 
 const Order = require("../models/Order");
 
-// const {
-// 	createNewOrder,
-// 	getRouteIDByLocation,
-// 	updatePaymentStatusByPaymentID,
-// } = require("../helpers/DB-helper");
-//Generate order object
 exports.generateOrder = async (req, res) => {
 	const { amount, orders } = req.body;
 	console.log(amount);
 	const { email } = res.locals;
-	console.log(req.headers);
 	try {
 		const razorpayOrder = await generateRazorpayOrder(amount);
 		const order = {
@@ -42,21 +36,70 @@ exports.generateOrder = async (req, res) => {
 	}
 };
 
+exports.getOrdersByUser = async (req, res) => {
+	const { email } = res.locals;
+	try {
+		const orders = await Order.find({ email: email.toLowerCase() });
+		res.status(200).send(orders);
+	} catch (error) {
+		console.error(error);
+		res.sendStatus(500);
+	}
+};
+
+exports.cancelOrder = async (req, res) => {
+	const { order_id } = req.body;
+	try {
+		await Order.updateOne(
+			{ order_id },
+			{ order_completed_status: "cancelled" }
+		);
+		res.sendStatus(200);
+	} catch (err) {
+		console.log(err);
+		res.sendStatus(500);
+	}
+};
+
 //Capture Payment
-exports.capturePayment = (req, res) => {
-	console.log("request", req.body);
-	capturePaymentRazorpay(req.body.totalprice, req.params.paymentId)
-		.then((response) => {
-			const data = response.data;
-			const { status, order_id } = data;
-			console.log(response.data);
-			updatePaymentStatusByPaymentID(order_id, true);
-			res.status(200).json({ status: status, order_id: order_id });
-		})
-		.catch((err) => {
-			console.log(err);
-			return res.status(500).json({
-				message: "Something Went Wrong out capture",
-			});
-		});
+exports.verifyAndCapturePayment = async (req, res) => {
+	// console.log("request", req.body);
+	const {
+		razorpay_order_id,
+		razorpay_payment_id,
+		razorpay_signature,
+	} = req.body.razorpay_data;
+	try {
+		const isPaymentAuthentic = await verifyPaymentRazorPay(
+			req.body.order_id,
+			razorpay_payment_id,
+			razorpay_signature
+		);
+		if (isPaymentAuthentic) {
+			const capturePayment = await capturePaymentRazorpay(
+				req.body.total_price,
+				razorpay_payment_id
+			);
+			console.log(capturePayment);
+			await Order.updateOne(
+				{ order_id: req.body.order_id },
+				{ order_completed_status: "success" }
+			);
+			//update status in DB
+			res.sendStatus(200);
+		} else {
+			await Order.updateOne(
+				{ order_id: req.body.order_id },
+				{ order_completed_status: "failed" }
+			);
+			res.sendStatus(403);
+		}
+	} catch (error) {
+		console.log(error);
+		await Order.updateOne(
+			{ order_id: req.body.order_id },
+			{ order_completed_status: "pending" }
+		);
+		res.sendStatus(500);
+	}
 };
