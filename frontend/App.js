@@ -4,6 +4,7 @@ import HomeScreen from './src/HomeScreen';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import ResultsScreen from './src/ResultsScreen';
+import OrdersComp from './src/components/OrdersComp';
 const App = () => {
   const Stack = createStackNavigator();
 
@@ -23,7 +24,12 @@ const App = () => {
           <Stack.Screen
             name="Results"
             component={ResultsScreen}
-            options={{title: 'Zomatoclone'}}
+            options={{title: 'ZomatoClone'}}
+          />
+          <Stack.Screen
+            name="Orders"
+            component={OrdersComp}
+            options={{title: 'ZomatoClone'}}
           />
         </Stack.Navigator>
       </SafeAreaView>
