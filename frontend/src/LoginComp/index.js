@@ -9,6 +9,7 @@ import {
   validateEmail,
   validatePassword,
   validateConfirmPassword,
+  getLoginStatus,
 } from '../Utils/authUtils';
 import {
   saveDataToStore,
@@ -30,12 +31,9 @@ const LoginComp = ({setShow}) => {
 
   const [loginStatus, setLoginStatus] = useState(false);
   useEffect(() => {
-    getDataFromStore('token')
+    getLoginStatus()
       .then((token) => {
-        console.log(token);
-        if (token !== null) {
-          setLoginStatus(true);
-        }
+        setLoginStatus(token);
       })
       .catch((err) => console.error(err));
   }, []);

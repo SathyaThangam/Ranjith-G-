@@ -6,7 +6,8 @@ import {postRequest} from '../Utils/networkUtils';
 import {getDataFromStore} from '../Utils/storeUtils';
 import {initiateRazorpayPayment} from '../Utils/razorpayUtils';
 import {useNavigation} from '@react-navigation/native';
-const ResultFooter = ({orders}) => {
+import {getLoginStatus} from '../Utils/authUtils';
+const ResultFooter = ({orders, setShow}) => {
   const [hasOrders, setHasOrders] = useState(false);
 
   const [totalAmount, setTotalAmount] = useState(0);
@@ -25,60 +26,56 @@ const ResultFooter = ({orders}) => {
   }, [orders]);
 
   const handleContinue = async () => {
-    setClicked(true);
-    if (clicked) {
-      const postData = {amount: totalAmount, orders};
-      try {
-        const token = await getDataFromStore('token');
-        const header = {authorization: `Bearer ${token}`};
-        const {data} = await postRequest({
-          url: '/order/create',
-          headers: header,
-          data: postData,
-        });
-        // const paymentOrder = await initiateRazorpayPayment({
-        //   order_id: data.id,
-        //   amount: totalAmount,
-        // });
-        // console.log('payment order', paymentOrder);
-        initiateRazorpayPayment({order_id: data.id, amount: totalAmount})
-          .then(async (paymentOrder) => {
-            const captureData = {
-              total_price: totalAmount,
-              order_id: data.id,
-              razorpay_data: paymentOrder,
-            };
-            const capturePayment = await postRequest({
-              url: '/order/capture',
-              headers: header,
-              data: captureData,
-            });
-            console.log('paymentOrder', paymentOrder);
-            console.log('capturePayment', capturePayment.status);
-          })
-          .catch((error) => {
-            if (
-              error.error &&
-              error.error.reason === 'payment_cancelled' &&
-              error.error.source === 'customer'
-            ) {
-              postRequest({
-                url: '/order/cancelorder',
-                headers: header,
-                data: {order_id: data.id},
-              })
-                .then((res) => console.log(res))
-                .catch((err) => console.log('err', err));
-            }
+    const loginStatus = await getLoginStatus();
+    if (loginStatus) {
+      if (!clicked) {
+        setClicked(true);
+        const postData = {amount: totalAmount, orders};
+        try {
+          const token = await getDataFromStore('token');
+          const header = {authorization: `Bearer ${token}`};
+          const {data} = await postRequest({
+            url: '/order/create',
+            headers: header,
+            data: postData,
           });
-      } catch (error) {
-        // {"code": 0, "error": {"code": "BAD_REQUEST_ERROR", "description": "Payment processing cancelled by user", "reason": "payment_cancelled", "source": "customer", "step": "payment_authentication"}}
+          initiateRazorpayPayment({order_id: data.id, amount: totalAmount})
+            .then(async (paymentOrder) => {
+              const captureData = {
+                total_price: totalAmount,
+                order_id: data.id,
+                razorpay_data: paymentOrder,
+              };
+              await postRequest({
+                url: '/order/capture',
+                headers: header,
+                data: captureData,
+              });
+            })
+            .catch((error) => {
+              if (
+                error.error &&
+                error.error.reason === 'payment_cancelled' &&
+                error.error.source === 'customer'
+              ) {
+                postRequest({
+                  url: '/order/cancel',
+                  headers: header,
+                  data: {order_id: data.id},
+                })
+                  .then((res) => console.log(res))
+                  .catch((err) => console.log('err', err));
+              }
+            });
+        } catch (error) {
+          // {"code": 0, "error": {"code": "BAD_REQUEST_ERROR", "description": "Payment processing cancelled by user", "reason": "payment_cancelled", "source": "customer", "step": "payment_authentication"}}
 
-        console.error(error);
+          console.error(error);
+        }
+        navigation.push('Orders');
       }
-      navigation.push('Orders');
-    }
-    setClicked(false);
+      setClicked(false);
+    } else setShow(true);
   };
 
   return (

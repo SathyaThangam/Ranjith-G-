@@ -1,5 +1,5 @@
 import {postRequest} from './networkUtils';
-
+import {getDataFromStore} from './storeUtils';
 export const login = async (email, password) => {
   if (validateEmail(email) && validatePassword(password)) {
     const requestData = {
@@ -46,6 +46,16 @@ export const signup = async (email, password, confirmPassword) => {
       }
       return null;
     }
+  }
+};
+
+export const getLoginStatus = async () => {
+  try {
+    const token = await getDataFromStore('token');
+    return token !== null;
+  } catch (error) {
+    console.log(error);
+    return false;
   }
 };
 

@@ -3,7 +3,9 @@ import {Pressable, StyleSheet, Text, View} from 'react-native';
 import CommonStyles from '../CommonStyles';
 import COLORS from '../ColorConstants';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useNavigation} from '@react-navigation/native';
 const LogOutView = ({setShow, handleLogOut}) => {
+  const navigation = useNavigation();
   return (
     <View style={{padding: 10}}>
       <View
@@ -11,7 +13,7 @@ const LogOutView = ({setShow, handleLogOut}) => {
           CommonStyles.horizontalView,
           {justifyContent: 'space-between'},
         ]}>
-        <Text style={styles.title}>Logout</Text>
+        <Text style={styles.title}>Profile</Text>
         <MaterialCommunityIcons
           name="close"
           size={30}
@@ -20,6 +22,26 @@ const LogOutView = ({setShow, handleLogOut}) => {
           }}
         />
       </View>
+      <Pressable
+        onPress={() => {
+          navigation.push('Orders');
+          setShow(false);
+        }}>
+        <View
+          style={{
+            marginVertical: 5,
+            padding: 5,
+          }}>
+          <Text>Email</Text>
+        </View>
+        <View
+          style={{
+            marginVertical: 5,
+            padding: 5,
+          }}>
+          <Text>My Orders</Text>
+        </View>
+      </Pressable>
       <Text style={styles.subHeading}>Do you want to log out?</Text>
       <View style={CommonStyles.horizontalView}>
         <Pressable style={styles.secondaryBtn} onPress={() => handleLogOut()}>

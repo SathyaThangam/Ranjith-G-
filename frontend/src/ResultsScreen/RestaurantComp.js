@@ -1,4 +1,4 @@
-import React, {useState, useEffect, memo} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -11,10 +11,15 @@ import CommonStyles from '../CommonStyles';
 import {nanoid} from 'nanoid';
 import MenuItem from './MenuItem';
 import ResultFooter from './ResultFooter';
+import DrawerView from '../components/DrawerView';
+import LoginComp from '../LoginComp';
+
 const RestaurantComp = ({data}) => {
   const [vegOnly, setVegOnly] = useState(false);
 
   const [orderList, setOrderList] = useState([]);
+
+  const [show, setShow] = useState(false);
 
   const [dishList, setDishList] = useState(() =>
     data.dishes.map((item) => {
@@ -41,21 +46,25 @@ const RestaurantComp = ({data}) => {
     });
   }, [vegOnly]);
   return (
-    <View style={{flex: 1}}>
-      <View style={{flex: 0.88}}>
-        <ImageBackground
-          style={styles.imagebg}
-          resizeMode="cover"
-          source={{uri: data.featured_image}}>
-          <Text
-            style={{backgroundColor: '#009bd3', padding: 5, color: 'white'}}>
-            Use Code WELCOME for 50% OFF
-          </Text>
-        </ImageBackground>
-        <ScrollView style={{padding: 20}}>
-          <View style={CommonStyles.horizontalView}>
-            <Text></Text>
-            {/* <View
+    <>
+      <DrawerView show={show}>
+        <LoginComp setShow={setShow} />
+      </DrawerView>
+      <View style={{flex: 1}}>
+        <View style={{flex: 0.88}}>
+          <ImageBackground
+            style={styles.imagebg}
+            resizeMode="cover"
+            source={{uri: data.featured_image}}>
+            <Text
+              style={{backgroundColor: '#009bd3', padding: 5, color: 'white'}}>
+              Use Code WELCOME for 50% OFF
+            </Text>
+          </ImageBackground>
+          <ScrollView style={{padding: 20}}>
+            <View style={CommonStyles.horizontalView}>
+              <Text></Text>
+              {/* <View
             style={[
               CommonStyles.horizontalView,
               {marginRight: 10, backgroundColor: '#ccc'},
@@ -70,36 +79,37 @@ const RestaurantComp = ({data}) => {
             <FontAwesome name="star-o" size={20} style={{marginRight: 5}} />
             <FontAwesome name="star-o" size={20} style={{marginRight: 5}} />
           </View> */}
-            <Text>({data.user_rating.votes} reviews)</Text>
-          </View>
-          <Text style={{fontSize: 34, paddingVertical: 10}}>{data.name}</Text>
-          <Text style={{fontSize: 18, color: '#7c7c7c', paddingVertical: 5}}>
-            {data.cuisines}
-          </Text>
-          <Text style={{color: '#7c7c7c', paddingVertical: 5}}>
-            {data.location.locality}
-          </Text>
-          <View style={CommonStyles.horizontalView}>
-            <Text style={{color: '#F4A266', fontSize: 18}}>Open now</Text>
-            <Text style={{fontSize: 18}}> - 8 am to 6 pm</Text>
-          </View>
-          <View style={CommonStyles.horizontalView}>
-            <Switch
-              trackColor={{false: '#767577', true: '#81b0ff'}}
-              thumbColor="#f4f3f4"
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={() => setVegOnly((prev) => !prev)}
-              value={vegOnly}
-            />
-            <Text style={{fontSize: 20, paddingVertical: 15}}>Veg only</Text>
-          </View>
-          <View style={{flex: 1, paddingBottom: 50}}>{dishList}</View>
-        </ScrollView>
+              <Text>({data.user_rating.votes} reviews)</Text>
+            </View>
+            <Text style={{fontSize: 34, paddingVertical: 10}}>{data.name}</Text>
+            <Text style={{fontSize: 18, color: '#7c7c7c', paddingVertical: 5}}>
+              {data.cuisines}
+            </Text>
+            <Text style={{color: '#7c7c7c', paddingVertical: 5}}>
+              {data.location.locality}
+            </Text>
+            <View style={CommonStyles.horizontalView}>
+              <Text style={{color: '#F4A266', fontSize: 18}}>Open now</Text>
+              <Text style={{fontSize: 18}}> - 8 am to 6 pm</Text>
+            </View>
+            <View style={CommonStyles.horizontalView}>
+              <Switch
+                trackColor={{false: '#767577', true: '#81b0ff'}}
+                thumbColor="#f4f3f4"
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={() => setVegOnly((prev) => !prev)}
+                value={vegOnly}
+              />
+              <Text style={{fontSize: 20, paddingVertical: 15}}>Veg only</Text>
+            </View>
+            <View style={{flex: 1, paddingBottom: 50}}>{dishList}</View>
+          </ScrollView>
+        </View>
+        <View style={{flex: 0.12}}>
+          <ResultFooter orders={orderList} setShow={setShow} />
+        </View>
       </View>
-      <View style={{flex: 0.12}}>
-        <ResultFooter orders={orderList} />
-      </View>
-    </View>
+    </>
   );
 };
 
