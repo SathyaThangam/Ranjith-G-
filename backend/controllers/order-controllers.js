@@ -39,7 +39,7 @@ exports.generateOrder = async (req, res) => {
 exports.getOrdersByUser = async (req, res) => {
 	const { email } = res.locals;
 	try {
-		const orders = await Order.find({ email: email.toLowerCase() });
+		const orders = await Order.find({ email: email.toLowerCase() }, "-_id");
 		res.status(200).send(orders);
 	} catch (error) {
 		console.error(error);
@@ -76,11 +76,10 @@ exports.verifyAndCapturePayment = async (req, res) => {
 			razorpay_signature
 		);
 		if (isPaymentAuthentic) {
-			const capturePayment = await capturePaymentRazorpay(
+			await capturePaymentRazorpay(
 				req.body.total_price,
 				razorpay_payment_id
 			);
-			console.log(capturePayment);
 			await Order.updateOne(
 				{ order_id: req.body.order_id },
 				{ order_completed_status: "success" }
